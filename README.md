@@ -5,6 +5,21 @@
 npm install <package_name> --save
 ```
 
+- 설치한 라이브러리 정리
+```
+// node.js와 브라우저를 위한 Promise 기반 HTTP 클라이언트
+axios
+
+// proxy 설정
+http-proxy-middleware 
+
+// 라우터 설정
+react-router-dom 
+
+// Material UI
+@mui/material @emotion/react @emotion/styled
+```
+
 <br>
 
 ### 프로젝트 실행 순서
