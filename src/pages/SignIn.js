@@ -41,7 +41,7 @@ export default function SignIn() {
 
           alert("로그인 성공했습니다.");
 
-          navigate('/', {
+          navigate('/home', {
             state : responseData
           })
         })

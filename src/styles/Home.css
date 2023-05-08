@@ -1,0 +1,228 @@
+@import url("reset.css");
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+}
+
+header {
+    position: sticky;
+    top: 0;
+    align-items: center;
+    background-color: white;
+    padding: 10px;
+    box-shadow: 0px 2px 5px #888888;
+}
+
+header>nav>div.bar {
+    display: flex;
+    justify-content: left;
+}
+
+.logo {
+    font-weight: bold;
+    font-size: 24px;
+    color: #13837a;
+    display: flex;
+}
+
+.logo::after {
+    content: "Ground。";
+    font-size: 24px;
+    color: #bb55d2;
+}
+
+
+.menu {
+    display: flex;
+    align-items: center;
+}
+
+.menu a {
+    color: black;
+    font-weight: bold;
+    margin-right: 20px;
+    font-size: 14px;
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
+}
+
+.menu a:hover {
+    color: #9536f4;
+}
+
+/* @media screen and (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: center;
+  } */
+
+@media screen and (max-width: 768px) {
+    .menu {
+        display: none;
+
+    }
+}
+
+
+.logo {
+    margin: 10px 0;
+}
+
+
+.menu a {
+    margin-bottom: 10px;
+}
+
+
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 50px;
+}
+
+
+
+ul {
+    display: flex;
+}
+
+li {
+    margin-left: 20px;
+}
+
+
+/* Post Styles */
+.post {
+    background-color: white;
+    box-shadow: 0px 2px 5px #888888;
+    margin: 20px 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+.post-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.post-header img {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}
+
+.post-header h2 {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.post-header p {
+    font-size: 14px;
+    margin: 0;
+    color: #888888;
+}
+
+.post-content {
+    margin-bottom: 10px;
+}
+
+.post-content img {
+    width: 100%;
+}
+
+.post-content p {
+    font-family: Arial, sans-serif;
+    font-weight: 550;
+}
+
+.post-footer {
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.post-footer a {
+    color: black;
+    font-size: 16px;
+    text-decoration: none;
+    margin: 15px;
+
+}
+
+.post-footer a:hover {
+    color: #7536f4;
+}
+
+.post-footer p {
+    color: #888888;
+    font-size: 14px;
+    margin: 0;
+}
+
+/* News Feed Styles */
+#news-feed {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.post-footer span {
+    cursor: pointer;
+    font-size: 20px;
+}
+
+div.icon {
+    font-size: 20px;
+    padding-right: 40px;
+}
+
+div.likeAct {
+    font-family: Arial, sans-serif;
+    font-size: smaller;
+    font-weight: bold;
+}
+
+.like button {
+    border: none;
+    background: none;
+}
+
+
+
+
+
+.button-box {
+    /* position: relative; */
+    /* top: 50%;
+  left: 50%; */
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: 1px solid gray;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease-in-out;
+}
+
+.button-class {
+    border: none;
+    background: none;
+}
+
+.button-box.floating {
+    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.5);
+    transform: translate(-50%, -50%) scale(1.1);
+}
