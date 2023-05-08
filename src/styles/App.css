@@ -1,0 +1,72 @@
+.play{
+font-family: 'Josefin Sans';
+font-style: normal;
+font-weight: 700;
+font-size: 40px;
+line-height: 40px;
+/* identical to box height */
+letter-spacing: -0.03em;
+
+color: #63B8B0;
+}
+
+.ground{
+    font-family: 'Josefin Sans';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 40px;
+    /* identical to box height */
+    letter-spacing: -0.03em;
+    
+    color: #FF9B3F;
+    }
+
+.data{
+    font-family: 'Josefin Sans';
+    font-style: normal;
+    color: #989898;
+
+}
+
+.login{
+    font-family: 'Josefin Sans';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 100px;
+    text-align: center;
+
+    /* identical to box height */
+    letter-spacing: 0.3em;
+    
+    color: #989898;
+    }
+
+.main{
+    position: absolute;
+    width: 510px;
+    height: 70px;
+    left: 110px;
+    top: 250px;
+    
+    font-family: 'Josefin Sans';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 70px;
+    line-height: 70px;
+    /* identical to box height */
+    letter-spacing: -0.03em;
+    
+    color: #63B8B0;
+}
+
+.signup{
+width: 225px;
+height: 50px;
+left: 30px;
+top: 640px;
+
+background: #63B8B0;
+border-radius: 5px;
+}
