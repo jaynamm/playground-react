@@ -63,25 +63,7 @@ header>nav>div.bar {
     }
 }
 
-/* @media screen and (max-width: 768px){
-    .text , .text2 , .text3{
-    display:inline
-    }
-  } */
-
-/* div.container {
-    width: 80%;
-    max-width: 800px;
-    margin: 0 auto;
-  } */
-
-/* @media screen and (max-width: 768px) {
-    div.container {
-    width: 90%;
-    }
-  } */
-
-
+/* 
 .logo {
     margin: 10px 0;
 }
@@ -89,7 +71,7 @@ header>nav>div.bar {
 
 .menu a {
     margin-bottom: 10px;
-}
+} */
 
 
 
@@ -159,13 +141,8 @@ li {
     border: none;
     cursor: pointer;
     transition: all 0.3s ease;
-    transform: translate(80%, -700%);
+    transform: translate(115%, -700%);
 
-
-    /* position: absolute; */
-    /* top: 500px;
-    left: 15%;
-      transform: translateX(-90%);           */
 }
 
 
