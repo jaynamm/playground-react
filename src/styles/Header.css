@@ -7,6 +7,7 @@ header {
     background-color: white;
     padding: 10px;
     box-shadow: 0px 2px 5px #888888;
+    z-index: 1;
 }
 
 header>nav>div.bar {
