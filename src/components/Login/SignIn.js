@@ -8,11 +8,11 @@ import Grid from '@mui/material/Grid';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import axios from "axios"
-import '../styles/Signin.css';
-import { kakaoURL } from'../components/config/KakaoAuth'
+import '../../styles/Signin.css';
+import { kakaoURL } from'../../config/KakaoAuth';
 import { ButtonGroup } from '@mui/material';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
-import '../styles/water.css'
+import '../../styles/water.css'
 
 
 export default function SignIn() {

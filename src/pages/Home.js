@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios'
-import NewsFeed from "./Feed/NewsFeed";
+import NewsFeed from "../components/Feed/NewsFeed";
 import '../styles/Home.css';
-import Header from "./Header";
+import Header from "../components/Base/Header";
 import { redirect } from 'react-router-dom';
 import Button from '@mui/material/Button';
-import FeedModal from "./Feed/FeedModal";
+import FeedModal from "../components/Feed/FeedModal";
 
 
 const action = () => {

@@ -1,8 +1,8 @@
-import React from "react";
-import '../styles/Header.css';
+import React from 'react'
+import '../../styles/Main.css';
+import { Link } from 'react-router-dom';
 
-
-const Header = () => {
+export default function Nav() {
     return (
         <header>
         <nav>
@@ -14,6 +14,7 @@ const Header = () => {
                         <li><a href="#">실시간 인기게시물</a></li>
                         <li><a href="#">사이드 프로젝트</a></li>
                         <li><a href="#">채용정보</a></li>
+                        <li><Link to="/notice"> <a>공지사항</a> </Link></li>
                     </ul>
                 </div>
             </div>
@@ -29,5 +30,3 @@ const Header = () => {
         </header>
     )
 }
-
-export default Header;
