@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios'
-import NoticeView from "./NoticeView"
-import Header from "../components/Header";
+import NoticeView from "../components/Notice/NoticeView"
+import Header from "../components/Base/Header";
 import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 
