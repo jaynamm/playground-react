@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import Footer from "./Footer";
-import Header from "./Header";
+import Footer from "../components/Base/Footer";
+import Header from "../components/Base/Header";
 import '../styles/Main.css';
 
 const Main = () => {
