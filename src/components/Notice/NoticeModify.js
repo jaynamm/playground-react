@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useLocation } from 'react-router-dom'
-import Header from "../components/Header";
+import Header from "../../components/Base/Header";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 

@@ -1,15 +1,15 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Home from './components/Home';
-import Main from './components/Main';
-import SignIn from './pages/SignIn';
-import SignUp from './pages/SignUp';
-import Notice from './pages/Notice';
-import NoticeView from './pages/NoticeView'
-
 import './styles/App.css';
-import NoticeWrite from './pages/NoticeWrite';
-import NoticeModify from './pages/NoticeModify';
+
+import Home from './pages/Home';
+import Main from './pages/Main';
+import Notice from './pages/Notice';
+import SignIn from './components/Login/SignIn';
+import SignUp from './components/Login/SignUp';
+import NoticeView from './components/Notice/NoticeView'
+import NoticeWrite from './components/Notice/NoticeWrite';
+import NoticeModify from './components/Notice/NoticeModify';
 
 
 
