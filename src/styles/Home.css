@@ -51,11 +51,6 @@ header>nav>div.bar {
     color: #9536f4;
 }
 
-/* @media screen and (max-width: 768px) {
-  header {
-    flex-direction: column;
-    align-items: center;
-  } */
 
 @media screen and (max-width: 768px) {
     .menu {
@@ -182,10 +177,7 @@ li {
     font-size: 20px;
 }
 
-div.icon {
-    font-size: 20px;
-    padding-right: 40px;
-}
+
 
 div.likeAct {
     font-family: Arial, sans-serif;
