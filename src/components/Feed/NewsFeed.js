@@ -8,7 +8,7 @@ export default function NewsFeed({feed}, {setLikeCount}) {
         {/* 뉴스피드 박스 */}
         <div className="post">
             <div className="post-header">
-                <img src="https://source.unsplash.com/random/50x50" alt="User profile picture"/>
+                <img src="https://source.unsplash.com/random/50x50" alt="User profile"/>
                 <div>
                     <h2>{feed.userid}</h2>
                     <p>{feed.uploadTime}</p>
@@ -34,21 +34,15 @@ export default function NewsFeed({feed}, {setLikeCount}) {
                             onClick={() => {
                                 setLikeCount(feed.likeCount + 1)
                             }}>
-                            <i class="fa-regular fa-heart"></i>
+                            <i className="fa-regular fa-heart"></i>
                         </span>
                     </button>
                 </div>
 
                 <div className='CSD'>
-                    <a href="#">
-                        <i class="fa-regular fa-message"></i>
-                    </a>
-                    <a href="#">
-                        <i class="fa-solid fa-share-nodes"></i>
-                    </a>
-                    <a href="#">
-                        <i class="fa-solid fa-ellipsis-vertical"></i>
-                    </a>
+                    <i className="fa-regular fa-message"></i>
+                    <i className="fa-solid fa-share-nodes"></i>
+                    <i className="fa-solid fa-ellipsis-vertical"></i>
                 </div>
             </div>
             </div>
