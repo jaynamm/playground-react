@@ -3,6 +3,9 @@ import axios from 'axios'
 import NewsFeed from "./Feed/NewsFeed";
 import '../styles/Home.css';
 import Header from "./Header";
+import FeedModal from "./Feed/FeedModal";
+
+
 
 const Home = () => {
     const [feeds, setFeeds] = useState([]);
@@ -29,13 +32,13 @@ const Home = () => {
     }, []);
 
     return (
-        
-        <div>
+        <>
             <Header />
+            <FeedModal />
             {feeds.map((feed) => (
-                <NewsFeed feed={feed} setLikeCount={setLikeCount} />
+                <NewsFeed feed={feed} likeCount={likeCount} setLikeCount={setLikeCount} />
             ))}
-        </div>
+        </>
     );
 }
 export default Home;
