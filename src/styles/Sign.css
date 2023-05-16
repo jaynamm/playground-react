@@ -1,0 +1,62 @@
+.container {
+  text-align: center;
+  position: relative;
+  width: 300px;
+  margin: 0 auto;
+  cursor: pointer;
+}
+
+button {
+  position: relative;
+  height: 50px;
+  width: 280px;
+  border: 0;
+  border-radius: 5px;
+  text-transform: uppercase;
+  font-size: 1.1em;
+  letter-spacing: 0.2em;
+  overflow: hidden;
+  box-shadow: 0 4px 12px 0 rgba(152, 160, 180, 10);
+  z-index: -2;
+}
+.container-two:hover .fill-two {
+  -webkit-animation: gradient 3s ease infinite;
+  -moz-animation: gradient 3s ease infinite;
+  animation: gradient 3s ease infinite;
+}
+
+@-webkit-keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@-moz-keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}

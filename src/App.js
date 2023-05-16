@@ -1,13 +1,11 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-
 import Home from './components/Home';
 import Main from './components/Main';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import Notice from './pages/Notice';
 import NoticeView from './pages/NoticeView'
-
 
 import './styles/App.css';
 import NoticeWrite from './pages/NoticeWrite';

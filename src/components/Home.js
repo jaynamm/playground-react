@@ -3,9 +3,15 @@ import axios from 'axios'
 import NewsFeed from "./Feed/NewsFeed";
 import '../styles/Home.css';
 import Header from "./Header";
+import { redirect } from 'react-router-dom';
+import Button from '@mui/material/Button';
 import FeedModal from "./Feed/FeedModal";
 
 
+const action = () => {
+    localStorage.removeItem('token');
+    return redirect('/.signin')
+}
 
 const Home = () => {
     const [feeds, setFeeds] = useState([]);
@@ -36,8 +42,10 @@ const Home = () => {
             <Header />
             <FeedModal />
             {feeds.map((feed) => (
-                <NewsFeed feed={feed} likeCount={likeCount} setLikeCount={setLikeCount} />
+                <NewsFeed feed={feed} setLikeCount={setLikeCount} />
+
             ))}
+            <Button variant="outlined" color="primary" href='/' onClick={action}>로그아웃</Button>
         </>
     );
 }
