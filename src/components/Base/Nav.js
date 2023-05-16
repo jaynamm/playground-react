@@ -32,7 +32,8 @@ export default function Nav() {
                 <div className='icon'>
                     <Link to={"/profile"}></Link>
                 </div>
-            </nav>
+            </div>
+        </nav>
         </header>
     )
 }
