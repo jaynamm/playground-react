@@ -19,6 +19,16 @@ react-router-dom
 // Material UI
 @mui/material @emotion/react @emotion/styled
 ```
+```
+// scss설치
+npm install node-sass
+사용 방법은 css 사용 방법과 똑같다. 
+CSS 방식
+import './App.css'
+
+scss방식
+import './App.scss'
+```
 
 <br>
 
