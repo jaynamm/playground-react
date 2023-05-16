@@ -12,6 +12,17 @@ import Qna from './pages/Qna';
 import { QnaWrite } from './components/Qna/QnaWrite';
 import { QnaView } from './components/Qna/QnaView';
 
+import Home from './pages/Home';
+import Main from './pages/Main';
+import Notice from './pages/Notice';
+import SignIn from './components/Login/SignIn';
+import SignUp from './components/Login/SignUp';
+import NoticeView from './components/Notice/NoticeView'
+import NoticeWrite from './components/Notice/NoticeWrite';
+import NoticeModify from './components/Notice/NoticeModify';
+
+
+
 function App() {
   return (
     <div>
@@ -21,7 +32,14 @@ function App() {
           <Route path='/signin' element={<SignIn />} />
           <Route path='/signup' element={<SignUp />} />
           <Route path='/home' element={<Home />} />
+          
           <Route path='/profile' element={<Profile />} />
+          
+          <Route path='/notice' element={<Notice />} />
+          <Route path='/notice/write' element={<NoticeWrite />} />
+          <Route path='/notice/view' element={<NoticeView />} />
+          <Route path='/notice/modify' element={<NoticeModify />} />
+
           <Route path='/qna' element={<Qna />} />
           <Route path='/qna/write' element={<QnaWrite />} />
           <Route path='/qna/view/:id' element={<QnaView />} />

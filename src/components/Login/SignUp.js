@@ -1,21 +1,19 @@
 import React, { useState } from 'react'
+import { useNavigate } from "react-router-dom";
 import axios from "axios"
-import '../styles/App.css';
-
+import '../../styles/App.css';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-
-import { useNavigate } from "react-router-dom";
 
 
 export default function SignUp() {
@@ -28,17 +26,20 @@ export default function SignUp() {
   const [userPassword, setPassword] = useState('');  //닉네임 값을 입력 받음
   const [userPasswordCheck, setPasswordCheck] = useState('');  //닉네임 값을 입력 받음
   const [userCurriculm, setCurriculum] = useState('');  //닉네임 값을 입력 받음
-
   const theme = createTheme();
 
   const signUpHandler = () =>{
-
-    // 패스워드랑 패스워드 확인이 일치하는지 검증
-    if (userPassword !== userPasswordCheck) {
-      alert("패스워드 일치하지 않습니다.");
-      return;
-    }
-
+      const regl = /^[A-Za-z0-9]{8,20}$/;
+      // 패스워드랑 패스워드 확인이 일치하는지 검증
+      if (userPassword !== userPasswordCheck) {
+        alert("패스워드 일치하지 않습니다.");
+        return;
+      }
+      if(userPassword.match(regl) === null) {
+        alert("비밀번호 형식에 맞지 않습니다.")
+        return;
+      }
+      
     const data = {
       "userid": userId,
       "password": userPassword,
@@ -62,7 +63,6 @@ export default function SignUp() {
       alert("회원가입에 실패하였습니다.");
     });   //실패했을 시 error를 발생함.
 };
-
 
   return (
     <ThemeProvider theme={theme}>
@@ -170,6 +170,7 @@ export default function SignUp() {
                     <MenuItem value={1}>빅데이터</MenuItem>
                     <MenuItem value={2}>인공지능</MenuItem>
                     <MenuItem value={3}>클라우드</MenuItem>
+                    <MenuItem value={4}>백엔드</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
@@ -178,21 +179,20 @@ export default function SignUp() {
             <Button
               type="button"
               fullWidth
-              variant="contained" color="warning"
+              variant="contained" color="secondary"
               sx={{ mt: 3, mb: 2 }}
               onClick={() => signUpHandler() }
-            >
-              회원가입
+            > 회원가입
             </Button>
 
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="/login" variant="body2">
+                <Link href="/Signin" variant="body1">
                   이미 아이디가 있으신가요? 로그인
                 </Link>
               </Grid>
             </Grid>
-            
+
           </Box>
         </Box>
       </Container>

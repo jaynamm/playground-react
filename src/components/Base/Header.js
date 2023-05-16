@@ -1,12 +1,12 @@
 import React from "react";
+import '../../styles/Header.css';
 import Nav from "./Nav";
+
 
 const Header = () => {
     return (
-        <div>
-            <Nav />
-        </div>
-    );
+        <Nav />
+    )
 }
 
 export default Header;
