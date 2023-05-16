@@ -117,7 +117,7 @@ export default function SignIn() {
               sx={{ mt: 3, mb: 3 }}
               onClick={() => signUpHandler()}
               >
-               PLAT LOGIN
+               PLAY LOGIN
               </Button>
                 <Box
                 
