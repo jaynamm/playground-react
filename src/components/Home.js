@@ -37,15 +37,15 @@ const Home = () => {
     }, []);
 
     return (
-        
-        <div>
+        <>
             <Header />
+            <FeedModal />
             {feeds.map((feed) => (
                 <NewsFeed feed={feed} setLikeCount={setLikeCount} />
 
             ))}
             <Button variant="outlined" color="primary" href='/' onClick={action}>로그아웃</Button>
-        </div>
+        </>
     );
 }
 export default Home;

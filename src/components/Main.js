@@ -11,7 +11,7 @@ const Main = () => {
     console.log(getData);
 
     return (
-        <div>
+        <>
             <Header />
             닉네임
             {/* <p> {getData.data.nickname} </p> */}
@@ -29,7 +29,8 @@ const Main = () => {
                 <Link to="/signin"><button className="start-button">지금 시작하기</button></Link>
             </div>
             <Footer />
-        </div>
+        </>
+        
     )
 }
 
