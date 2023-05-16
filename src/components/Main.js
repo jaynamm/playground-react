@@ -11,19 +11,11 @@ const Main = () => {
     console.log(getData);
 
     return (
-        <div>
+        <>
             <Header />
-            닉네임
-            {/* <p> {getData.data.nickname} </p> */}
-
-            <Link to="/signin"> 로그인 </Link>
-            <Link to="/signup"> 회원가입 </Link>
-            
-
-            <div>
+        <>
 
                 <div className="body">
-
                     <img src="./home2.jpg" alt="Example image" />
                 </div>
 
@@ -35,12 +27,10 @@ const Main = () => {
                 
                 <Link to="/signin"><button className="start-button">지금 시작하기</button></Link>
 
-            </div>
-
-
-
+        </>
             <Footer />
-        </div>
+        </>
+        
     )
 }
 
