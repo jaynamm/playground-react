@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import Header from '../components/Header';
+import Header from '../components/Base/Header';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -11,7 +11,7 @@ const Qna = () => {
     useEffect (() => {
         axios({
             method: "GET",
-            url: "/api/qna/question"
+            url: "/api/qna/question/list"
         })
         .then((res) => {
             console.log(res.data);
