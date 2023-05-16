@@ -5,6 +5,7 @@ import '../styles/Home.css';
 import Header from "./Header";
 import { redirect } from 'react-router-dom';
 import Button from '@mui/material/Button';
+import FeedModal from "./Feed/FeedModal";
 
 
 const action = () => {
