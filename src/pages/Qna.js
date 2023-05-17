@@ -55,7 +55,7 @@ const Qna = () => {
                     <tr>
                         <td>{question.id}</td>
                         <td onClick={() => {onClickQnaViewHandler(question.id)}}>{question.title}</td>
-                        <td>{question.author}</td>
+                        <td>{question.memberId}</td>
                         <td>{question.createdDate}</td>
                     </tr>
                     ))}

@@ -7,7 +7,7 @@ export const QnaWrite = () => {
     const navigate = useNavigate();
 
     const [title, setTitle] = useState("");
-    const [author, setAuthor] = useState("");
+    const [memberId, setMemberId] = useState("");
     const [content, setContent] = useState("");
 
     const onSubmitQnaHandler = () => {
@@ -19,7 +19,7 @@ export const QnaWrite = () => {
             },
             data: {
                 "title": title,
-                "author": author,
+                "memberId": memberId,
                 "content": content
             }
         })
@@ -45,7 +45,7 @@ export const QnaWrite = () => {
                 <input type='text' id='title' name='title' value={title} onChange={(e) => setTitle(e.target.value)} />
                 <br></br>
                 <label>작성자</label>
-                <input type='text' id='author' name='author' value={author} onChange={(e) => setAuthor(e.target.value)} />
+                <input type='text' id='author' name='memberId' value={memberId} onChange={(e) => setMemberId(e.target.value)} />
                 <br></br>
                 <label>내용</label>
                 <input type='text' id='content' name='content' view={content} onChange={(e) => setContent(e.target.value)} />

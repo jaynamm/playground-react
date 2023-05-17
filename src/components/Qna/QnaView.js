@@ -8,7 +8,7 @@ export const QnaView = () => {
 
     const [questionViewData, setQuestionViewData] = useState(null);
     const [content, setContent] = useState("");
-    const [author, setAuthor] = useState("");
+    const [memberId, setMemberId] = useState("");
 
     useEffect(() => {
         console.log(`/api/qna/question/view/${getId}`);
@@ -40,7 +40,7 @@ export const QnaView = () => {
             method: "POST",
             url: `/api/qna/answer/create/${getId}`,
             data: {
-                "author": author,
+                "memberId": memberId,
                 "content": content
             }
         })
@@ -63,7 +63,7 @@ export const QnaView = () => {
             {questionViewData ? ( // questionViewData가 비어있지 않은 경우에만 렌더링
                 <div>
                     <h1>{questionViewData.title}</h1>
-                    <h3>{questionViewData.author}</h3>
+                    <h3>{questionViewData.memberId}</h3>
                     <h3>{questionViewData.content}</h3>
                 </div>
             ) : (
@@ -82,8 +82,8 @@ export const QnaView = () => {
                 <label>작성자</label>
                 <br></br>
                 <input id='author' name='aurhor' 
-                        value={author} 
-                        onChange={(e) => { setAuthor(e.target.value) }} />
+                        value={memberId} 
+                        onChange={(e) => { setMemberId(e.target.value) }} />
                 <br></br>
                 <button type='button' onClick={onClickCreateAnswer}>작성하기</button>
             </form>
