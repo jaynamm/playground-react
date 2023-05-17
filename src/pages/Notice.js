@@ -25,7 +25,7 @@ const Notice = () =>  {
         })
         .then((res) => {
             console.log(res.data);
-            navigate('view',{state : res.data})            
+            navigate('/notice/view',{state : res.data})            
         })
         .catch((err) => {
             console.log(err);
