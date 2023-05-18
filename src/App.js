@@ -29,7 +29,7 @@ function App() {
           
           <Route path='/notice' element={<Notice />} />
           <Route path='/notice/write' element={<NoticeWrite />} />
-          <Route path='/notice/view' element={<NoticeView />} />
+          <Route path='/notice/view/:id' element={<NoticeView />} />
           <Route path='/notice/modify' element={<NoticeModify />} />
 
           <Route path='/qna' element={<Qna />} />
