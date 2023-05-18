@@ -3,11 +3,10 @@
     padding: 20px;
     margin: 0 auto;
     max-width: 90%;
-    min-height: 600px;
 }
 
 body {
-    overflow-y: auto;
+    overflow-y: scroll;
 }
 
 .notice-title {

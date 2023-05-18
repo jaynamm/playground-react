@@ -1,47 +1,37 @@
 import React, { useState } from 'react'
 import '../../styles/Feed/Modal.css';
 import axios from 'axios';
-import { redirect } from 'react-router-dom';
 
-const FeedModal= () => {
-
-    const [feedArticle,setFeedArticle] = useState("");
-
+const FeedModal = () => {
+    const [feedArticle, setFeedArticle] = useState("");
     const createFeed = () => {
         console.log(feedArticle)
-
-        axios ({
-            method : "post",
-            url : "/api/feed/write",
-            data : {
-                "memberId" : "userid",
-                "content" : feedArticle
-                
+        axios({
+            method: "post",
+            url: "/api/feed/write",
+            data: {
+                "memberId": "userid",
+                "content": feedArticle
             }
-        }) .then((res)=>{
+        }).then((res) => {
             console.log(res.data)
-
             window.location.replace('/home');
-        }) .catch((error)=>{
+        }).catch((error) => {
             console.log(error)
         })
     }
-
     return (
         <div>
-
             <div className="card">
                 <div className="card-body">
-                    <button 
-                    data-bs-toggle="modal"
-                    data-bs-target="#staticBackdrop"
-                    className="form-control">
-                    무슨 생각을 하고 계신가요?
+                    <button
+                        data-bs-toggle="modal"
+                        data-bs-target="#staticBackdrop"
+                        className="form-control">
+                        무슨 생각을 하고 계신가요?
                     </button>
                 </div>
             </div>
-
-
             <div
                 class="modal fade"
                 id="staticBackdrop"
@@ -60,12 +50,9 @@ const FeedModal= () => {
                                 data-bs-dismiss="modal"
                                 aria-label="Close"></button>
                         </div>
-                        
                         <div class="modal-body">
                             <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" onChange={(e) => setFeedArticle(e.target.value)}></textarea>
-                            
-                        </div>    
-                        
+                        </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
                             <button type="button" class="btn btn-primary" onClick={createFeed}>게시</button>
@@ -76,5 +63,4 @@ const FeedModal= () => {
         </div>
     )
 }
-
 export default FeedModal;

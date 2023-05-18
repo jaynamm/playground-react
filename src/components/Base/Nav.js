@@ -16,11 +16,13 @@ export default function Nav() {
                 <div className="logo">Play</div>
                 <div className="menu">
                     <ul>
-                    <li><Link to="/notice"><a>공지사항</a></Link></li>
+                        <li><Link to="/notice"><a>공지사항</a></Link></li>
+                        <li><Link to="/qna"> Q&A </Link></li>
                         <li><a href="#">PlayGround Q&A</a></li>
                         <li><a href="#">실시간 인기게시물</a></li>
                         <li><a href="#">사이드 프로젝트</a></li>
                         <li><a href="#">채용정보</a></li>
+                        
                     </ul>
                 </div>
             </div>

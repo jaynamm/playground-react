@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from "react-router-dom";
 import axios from "axios"
-import '../../styles/App.css';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -14,11 +14,11 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import '../../styles/App.css';
 
 
 export default function SignUp() {
   const navigate = useNavigate();
-
   const [userId, setUserid] = useState('');  //아이디 값을 입력받음
   const [userEmail, setEmail] = useState('');  //비밀번호 값을 입력 받음
   const [userName, setName] = useState('');  //비밀번호 입력값을 받음
@@ -39,7 +39,7 @@ export default function SignUp() {
         alert("비밀번호 형식에 맞지 않습니다.")
         return;
       }
-      
+
     const data = {
       "userid": userId,
       "password": userPassword,
@@ -66,6 +66,7 @@ export default function SignUp() {
 
   return (
     <ThemeProvider theme={theme}>
+      {/* <style>{styles}</style> */}
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -76,6 +77,7 @@ export default function SignUp() {
             alignItems: 'center',
           }}
         >
+
           <p className='play'>PLAY <span className="ground">GROUND</span></p>
           <div className="data">PLAY DATA의 정보를 알고 싶다면 
             가입하세요.</div>
@@ -90,8 +92,7 @@ export default function SignUp() {
                   id="Id"
                   label="아이디"
                   autoFocus
-                  onChange={(e) => setUserid(e.target.value)}
-                />
+                  onChange={(e) => setUserid(e.target.value)} />
               </Grid>
 
               <Grid item xs={12}>
@@ -103,8 +104,7 @@ export default function SignUp() {
                   name="password"
                   autoComplete="password"
                   type="password"
-                  onChange={(e) => setPassword(e.target.value)}
-                />
+                  onChange={(e) => setPassword(e.target.value)} />
               </Grid>
 
               <Grid item xs={12}>
@@ -116,8 +116,7 @@ export default function SignUp() {
                   name="passwordCheck"
                   autoComplete="passwordCheck"
                   type="password"
-                  onChange={(e) => setPasswordCheck(e.target.value)}
-                />
+                  onChange={(e) => setPasswordCheck(e.target.value)} />
               </Grid>
 
               <Grid item xs={12}>
@@ -129,8 +128,7 @@ export default function SignUp() {
                   name="email"
                   autoComplete="email"
                   type="email"
-                  onChange={(e) => setEmail(e.target.value)}
-                />
+                  onChange={(e) => setEmail(e.target.value)} />
               </Grid>
 
               <Grid item xs={12}>
@@ -141,8 +139,7 @@ export default function SignUp() {
                   label="이름"
                   name="name"
                   autoComplete="name"
-                  onChange={(e) => setName(e.target.value)}
-                />
+                  onChange={(e) => setName(e.target.value)} />
               </Grid>
 
               <Grid item xs={12}>
@@ -153,8 +150,7 @@ export default function SignUp() {
                   label="닉네임"
                   name="nickname"
                   autoComplete="nickname"
-                  onChange={(e) => setUserNickname(e.target.value)}
-                />
+                  onChange={(e) => setUserNickname(e.target.value)} />
               </Grid>
 
               <Grid item xs={12}>
@@ -165,8 +161,7 @@ export default function SignUp() {
                     id="demo-simple-select"
                     value={userCurriculm}
                     label="Curriculm"
-                    onChange={(e) => setCurriculum(e.target.value)}
-                  >
+                    onChange={(e) => setCurriculum(e.target.value)}>
                     <MenuItem value={1}>빅데이터</MenuItem>
                     <MenuItem value={2}>인공지능</MenuItem>
                     <MenuItem value={3}>클라우드</MenuItem>
