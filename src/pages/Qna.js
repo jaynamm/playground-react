@@ -3,25 +3,25 @@ import Header from '../components/Base/Header';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Moment from 'react-moment';
-import '../styles/Qna.css'
+import '../styles/Qna/Qna.css'
 
 const Qna = () => {
     const navigate = useNavigate();
     const [questions, setQuestions] = useState([]);
     const [id, setId] = useState(0);
 
-    useEffect (() => {
+    useEffect(() => {
         axios({
             method: "GET",
             url: "/api/qna/question/list"
         })
-        .then((res) => {
-            console.log(res.data);
-            setQuestions(res.data);
-        })
-        .catch((err) => {
-            console.log(err)
-        })
+            .then((res) => {
+                console.log(res.data);
+                setQuestions(res.data);
+            })
+            .catch((err) => {
+                console.log(err)
+            })
     }, []);
 
     const onClickCreateQnaHandler = () => {
@@ -42,28 +42,38 @@ const Qna = () => {
     }
 
     return (
+
+
         <div>
             <Header />
-            <h1>질문 게시판</h1>
-            <table>
-                <thead>
-                    <th>번호</th>
-                    <th>제목</th>
-                    <th>작성자</th>
-                    <th>생성일</th>
-                </thead>
-                <tbody>
-                    {questions.map((question) => (    
-                    <tr>
-                        <td>{question.id}</td>
-                        <td onClick={() => {onClickQnaViewHandler(question.id)}}>{question.title}</td>
-                        <td>{question.memberId}</td>
-                        <td><Moment format="YYYY-MM-DD HH:mm:ss">{question.createdDate}</Moment></td>
-                    </tr>
-                    ))}
-                </tbody>
-            </table>
-            <button type='button' onClick={() => {onClickCreateQnaHandler()}}>질문하기</button>
+            <div align="center" class="notice-board">
+                <div class="notice-title">
+                    Q & A
+                </div>
+                <table class="notice-table">
+                    <thead>
+                        <tr class="notice-label">
+                            <th>글 번호</th>
+                            <th>제목</th>
+                            <th>작성자</th>
+                            {/* <th>조회수</th> */}
+                            <th>작성일시</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {questions.map((question) => (
+                            <tr>
+                                <td>{question.id}</td>
+                                <td onClick={() => { onClickQnaViewHandler(question.id) }}>{question.title}</td>
+                                <td>{question.memberId}</td>
+                                <td><Moment format="YYYY-MM-DD HH:mm:ss">{question.createdDate}</Moment></td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+                <button class="btn btn-primary-notice" type='button' onClick={() => { onClickCreateQnaHandler() }}>질문하기</button>
+            </div>
+
         </div>
     )
 }
