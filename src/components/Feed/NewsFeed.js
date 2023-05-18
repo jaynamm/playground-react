@@ -1,4 +1,5 @@
 import React from 'react'
+import '../../styles/Feed/Newfeed.css'
 
 export default function NewsFeed({ feed, likeCount, setLikeCount }) {
     return (
@@ -6,17 +7,17 @@ export default function NewsFeed({ feed, likeCount, setLikeCount }) {
             {/* 뉴스피드 박스 */}
             <div className="post">
                 <div className="post-header">
-                    <img src="https://source.unsplash.com/random/50x50" alt="User profile picture" />
+                    <img src="./user.png" alt="User profile picture" />
                     <div>
                         <h2>{feed.userid}</h2>
                         <p>{feed.uploadTime}</p>
+                        
                     </div>
                 </div>
 
                 <div className="post-content">
-                    <p>{feed.article}</p>
+                    <p className="content">{feed.article}</p>
                     <br></br>
-                    {/* <img src="./TEST.jpeg" alt="Post image" height="500px"/> */}
                 </div>
 
                 <div className='likeAct'>
@@ -33,6 +34,7 @@ export default function NewsFeed({ feed, likeCount, setLikeCount }) {
                         <a href="#"><i class="fa-regular fa-message"></i></a>
                         <a href="#"><i class="fa-solid fa-share-nodes"></i></a>
                         <a href="#"><i class="fa-solid fa-ellipsis-vertical"></i></a>
+                        
                     </div>
                 </div>
             </div>
