@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 import '../styles/Notice/Notice.css';
 import Moment from "react-moment";
+import Footer from "../components/Base/Footer";
 
 const Notice = () =>  {
 
@@ -72,6 +73,7 @@ const Notice = () =>  {
             </table> <br />
             <Link to="write"><button type="button" class="btn btn-primary-notice">글쓰기</button></Link>
         </div>    
+        <Footer />
         </div>
 
 
