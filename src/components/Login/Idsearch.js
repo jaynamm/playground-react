@@ -1,5 +1,7 @@
 import React, { useState } from "react";
+import '../../styles/Idsearch.css';
 import axios from "axios";
+
 // import { styles } from'./styles'
 
 export default function IdSearch() {
@@ -32,15 +34,23 @@ export default function IdSearch() {
     }
 
  return (
-    <div>
-        <input 
-        onSubmit={idCheckHandler} 
-        type="email" 
-        id="userEmail" 
-        onChange={(e) => setEmail(e.target.value)}
-        />
-        <button onClick={idCheckHandler}>아이디찾기</button>  
-        <div>{searchResult}</div>  
+    <div className="wrap">
+        <div className="box">
+        <p className='play'>PLAY <span className="ground">GROUND</span></p>
+            <div className="emailinput">아이디를 찾고자하는 이메일을 입력해주세요.</div>
+            <input 
+            className="idinput"
+            onSubmit={idCheckHandler} 
+            type="email" 
+            id="userEmail" 
+            onChange={(e) => setEmail(e.target.value)}
+            />
+            <button className="idsearch" onClick={idCheckHandler}>아이디 찾기</button>
+            <br/>
+            <a className="searchresult">{searchResult}</a>
+            <br></br>
+            <a href="/Signin"> 로그인하러 가기</a>
+        </div>
     </div>    
     )
 } 
