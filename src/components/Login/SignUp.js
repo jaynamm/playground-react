@@ -28,21 +28,6 @@ export default function SignUp() {
   const [userCurriculm, setCurriculum] = useState('');  //닉네임 값을 입력 받음
   const theme = createTheme();
 
-  const idCheck = () => {
-    const id = {
-      "userid": userId,
-    }
-    .axios 
-    .get("/member/signup", id)
-    .then((respons) => {
-      console.log(respons.data);
-    })
-    .catch((error) =>{
-      console.log(error)
-      alert("회원가입에 실패하였습니다.");
-    });
-  }
-
   const signUpHandler = () =>{
       const regl = /^[A-Za-z0-9]{8,20}$/;
       // 패스워드랑 패스워드 확인이 일치하는지 검증
@@ -98,7 +83,6 @@ export default function SignUp() {
             가입하세요.</div>
           <Box component="form" noValidate onSubmit={signUpHandler} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-            <Button onClick={idCheck}>중복확인</Button>
               <Grid item xs={12} >
                 <TextField
                   autoComplete="given-name"

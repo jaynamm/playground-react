@@ -41,6 +41,7 @@ export default function IdSearch() {
             onSubmit={idCheckHandler} 
             type="email" 
             id="userEmail" 
+            placeholder="이메일을 입력해주세요."
             onChange={(e) => setEmail(e.target.value)}
             />
 
