@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios'
-import NewsFeed from "../components/Feed/NewsFeed";
 import '../styles/Home.css';
-import Header from "../components/Base/Header";
 import { redirect } from 'react-router-dom';
 import Button from '@mui/material/Button';
+import NewsFeed from "../components/Feed/NewsFeed";
+import Header from "../components/Base/Header";
 import FeedModal from "../components/Feed/FeedModal";
+import Footer from "../components/Base/Footer";
 
 
 const action = () => {
@@ -39,13 +40,16 @@ const Home = () => {
 
     return (
         <>
-            <Header />
-            <FeedModal />
-            {feeds.map((feed) => (
-                <NewsFeed feed={feed} setLikeCount={setLikeCount} />
 
-            ))}
-            <Button variant="outlined" color="primary" href='/' onClick={action}>로그아웃</Button>
+            <div className="HomeBack">
+
+                <Header />
+                <FeedModal />
+                {feeds.map((feed) => (
+                    <NewsFeed feed={feed} setLikeCount={setLikeCount} />
+                ))}
+            </div>
+            <Footer />
         </>
     );
 }

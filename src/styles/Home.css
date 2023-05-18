@@ -1,9 +1,13 @@
 @import url("reset.css");
 
+
 body {
     font-family: Arial, sans-serif;
-    background-color: #f2f2f2;
 }
+
+/* .HomeBack{
+
+} */
 
 header {
     position: sticky;
@@ -33,10 +37,10 @@ header>nav>div.bar {
 }
 
 
-.menu {
+/* .menu {
     display: flex;
     align-items: center;
-}
+} */
 
 .menu a {
     color: black;
@@ -218,3 +222,4 @@ div.likeAct {
     box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.5);
     transform: translate(-50%, -50%) scale(1.1);
 }
+
