@@ -7,6 +7,7 @@ import NewsFeed from "../components/Feed/NewsFeed";
 import Header from "../components/Base/Header";
 import FeedModal from "../components/Feed/FeedModal";
 import Footer from "../components/Base/Footer";
+import FeedCard from "../components/Feed/FeedCard";
 
 
 const action = () => {
@@ -40,15 +41,20 @@ const Home = () => {
 
     return (
         <>
+            <Header />
 
-            <div className="HomeBack">
-
-                <Header />
+            <div className="feed-wrapper">
                 <FeedModal />
-                {feeds.map((feed) => (
-                    <NewsFeed feed={feed} setLikeCount={setLikeCount} />
-                ))}
+                    {feeds.map((feed) => (
+                        <NewsFeed feed={feed} setLikeCount={setLikeCount} />
+                    ))}
             </div>
+
+            {/* <div className="feed-card-wrapper"> */}
+                <FeedCard />
+            {/* </div> */}
+
+
             <Footer />
         </>
     );

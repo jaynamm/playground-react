@@ -38,9 +38,9 @@ export default function Nav() {
                             <li><i class="fa-solid fa-user"></i></li>
                             </button>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">로그인</a></li>
+                                <li><a class="dropdown-item" href="#">프로필</a></li>
                                 <li><a class="dropdown-item" href="/" onClick={action}>로그아웃</a></li>
-                                <li><a class="dropdown-item" href="#">회원가입</a></li>
+                                <li><a class="dropdown-item" href="#">고객센터</a></li>
                             </ul>
                         </div>
 

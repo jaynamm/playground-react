@@ -5,7 +5,7 @@ const Footer = () => {
     return (
         <>
             {/* <section>Footer Example 4</section> */}
-            <footer className="footer-distributed">
+            <footer className="footer-distributed clearfix">
 
                 <div className="footer-left">
 

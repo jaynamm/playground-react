@@ -31,6 +31,7 @@ const Main = () => {
                     <button className="start-button">지금 시작하기</button>
                 </Link>
             </div>
+            
             <Footer />
         </>
 
