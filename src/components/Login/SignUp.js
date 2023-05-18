@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
+import { styles } from'./styles'
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from "react-router-dom";
 import axios from "axios"
-import '../../styles/App.css';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -14,11 +15,11 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import '../../styles/App.css';
 
 
 export default function SignUp() {
   const navigate = useNavigate();
-
   const [userId, setUserid] = useState('');  //아이디 값을 입력받음
   const [userEmail, setEmail] = useState('');  //비밀번호 값을 입력 받음
   const [userName, setName] = useState('');  //비밀번호 입력값을 받음
@@ -27,6 +28,21 @@ export default function SignUp() {
   const [userPasswordCheck, setPasswordCheck] = useState('');  //닉네임 값을 입력 받음
   const [userCurriculm, setCurriculum] = useState('');  //닉네임 값을 입력 받음
   const theme = createTheme();
+
+  const idCheck = () => {
+    const id = {
+      "userid": userId,
+    }
+    .axios 
+    .get("/member/signup", id)
+    .then((respons) => {
+      console.log(respons.data);
+    })
+    .catch((error) =>{
+      console.log(error)
+      alert("회원가입에 실패하였습니다.");
+    });
+  }
 
   const signUpHandler = () =>{
       const regl = /^[A-Za-z0-9]{8,20}$/;
@@ -39,7 +55,7 @@ export default function SignUp() {
         alert("비밀번호 형식에 맞지 않습니다.")
         return;
       }
-      
+
     const data = {
       "userid": userId,
       "password": userPassword,
@@ -66,6 +82,7 @@ export default function SignUp() {
 
   return (
     <ThemeProvider theme={theme}>
+      <style>{styles}</style>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -81,6 +98,7 @@ export default function SignUp() {
             가입하세요.</div>
           <Box component="form" noValidate onSubmit={signUpHandler} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
+              <Button onClick={idCheck}>중복확인</Button>
               <Grid item xs={12} >
                 <TextField
                   autoComplete="given-name"

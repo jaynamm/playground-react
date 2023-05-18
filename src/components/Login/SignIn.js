@@ -1,16 +1,17 @@
 import React, { useState } from 'react'
+import { kakaoURL } from'../../config/KakaoAuth';
+import { ButtonGroup } from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useNavigate } from 'react-router-dom';
+import { styles } from'./styles'
+import axios from "axios"
+
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useNavigate } from 'react-router-dom';
-import axios from "axios"
-import '../../styles/Signin.css';
-import { kakaoURL } from'../../config/KakaoAuth';
-import { ButtonGroup } from '@mui/material';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import '../../styles/water.css'
 
@@ -21,8 +22,9 @@ export default function SignIn() {
   const navigate = useNavigate();
   const theme = createTheme();
 
+
   const buttons = [
-    <Button href='/signup' color="primary" >아이디 찾기</Button>,
+    <Button href='/Idsearch' color="primary" >아이디 찾기</Button>,
     <Button href='/signup' color="success" >비밀번호 찾기</Button>,
     <Button href='/signup' color="secondary" >회원가입</Button>
   ]
@@ -62,9 +64,12 @@ export default function SignIn() {
       alert('로그인에 실패했습니다.') //axios값에 데이터가 일치 하지 않으면 함수를 호출함
     });   
   };
+  
 
   return (
+
     <ThemeProvider theme={theme}>
+      <style>{styles}</style>
       <Grid container component="main" sx={{ height: '100vh' }}>
         <CssBaseline />
         <Grid
@@ -77,10 +82,10 @@ export default function SignIn() {
           }}
           className="backgruond"
         />
-        <Grid item xs={12} sm={5} md={4} component={Paper} elevation={3} square>
+        <Grid item xs={12} sm={5} md={4.0} component={Paper} elevation={3} square>
           <Box 
             sx={{
-              my: 13,
+              my: 14,
               mx: 5,
               display: 'flex',
               flexDirection: 'column',
@@ -100,6 +105,7 @@ export default function SignIn() {
                 autoFocus
                 onChange={(e) => setUserid(e.target.value)}
               />
+
               <TextField
                  margin="normal"
                  required
@@ -146,7 +152,7 @@ export default function SignIn() {
             </Box>
           </Box>
         </Grid>
-      </Grid>
+      </Grid> 
       {/* 뒷 배경을 가져온 것 입니다. */}
         <div class="ocean"> 
           <div class="wave"></div>
