@@ -25,7 +25,7 @@ export default function SignIn() {
 
   const buttons = [
     <Button href='/Idsearch' color="primary" >아이디 찾기</Button>,
-    <Button href='/signup' color="success" >비밀번호 찾기</Button>,
+    <Button href='/PasswordSearch' color="success" >비밀번호 찾기</Button>,
     <Button href='/signup' color="secondary" >회원가입</Button>
   ]
 
@@ -82,6 +82,7 @@ export default function SignIn() {
           }}
           className="backgruond"
         />
+
         <Grid item xs={12} sm={5} md={4.0} component={Paper} elevation={3} square>
           <Box 
             sx={{
@@ -92,6 +93,7 @@ export default function SignIn() {
               alignItems: 'center',
             }}
           >
+
             <p className='login'>로그인 </p>
             <Box component="form" noValidate onSubmit={signUpHandler} sx={{ mt: 4 }}>
               <TextField
@@ -116,6 +118,7 @@ export default function SignIn() {
                  id="userPassword"
                  onChange={(e) => setPassword(e.target.value)}
               />
+
               <Button
               type="button"
               fullWidth
@@ -137,6 +140,7 @@ export default function SignIn() {
                 </ButtonGroup>
                 </Box>
                 <br></br>
+                
                 {/* 카카오 로그인 버튼 입니다. */}
                 <Button 
               fullWidth

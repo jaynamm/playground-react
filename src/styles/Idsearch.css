@@ -6,8 +6,6 @@
     font-family: Arial, sans-serif;
 }
 
-
-
 .idsearch{
     margin-top: 10%;
     border-radius: 7px;
@@ -58,7 +56,6 @@
     font-size: 30px;
 }
 
-
 .idsearch {
     display: block;
     margin-top: 30px;
@@ -70,4 +67,28 @@
     margin-top: 5%;
     margin-bottom: 5%;
     color: black;
+}
+
+.idinput1{
+    margin-top: 5%;
+    width: 250px;
+    height: 40px;
+    border-radius: 10px;
+    outline: none;
+    border: 0;
+    font-size: 20px;
+    text-align: center;
+    background-color: #efefef;
+}
+
+.idsearch2{
+    margin-top: 7%;
+    border-radius: 7px;
+    background-color: #9536F4;
+    color: #ffff;
+    transform: scale(1.5);
+    padding: 7px 40px;
+    outline: none;
+    border: 0;
+    font-size: 12px;
 }

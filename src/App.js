@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import Main from './pages/Main';
 import Notice from './pages/Notice';
 import Idsearch from'./components/Login/Idsearch';
+import PasswordSearch from'./components/Login/PasswordSearch';
 import SignIn from './components/Login/SignIn';
 import SignUp from './components/Login/SignUp';
 import NoticeView from './components/Notice/NoticeView'
@@ -28,7 +29,7 @@ function App() {
           <Route path='/notice/write' element={<NoticeWrite />} />
           <Route path='/notice/view' element={<NoticeView />} />
           <Route path='/notice/modify' element={<NoticeModify />} />
-          
+          <Route path='/passwordsearch' element={<PasswordSearch />}/>
         </Routes>
       </BrowserRouter>
     </div>

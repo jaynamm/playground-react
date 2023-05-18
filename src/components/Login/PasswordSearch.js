@@ -1,23 +1,25 @@
 import React, { useState } from "react";
-import '../../styles/Idsearch.css';
 import axios from "axios";
+import '../../styles/Idsearch.css';
 
 export default function IdSearch() {
     const [userEmail, setEmail] = useState('');
+    const [userId, setUserid] = useState(''); 
     const [searchResult, setSearchResult] = useState('');
 
     const idCheckHandler = () => {
-        const email = {
+        const password = {
             "email": userEmail,
+            "userid": userId,
         };
 
         axios
-        .post("/api/member/search/id", email)
+        .post("/api/member/search/password", password)
         .then((response) => {
             console.log(response.data);
             const responseData = response.data;
             setSearchResult(responseData)
-            alert("아이디를 찾았습니다.")
+            alert("비밀번호를 찾았습니다.")
         })
 
         .then((result) => {
@@ -26,7 +28,7 @@ export default function IdSearch() {
 
         .catch((error) => {
             console.log(error)
-            alert("입력하신 이메일로 가입한 아이디가 없습니다.")
+            alert("입력하신 아이디와 이메일로 가입한 아이디가 없습니다.")
         })
     }
 
@@ -34,17 +36,25 @@ export default function IdSearch() {
     <div className="wrap">
         <div className="box">
         <p className='play'>PLAY <span className="ground">GROUND</span></p>
-            <div className="emailinput">아이디를 찾고자하는 이메일을 입력해주세요.</div>
+            <div className="emailinput">비밀번호를 찾고자하는 아이디와 이메일을 입력해주세요.</div>
             
             <input 
             className="idinput"
+            onSubmit={idCheckHandler} 
+            type="text" 
+            id="userId" 
+            onChange={(e) => setUserid(e.target.value)}
+            />
+
+            <input 
+            className="idinput1"
             onSubmit={idCheckHandler} 
             type="email" 
             id="userEmail" 
             onChange={(e) => setEmail(e.target.value)}
             />
-
-            <button className="idsearch" onClick={idCheckHandler}>아이디 찾기</button>
+            
+            <button className="idsearch2" onClick={idCheckHandler}>임시비밀번호 받기</button>
             <br/>
             <a className="searchresult">{searchResult}</a>
             <br></br>
