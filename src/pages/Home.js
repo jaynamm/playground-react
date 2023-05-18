@@ -30,7 +30,7 @@ const Home = () => {
             .then((res) => {
                 console.log(res.data);
 
-                let feedData = res.data.feeds;
+                let feedData = res.data;
 
                 setFeeds(feedData);
             })
