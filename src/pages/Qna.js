@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import Header from '../components/Base/Header';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Moment from 'react-moment';
+import '../styles/Qna.css'
 
 const Qna = () => {
     const navigate = useNavigate();
@@ -56,7 +58,7 @@ const Qna = () => {
                         <td>{question.id}</td>
                         <td onClick={() => {onClickQnaViewHandler(question.id)}}>{question.title}</td>
                         <td>{question.memberId}</td>
-                        <td>{question.createdDate}</td>
+                        <td><Moment format="YYYY-MM-DD HH:mm:ss">{question.createdDate}</Moment></td>
                     </tr>
                     ))}
                 </tbody>
