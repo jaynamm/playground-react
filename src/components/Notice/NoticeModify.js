@@ -3,25 +3,26 @@ import { useLocation } from 'react-router-dom'
 import Header from "../../components/Base/Header";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
+import '../../styles/Notice/NoticeModify.css';
 
 export default function NoticeModify() {
     const location = useLocation();
     const notice = location.state;
-    const [noticeId, setNoticeId] = useState(notice.noticeId);
-    const [noticeTitle, setNoticeTitle] = useState(notice.title);
-    const [noticeContents, setNoticeContents] = useState(notice.contents);
+    const [id, setId] = useState(notice.id);
+    const [title, setTitle] = useState(notice.title);
+    const [content, setContent] = useState(notice.content);
     const navigate = useNavigate();
 
     const modifyCompleteHandler = () => {
-        if (noticeTitle.length === 0 || noticeContents.length === 0){
+        if (title.length === 0 || content.length === 0){
             alert("제목과 내용을 입력하세요.");
             return;        
     }
 
     const data = {
-        "noticeId" : noticeId,
-        "title" : noticeTitle,
-        "contents" : noticeContents,
+        "id" : id,
+        "title" :title,
+        "content" : content,
     }
 
     axios
@@ -49,25 +50,46 @@ export default function NoticeModify() {
 
 
     return (
-        <div align="center">
-        <Header /><br />
-        <h1> 제목 : <input 
-            className = "noticeTitle"  
-            defaultValue= {notice.title}
-            onChange={(e) => setNoticeTitle(e.target.value)}
-            /> </h1><br/>
-        <p>작성자 : {notice.author} </p><br />
-        {/* <p>조회수 : {notice.viewCount}</p><br/> */}
-        <p>내용 : <textarea
-            className = "noticeContents"
-            defaultValue= {notice.contents}
-            onChange={(e) => setNoticeContents(e.target.value)}
-            /><br /><br /></p>
-        <p>작성일시 : {notice.uploadTime}</p><br/>
+        <div>
+            <Header />
+        <div align="center" class="notice-modify-board">
+        <div class="notice-title">
+                공지사항
+        </div>
+            <table class="notice-modify-table">
+                <tr>
+                    <input 
+                        className = "modify-title"  
+                        defaultValue= {notice.title}
+                        onChange={(e) => setTitle(e.target.value)}
+                        />
+                </tr>
+                <tr>
+                    <div class="modify-member-id">
+                        <td class="modify-member-id2">작성자</td>
+                        <td>{notice.memberId}</td>
+                    </div>
+                    <div class="modify-createdDate">
+                        <td class="modify-createdDate2">작성일시</td>
+                        <td class="modify-createdDate3">{notice.createdDate}</td>
+                    </div>
+                </tr>
+                {/* <p>조회수 : {notice.viewCount}</p><br/> */}
+                <tr>
+                    <td>
+                        <textarea
+                        className = "modify-content"
+                        defaultValue= {notice.content}
+                        onChange={(e) => setContent(e.target.value)}
+                        />
+                    </td>
+                </tr>
+            </table>
         <button
-        type="submit" className="btn btn-primary"
+        type="submit" className="btn btn-primary-modify"
         onClick={() => modifyCompleteHandler()}
         >수정하기</button>
+        </div>
         </div>
     );
 
