@@ -58,7 +58,7 @@ export default function IdSearch() {
             
             <button className="idsearch2" onClick={idCheckHandler}>임시비밀번호 받기</button>
             <br/>
-            <a className="searchresult">{searchResult}</a>
+            <a className="searchresult">{searchResult.randomPassword}</a>
             <br></br>
             <a href="/Signin"> 로그인하러 가기</a>
         </div>
