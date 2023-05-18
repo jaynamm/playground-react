@@ -1,5 +1,5 @@
 .play{
-font-family: 'Josefin Sans';
+font-family: 'Arial, sans-serif';
 font-style: normal;
 font-weight: 700;
 font-size: 40px;
@@ -11,7 +11,7 @@ color: #63B8B0;
 }
 
 .ground{
-    font-family: 'Josefin Sans';
+    font-family: 'Arial, sans-serif';
     font-style: normal;
     font-weight: 700;
     font-size: 40px;
@@ -23,14 +23,14 @@ color: #63B8B0;
     }
 
 .data{
-    font-family: 'Josefin Sans';
+    font-family: 'Arial, sans-serif';
     font-style: normal;
     color: #989898;
 
 }
 
 .login{
-    font-family: 'Josefin Sans';
+    font-family: 'Arial, sans-serif';
     font-style: normal;
     font-weight: 700;
     font-size: 40px;
@@ -50,7 +50,7 @@ color: #63B8B0;
     left: 110px;
     top: 250px;
     
-    font-family: 'Josefin Sans';
+    font-family: 'Arial, sans-serif';
     font-style: normal;
     font-weight: 700;
     font-size: 70px;
