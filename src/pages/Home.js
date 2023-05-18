@@ -22,7 +22,7 @@ const Home = () => {
     useEffect(() => {
         axios({
             method: 'GET',
-            url: "/api/feed/getallfeeds",
+            url: "/api/feed/list",
             headers: {
                 'Content-Type': 'application/json'
             }
