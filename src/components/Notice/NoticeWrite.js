@@ -3,6 +3,7 @@ import axios from 'axios'
 import Header from "../../components/Base/Header";
 import { useNavigate } from 'react-router-dom';
 import '../../styles/Notice/NoticeWrite.css';
+import Footer from "../Base/Footer";
 
 export default function NoticeWrite() {
     const [title, setTitle] = useState('');
@@ -49,7 +50,7 @@ export default function NoticeWrite() {
 
     return(
         <div>
-            <Header /><br />    
+            <Header />
         <div align="center" class="notice-write-board">
             <div class="notice-title">
                 공지사항
@@ -82,6 +83,7 @@ export default function NoticeWrite() {
             >작성하기
             </button>
         </div>
+        <Footer />
         </div>
     );
 };
