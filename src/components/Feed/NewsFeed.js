@@ -9,14 +9,14 @@ export default function NewsFeed({ feed, likeCount, setLikeCount }) {
                 <div className="post-header">
                     <img src="./user.png" alt="User profile picture" />
                     <div>
-                        <h2>{feed.userid}</h2>
-                        <p>{feed.uploadTime}</p>
+                        <h2>{feed.memberId}</h2>
+                        <p>{feed.createdDate}</p>
                         
                     </div>
                 </div>
 
                 <div className="post-content">
-                    <p className="content">{feed.article}</p>
+                    <p className="content">{feed.content}</p>
                     <br></br>
                 </div>
 

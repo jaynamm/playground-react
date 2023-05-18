@@ -14,8 +14,9 @@ const FeedModal= () => {
             method : "post",
             url : "/api/feed/write",
             data : {
-                "id" : "userid",
-                "article" : feedArticle
+                "memberId" : "userid",
+                "content" : feedArticle
+                
             }
         }) .then((res)=>{
             console.log(res.data)
