@@ -76,12 +76,13 @@ export default function NoticeWrite() {
                     onChange={(e) => setContent(e.target.value)}
                     />
                 </tr>
-            </table>
-            <button 
-            type="submit" className="btn btn-primary-write" 
-            onClick={() => noticeWriteHandler()}
-            >작성하기
+                <button 
+                type="submit" className="btn btn-primary-write" 
+                onClick={() => noticeWriteHandler()}
+                >작성하기
             </button>
+            </table>
+
         </div>
         <Footer />
         </div>

@@ -21,8 +21,8 @@ const Main = () => {
             <div style={{
                 backgroundImage: `url(./black.jpg)`,
                 backgroundSize: 'cover',
-                width: '1440px',
-                height: '740px'
+                width: '100vw',
+                height: '100vh'
             }}>
                 <p className="text">요즘 개발자들의 커뮤니티</p>
                 <p className="text2">플레이 그라운드</p>
