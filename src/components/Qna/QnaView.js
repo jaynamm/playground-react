@@ -54,7 +54,7 @@ export const QnaView = () => {
 
     return (
         <div>
-            <Link to="/qna">질문 목록으로 돌아가기</Link>
+
 
             <br></br><br></br>
             <h1>질문보기</h1>
@@ -85,7 +85,11 @@ export const QnaView = () => {
                         value={memberId} 
                         onChange={(e) => { setMemberId(e.target.value) }} />
                 <br></br>
-                <button type='button' onClick={onClickCreateAnswer}>작성하기</button>
+                
+                <button className='qnabutton'><Link to="/qna" >질문 목록으로 돌아가기</Link></button>
+
+                <button className='qnabutton' type='button' onClick={onClickCreateAnswer}>작성하기</button>
+
             </form>
         </div>
     )
