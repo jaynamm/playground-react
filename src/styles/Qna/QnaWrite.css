@@ -1,0 +1,45 @@
+@import url("../reset.css");
+
+
+.qna-table{
+    display: block;
+}
+
+.input-title{
+    padding: 0px, 10px, 0px, 10px;
+}
+
+.top-margin{
+    padding: 3%;
+}
+
+.memberid{
+    float : conter;
+    margin-left: 5%;
+}
+
+.qnabutton{
+    background-color: #F0E4FF;
+    color: black;
+    padding: 10px 20px;
+    border-radius: 10px;
+    outline: none;
+    border: 0;
+    float: right;
+    margin-top: 2%;
+    margin-right : 5%;
+    text-decoration: "none";
+}
+
+.qnabutton:hover {
+    background-color: #d2aeff; 
+}
+
+.qna-memberid{
+    width: 400px;
+    height: 25px;
+    margin-left: 20px;
+    box-shadow: none;
+    outline: none;
+    background-color: white;
+}

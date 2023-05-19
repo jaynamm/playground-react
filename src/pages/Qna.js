@@ -3,6 +3,7 @@ import Header from '../components/Base/Header';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Moment from 'react-moment';
+import Footer from "../components/Base/Footer";
 import '../styles/Qna/Qna.css'
 
 const Qna = () => {
@@ -73,8 +74,9 @@ const Qna = () => {
                 </table>
                 <button class="btn btn-primary-notice" type='button' onClick={() => { onClickCreateQnaHandler() }}>질문하기</button>
             </div>
-
+            <Footer />
         </div>
+
     )
 }
 

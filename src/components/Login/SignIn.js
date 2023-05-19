@@ -14,6 +14,7 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import '../../styles/water.css'
+import '../../styles/login.css'
 
 
 export default function SignIn() {
@@ -109,14 +110,14 @@ export default function SignIn() {
               />
 
               <TextField
-                 margin="normal"
-                 required
-                 fullWidth
-                 name="userPassword"
-                 label="비밀번호를 입력해주세요."
-                 type="password"
-                 id="userPassword"
-                 onChange={(e) => setPassword(e.target.value)}
+                margin="normal"
+                required
+                fullWidth
+                name="userPassword"
+                label="비밀번호를 입력해주세요."
+                type="password"
+                id="userPassword"
+                onChange={(e) => setPassword(e.target.value)}
               />
 
               <Button
@@ -126,7 +127,7 @@ export default function SignIn() {
               sx={{ mt: 3, mb: 3 }}
               onClick={() => signUpHandler()}
               >
-               PLAY LOGIN
+                PLAY LOGIN
               </Button>
                 <Box
                 
