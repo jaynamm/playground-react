@@ -17,6 +17,9 @@ import Qna from './pages/Qna';
 import { QnaWrite } from './components/Qna/QnaWrite';
 import { QnaView } from './components/Qna/QnaView';
 
+import MyPage from './components/Mypage/MyPage';
+import MyPageModify from './components/Mypage/MyPageModify';
+
 
 
 function App() {
@@ -41,6 +44,9 @@ function App() {
           <Route path='/qna' element={<Qna />} />
           <Route path='/qna/write' element={<QnaWrite />} />
           <Route path='/qna/view/:id' element={<QnaView />} />
+
+          <Route path='/mypage' element={<MyPage />} />
+          <Route path='/mypage/modify' element={<MyPageModify />} />
         </Routes>
       </BrowserRouter>
     </div>
