@@ -1,0 +1,39 @@
+
+.qna-view-board {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    margin: 0 auto;
+    max-width: 90%;
+}
+
+.qna-view-title {
+    float: left;
+    margin-left: 5%;
+    font-weight : bold;
+    font-size: 20px;
+
+}
+
+.qna-member-id {
+    float: left;
+    margin-left: 5%;    
+}
+
+.btn-qnalist{
+    background-color: #F0E4FF;
+    color: #000;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: none;
+    text-decoration: none;
+    cursor: pointer;
+    float: right;   
+    margin-left: 20px; 
+}
+
+.btn-qnalists:hover {
+    background-color: #F0E4FF;
+    color : #7D7D7D;
+
+}
+

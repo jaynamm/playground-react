@@ -34,12 +34,14 @@ header>nav>div.bar {
     font-size: 24px;
     color: #000000;
     display: flex;
+    text-decoration: none;
 }
 
 .logo::after {
     content: "Ground。";
     font-size: 24px;
     color: #8a7474;
+    text-decoration: none;
 }
 
 

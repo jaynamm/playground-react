@@ -13,12 +13,11 @@ export default function Nav() {
         <header>
         <nav>
             <div className='bar'>
-                <div className="logo">Play</div>
+                <Link to="/" style={{ textDecoration: "none" }}><div className="logo">Play</div></Link>
                 <div className="menu">
                     <ul>
-                        <li><Link to="/notice"><a>공지사항</a></Link></li>
+                        <li><Link to="/notice"> 공지사항 </Link></li>
                         <li><Link to="/qna"> Q&A </Link></li>
-                        <li><a href="#">PlayGround Q&A</a></li>
                         <li><a href="#">실시간 인기게시물</a></li>
                         <li><a href="#">사이드 프로젝트</a></li>
                         <li><a href="#">채용정보</a></li>
@@ -40,7 +39,7 @@ export default function Nav() {
                             <li><i class="fa-solid fa-user"></i></li>
                             </button>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">프로필</a></li>
+                                <li><Link to="/mypage" class="dropdown-item" style={{ textDecoration: "none" }}>프로필</Link></li>
                                 <li><a class="dropdown-item" href="/" onClick={action}>로그아웃</a></li>
                                 <li><a class="dropdown-item" href="#">고객센터</a></li>
                             </ul>
