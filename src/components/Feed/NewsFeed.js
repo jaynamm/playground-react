@@ -1,5 +1,6 @@
 import React from 'react'
 import '../../styles/Feed/Newfeed.css'
+import Moment from 'react-moment'
 
 export default function NewsFeed({ feed, likeCount, setLikeCount }) {
     return (
@@ -10,7 +11,7 @@ export default function NewsFeed({ feed, likeCount, setLikeCount }) {
                     <img src="./user.png" alt="User profile picture" />
                     <div>
                         <h2>{feed.memberId}</h2>
-                        <p>{feed.createdDate}</p>
+                        <p><Moment format="YYYY-MM-DD HH:mm:ss">{feed.createdDate}</Moment></p>
                     </div>
                 </div>
                 <div className="post-content">
