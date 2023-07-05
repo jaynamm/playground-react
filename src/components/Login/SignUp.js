@@ -30,7 +30,7 @@ export default function SignUp() {
 
   const idCheck = () => {
     axios
-      .post('/api/member/signup', { userId })
+      .post('/api/member/checkid', { userId })
       .then((response) => {
         console.log(response);
         if (response.data.available) {
