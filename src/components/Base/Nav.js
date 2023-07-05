@@ -7,6 +7,7 @@ import axios from 'axios';
 const action = () => {
   delete axios.defaults.headers.common['Authorization'];
   localStorage.removeItem('accessToken');
+  localStorage.removeItem('refresh-token');
 };
 
 export default function Nav() {
