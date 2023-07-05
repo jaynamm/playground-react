@@ -11,7 +11,6 @@ import { Avatar } from '@mui/material';
 import Button from '@mui/material/Button';
 import '../../styles/Mypage.css';
 import axios from 'axios';
-// import axios from 'axios';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -52,8 +51,8 @@ const MyPage = () => {
   const [value, setValue] = React.useState(0);
   const [mypage, setMypage] = useState([]);
   const [myWriting, setMyWriting] = useState([]);
+  const [folowMyPage, setFollowMyPage] = useState([]);
 
-  const myWritingHandler = () => {};
   useEffect(() => {
     axios({
       method: 'GET',
@@ -65,6 +64,7 @@ const MyPage = () => {
     })
       .then((response) => {
         setMypage(response.data.memberDto);
+        setFollowMyPage(response.data.followMyPageDto);
         setMyWriting(response.data.myPageFeedDtoList);
       })
       .catch((error) => {
@@ -99,13 +99,14 @@ const MyPage = () => {
               </td>
             </tr>
             <tr>
-              {mypage && (
+              {mypage && folowMyPage && (
                 <div>
                   <p>이름 : {mypage.name} </p>
                   <p>이메일 : {mypage.email} </p>
                   <p>교육과정 : {mypage.curriculum} </p>
                   <p>가입날짜 : {mypage.createdDate} </p>
-                  <p></p>
+                  <p navigate="/mypage/following">팔로잉 : {folowMyPage.followingCount}</p>
+                  <p>팔로워 : {folowMyPage.followerCount}</p>
                 </div>
               )}
             </tr>
@@ -123,10 +124,19 @@ const MyPage = () => {
           <TabPanel value={value} index={0}>
             <Button href="/Mypage/CheckSkill">스킬 추가</Button>
           </TabPanel>
-          <TabPanel value={value} index={1} onClick={() => myWritingHandler()}>
+          <TabPanel value={value} index={1}>
             {myWriting && (
               <div>
-                <p>내가 쓴 글 : {myWriting.content}</p>
+                {mypage && folowMyPage && (
+                  <div>
+                    <p>이름 : {mypage.name} </p>
+                    <p>이메일 : {mypage.email} </p>
+                    <p>교육과정 : {mypage.curriculum} </p>
+                    <p>가입날짜 : {mypage.createdDate} </p>
+                    <p navigate="/mypage/following">팔로잉 : {folowMyPage.followingCount}</p>
+                    <p>팔로워 : {folowMyPage.followerCount}</p>
+                  </div>
+                )}
               </div>
             )}
           </TabPanel>
