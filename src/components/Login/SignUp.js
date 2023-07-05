@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useNavigate } from "react-router-dom";
-import axios from "axios"
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -16,53 +16,52 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import '../../styles/App.css';
 
-
 export default function SignUp() {
   const navigate = useNavigate();
-  const [userId, setUserid] = useState('');  //아이디 값을 입력받음
-  const [userEmail, setEmail] = useState('');  //비밀번호 값을 입력 받음
-  const [userName, setName] = useState('');  //비밀번호 입력값을 받음
-  const [userNickname, setUserNickname] = useState('');  //닉네임 값을 입력 받음
-  const [userPassword, setPassword] = useState('');  //닉네임 값을 입력 받음
-  const [userPasswordCheck, setPasswordCheck] = useState('');  //닉네임 값을 입력 받음
-  const [userCurriculm, setCurriculum] = useState('');  //닉네임 값을 입력 받음
+  const [userId, setUserid] = useState(''); //아이디 값을 입력받음
+  const [userEmail, setEmail] = useState(''); //비밀번호 값을 입력 받음
+  const [userName, setName] = useState(''); //비밀번호 입력값을 받음
+  const [userNickname, setUserNickname] = useState(''); //닉네임 값을 입력 받음
+  const [userPassword, setPassword] = useState(''); //닉네임 값을 입력 받음
+  const [userPasswordCheck, setPasswordCheck] = useState(''); //닉네임 값을 입력 받음
+  const [userCurriculm, setCurriculum] = useState(''); //닉네임 값을 입력 받음
   const theme = createTheme();
 
-  const signUpHandler = () =>{
-      const regl = /^[A-Za-z0-9]{8,20}$/;
-      // 패스워드랑 패스워드 확인이 일치하는지 검증
-      if (userPassword !== userPasswordCheck) {
-        alert("패스워드 일치하지 않습니다.");
-        return;
-      }
-      if(userPassword.match(regl) === null) {
-        alert("비밀번호 형식에 맞지 않습니다.")
-        return;
-      }
+  const signUpHandler = () => {
+    const regl = /^[A-Za-z0-9]{8,20}$/;
+    // 패스워드랑 패스워드 확인이 일치하는지 검증
+    if (userPassword !== userPasswordCheck) {
+      alert('패스워드 일치하지 않습니다.');
+      return;
+    }
+    if (userPassword.match(regl) === null) {
+      alert('비밀번호 형식에 맞지 않습니다.');
+      return;
+    }
 
     const data = {
-      "userid": userId,
-      "password": userPassword,
-      "email": userEmail,
-      "name": userName,
-      "nickname": userNickname,
-      "curriculum": userCurriculm,
+      userid: userId,
+      password: userPassword,
+      email: userEmail,
+      name: userName,
+      nickname: userNickname,
+      curriculum: userCurriculm,
     };
-  
+
     axios //입력한 데이터를 받음.
-    .post("/api/member/signup", data)
-    .then((response) => {
-      console.log(response.data);
+      .post('/api/member/signup', data)
+      .then((response) => {
+        console.log(response.data);
 
-      alert("회원가입에 성공하였습니다.");
+        alert('회원가입에 성공하였습니다.');
 
-      navigate('/signin');
-    })  //성공했을시 response를 받아옴.
-    .catch((error) =>{
-      console.log(error)
-      alert("회원가입에 실패하였습니다.");
-    });   //실패했을 시 error를 발생함.
-};
+        navigate('/signin');
+      }) //성공했을시 response를 받아옴.
+      .catch((error) => {
+        console.log(error);
+        alert('회원가입에 실패하였습니다.');
+      }); //실패했을 시 error를 발생함.
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -77,13 +76,13 @@ export default function SignUp() {
             alignItems: 'center',
           }}
         >
-
-          <p className='play'>PLAY <span className="ground">GROUND</span></p>
-          <div className="data">PLAY DATA의 정보를 알고 싶다면 
-            가입하세요.</div>
+          <p className="play">
+            PLAY <span className="ground">GROUND</span>
+          </p>
+          <div className="data">PLAY DATA의 정보를 알고 싶다면 가입하세요.</div>
           <Box component="form" noValidate onSubmit={signUpHandler} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12} >
+              <Grid item xs={9}>
                 <TextField
                   autoComplete="given-name"
                   name="Id"
@@ -92,8 +91,17 @@ export default function SignUp() {
                   id="Id"
                   label="아이디"
                   autoFocus
-                  onChange={(e) => setUserid(e.target.value)} />
+                  onChange={(e) => setUserid(e.target.value)}
+                />
               </Grid>
+              <Button
+                sx={{ mt: 2, mb: 1, marginLeft: '16px', marginTop: '20px' }}
+                variant="contained"
+                color="success"
+                // onClick={idCheck}
+              >
+                중복확인
+              </Button>
 
               <Grid item xs={12}>
                 <TextField
@@ -104,7 +112,8 @@ export default function SignUp() {
                   name="password"
                   autoComplete="password"
                   type="password"
-                  onChange={(e) => setPassword(e.target.value)} />
+                  onChange={(e) => setPassword(e.target.value)}
+                />
               </Grid>
 
               <Grid item xs={12}>
@@ -116,7 +125,8 @@ export default function SignUp() {
                   name="passwordCheck"
                   autoComplete="passwordCheck"
                   type="password"
-                  onChange={(e) => setPasswordCheck(e.target.value)} />
+                  onChange={(e) => setPasswordCheck(e.target.value)}
+                />
               </Grid>
 
               <Grid item xs={12}>
@@ -128,7 +138,8 @@ export default function SignUp() {
                   name="email"
                   autoComplete="email"
                   type="email"
-                  onChange={(e) => setEmail(e.target.value)} />
+                  onChange={(e) => setEmail(e.target.value)}
+                />
               </Grid>
 
               <Grid item xs={12}>
@@ -139,7 +150,8 @@ export default function SignUp() {
                   label="이름"
                   name="name"
                   autoComplete="name"
-                  onChange={(e) => setName(e.target.value)} />
+                  onChange={(e) => setName(e.target.value)}
+                />
               </Grid>
 
               <Grid item xs={12}>
@@ -150,7 +162,8 @@ export default function SignUp() {
                   label="닉네임"
                   name="nickname"
                   autoComplete="nickname"
-                  onChange={(e) => setUserNickname(e.target.value)} />
+                  onChange={(e) => setUserNickname(e.target.value)}
+                />
               </Grid>
 
               <Grid item xs={12}>
@@ -161,7 +174,8 @@ export default function SignUp() {
                     id="demo-simple-select"
                     value={userCurriculm}
                     label="Curriculm"
-                    onChange={(e) => setCurriculum(e.target.value)}>
+                    onChange={(e) => setCurriculum(e.target.value)}
+                  >
                     <MenuItem value={1}>빅데이터</MenuItem>
                     <MenuItem value={2}>인공지능</MenuItem>
                     <MenuItem value={3}>클라우드</MenuItem>
@@ -174,10 +188,13 @@ export default function SignUp() {
             <Button
               type="button"
               fullWidth
-              variant="contained" color="secondary"
+              variant="contained"
+              color="secondary"
               sx={{ mt: 3, mb: 2 }}
-              onClick={() => signUpHandler() }
-            > 회원가입
+              onClick={() => signUpHandler()}
+            >
+              {' '}
+              회원가입
             </Button>
 
             <Grid container justifyContent="flex-end">
@@ -187,10 +204,9 @@ export default function SignUp() {
                 </Link>
               </Grid>
             </Grid>
-
           </Box>
         </Box>
       </Container>
     </ThemeProvider>
   );
-};
+}
