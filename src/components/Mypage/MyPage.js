@@ -52,27 +52,71 @@ const MyPage = () => {
   const [mypage, setMypage] = useState([]);
   const [myWriting, setMyWriting] = useState([]);
   const [folowMyPage, setFollowMyPage] = useState([]);
+  // const [myPageFeedDtoList, setMyPageFeedDtoList] = useState([]);
   const [myPageFeedDtoList, setMyPageFeedDtoList] = useState([]);
-  const [followMyPageDto, setFollowMyPageDto] = useState([]);
+  const [lists, setLists] = useState([]);
 
+  const refreshToken = async () => {
+    try {
+      const response = await axios({
+        method: 'POST',
+        url: '/api/refresh-token',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: localStorage.getItem('refreshToken'),
+        },
+      });
+      const newAccessToken = response.data.accesstoken;
+      localStorage.setItem('accessToken', newAccessToken);
+      return newAccessToken;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
+  //refreshTokne을 다시 받습니다.
   useEffect(() => {
     axios({
       method: 'GET',
-      url: '/api/mypage',
+      url: 'api/mypage',
       headers: {
         'Content-Type': 'application/json',
         Authorization: localStorage.getItem('accessToken'),
       },
     })
       .then((response) => {
+        let myPageFeedDtoList = response.data;
         setMypage(response.data.memberDto);
-        setFollowMyPage(response.data.followMyPageDto);
-        setMyWriting(response.data.myPageFeedDtoList);
-        setMyPageFeedDtoList(response.data.myPageFeedDtoList);
-        setFollowMyPageDto(response.data.followMyPageDto);
       })
-      .catch((error) => {
-        console.log(error);
+      .catch(async (error) => {
+        if (error.response && error.response.status === 401) {
+          try {
+            const newAccessToken = await refreshToken();
+            axios({
+              method: 'GET',
+              url: '/api/mypage',
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: newAccessToken,
+              },
+            })
+              .then((response) => {
+                let myPageFeedDtoList = response.data;
+                setMypage(response.data.memberDto);
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          } catch (error) {
+            delete axios.defaults.headers.common['Authorization'];
+            localStorage.removeItem('accessToken');
+            localStorage.removeItem('refresh-token');
+            console.log(error);
+            //refreshToken이 없으면 로그아웃
+          }
+        } else {
+          console.log(error);
+        }
       });
   }, []);
 
@@ -129,21 +173,18 @@ const MyPage = () => {
             <Button href="/Mypage/CheckSkill">스킬 추가</Button>
           </TabPanel>
           <TabPanel value={value} index={1}>
-            {myWriting && (
-              <div>
-                {mypage && followMyPageDto && (
-                  <div>
-                    <p>이름 : {followMyPageDto.name} </p>
-                    <p>이메일 : {followMyPageDto.email} </p>
-                    <p>교육과정 : {followMyPageDto.curriculum} </p>
-                    <p>가입날짜 : {followMyPageDto.content} </p>
-                  </div>
-                )}
-              </div>
-            )}
+            <div>
+              {myPageFeedDtoList && (
+                <div>
+                  <p>제목 : {myPageFeedDtoList.title} </p>
+                  <p>내용 : {myPageFeedDtoList.content} </p>
+                  <p>작성일 : {myPageFeedDtoList.createdDate}</p>
+                </div>
+              )}
+            </div>
           </TabPanel>
           <TabPanel value={value} index={2}>
-            Item Two
+            title
           </TabPanel>
         </Box>
       </Box>
