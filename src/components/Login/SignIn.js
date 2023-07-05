@@ -49,21 +49,23 @@ export default function SignIn() {
       .post('/api/member/login', data)
       .then((response) => {
         console.log(response.data);
-        const responseData = response.data;
+        // const responseData = response.data;
         const jwtToken = response.headers['authorization'];
-        if (jwtToken) {
+        const refreshToken = response.data['refresh-token'];
+        console.log(axios.defaults);
+        // const refreshToken = response.data['refresh-token'];
+        if (jwtToken && refreshToken) {
           axios.defaults.headers.common['Authorization'] = jwtToken;
           localStorage.setItem('accessToken', jwtToken);
+          localStorage.setItem('refresh-token', refreshToken);
+
+          // axios.defaults.data.common['refresh-token'] = refreshToken;
+          // localStorage.setItem('refreshToken', refreshToken);
         }
-
-        // Request 헤더에서 토큰을 가져와서 localStorage 에 저장한다.
-        // let jwtToken = response.headers.get("Authorization");
-        // localStorage.setItem("Authorizaion", jwtToken);
-
         alert('로그인 성공했습니다.');
 
         navigate('/home', {
-          state: responseData,
+          // state: responseData,
         });
       })
       .then((result) => {
@@ -164,5 +166,3 @@ export default function SignIn() {
     </ThemeProvider>
   );
 }
-
-// spacing={8}
