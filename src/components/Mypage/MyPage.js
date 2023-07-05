@@ -10,6 +10,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { Avatar } from '@mui/material';
 import Button from '@mui/material/Button';
 import '../../styles/Mypage.css';
+import axios from 'axios';
 // import axios from 'axios';
 
 function TabPanel(props) {
@@ -45,18 +46,39 @@ function a11yProps(index) {
 }
 
 const MyPage = () => {
-  const location = useLocation();
-  const member = location.state; // notice 가 mypage로 바뀜
+  // const location = useLocation();
+  // const member = location.state; // notice 가 mypage로 바뀜
   const navigate = useNavigate();
   const [value, setValue] = React.useState(0);
+  const [mypage, setMypage] = useState([]);
+  const [myWriting, setMyWriting] = useState([]);
+
+  const myWritingHandler = () => {};
+  useEffect(() => {
+    axios({
+      method: 'GET',
+      url: '/api/mypage',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: localStorage.getItem('accessToken'),
+      },
+    })
+      .then((response) => {
+        setMypage(response.data.memberDto);
+        setMyWriting(response.data.myPageFeedDtoList);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  const myPageModifyHandler = () => {
-    navigate('/mypage/modify', { state: member });
-  };
+  // const myPageModifyHandler = () => {
+  //   navigate('/mypage/modify', { state: member });
+  // };
 
   return (
     <div>
@@ -71,22 +93,21 @@ const MyPage = () => {
             <tr id="firstrow">
               <td> </td>
               <td id="modify_button">
-                <button type="submit" className="btn btn-primary" onClick={() => myPageModifyHandler()}>
+                {/* <button type="submit" className="btn btn-primary" onClick={() => myPageModifyHandler()}>
                   수정
-                </button>
+                </button> */}
               </td>
             </tr>
             <tr>
-              <td>이름 : 유수빈 (유수빈)</td>
-            </tr>
-            <tr>
-              <td>이메일 : aaaaaa@aaa.aaa</td>{' '}
-            </tr>
-            <tr>
-              <td>교육과정 : 빅데이터 </td>
-            </tr>
-            <tr>
-              <td> 가입날짜: 2023.05.17 </td>
+              {mypage && (
+                <div>
+                  <p>이름 : {mypage.name} </p>
+                  <p>이메일 : {mypage.email} </p>
+                  <p>교육과정 : {mypage.curriculum} </p>
+                  <p>가입날짜 : {mypage.createdDate} </p>
+                  <p></p>
+                </div>
+              )}
             </tr>
           </table>
         </div>
@@ -102,8 +123,12 @@ const MyPage = () => {
           <TabPanel value={value} index={0}>
             <Button href="/Mypage/CheckSkill">스킬 추가</Button>
           </TabPanel>
-          <TabPanel value={value} index={1}>
-            Item Two
+          <TabPanel value={value} index={1} onClick={() => myWritingHandler()}>
+            {myWriting && (
+              <div>
+                <p>내가 쓴 글 : {myWriting.content}</p>
+              </div>
+            )}
           </TabPanel>
           <TabPanel value={value} index={2}>
             Item Two
