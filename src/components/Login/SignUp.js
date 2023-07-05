@@ -25,7 +25,28 @@ export default function SignUp() {
   const [userPassword, setPassword] = useState(''); //닉네임 값을 입력 받음
   const [userPasswordCheck, setPasswordCheck] = useState(''); //닉네임 값을 입력 받음
   const [userCurriculm, setCurriculum] = useState(''); //닉네임 값을 입력 받음
+  const [checkId, setCheckId] = useState('');
   const theme = createTheme();
+
+  const idCheck = () => {
+    axios
+      .post('/api/member/signup', { userId })
+      .then((response) => {
+        console.log(response);
+        if (response.data.available) {
+          alert('사용 가능한 아이디입니다.');
+          setCheckId(true);
+        } else {
+          alert('중복된 아이디입니다. 다시 시도하세요.');
+          setCheckId(false);
+          setUserid('');
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        alert('아이디 중복 확인에 실패했습니다.');
+      });
+  };
 
   const signUpHandler = () => {
     const regl = /^[A-Za-z0-9]{8,20}$/;
@@ -98,7 +119,7 @@ export default function SignUp() {
                 sx={{ mt: 2, mb: 1, marginLeft: '16px', marginTop: '20px' }}
                 variant="contained"
                 color="success"
-                // onClick={idCheck}
+                onClick={idCheck}
               >
                 중복확인
               </Button>
