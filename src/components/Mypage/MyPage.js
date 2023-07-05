@@ -52,6 +52,8 @@ const MyPage = () => {
   const [mypage, setMypage] = useState([]);
   const [myWriting, setMyWriting] = useState([]);
   const [folowMyPage, setFollowMyPage] = useState([]);
+  const [myPageFeedDtoList, setMyPageFeedDtoList] = useState([]);
+  const [followMyPageDto, setFollowMyPageDto] = useState([]);
 
   useEffect(() => {
     axios({
@@ -66,6 +68,8 @@ const MyPage = () => {
         setMypage(response.data.memberDto);
         setFollowMyPage(response.data.followMyPageDto);
         setMyWriting(response.data.myPageFeedDtoList);
+        setMyPageFeedDtoList(response.data.myPageFeedDtoList);
+        setFollowMyPageDto(response.data.followMyPageDto);
       })
       .catch((error) => {
         console.log(error);
@@ -127,14 +131,12 @@ const MyPage = () => {
           <TabPanel value={value} index={1}>
             {myWriting && (
               <div>
-                {mypage && folowMyPage && (
+                {mypage && followMyPageDto && (
                   <div>
-                    <p>이름 : {mypage.name} </p>
-                    <p>이메일 : {mypage.email} </p>
-                    <p>교육과정 : {mypage.curriculum} </p>
-                    <p>가입날짜 : {mypage.createdDate} </p>
-                    <p navigate="/mypage/following">팔로잉 : {folowMyPage.followingCount}</p>
-                    <p>팔로워 : {folowMyPage.followerCount}</p>
+                    <p>이름 : {followMyPageDto.name} </p>
+                    <p>이메일 : {followMyPageDto.email} </p>
+                    <p>교육과정 : {followMyPageDto.curriculum} </p>
+                    <p>가입날짜 : {followMyPageDto.content} </p>
                   </div>
                 )}
               </div>
