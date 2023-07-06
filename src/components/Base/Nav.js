@@ -2,13 +2,13 @@ import React from 'react';
 import '../../styles/Main.css';
 import { Link } from 'react-router-dom';
 import { redirect } from 'react-router-dom';
+import logout from '../Login/LogOut';
 import axios from 'axios';
 
 const action = () => {
-  delete axios.defaults.headers.common['Authorization'];
-  localStorage.removeItem('accessToken');
-  localStorage.removeItem('refresh-token');
+  <logout />;
 };
+//로그아웃 기능
 
 export default function Nav() {
   return (
@@ -27,7 +27,7 @@ export default function Nav() {
                 <Link to="/qna"> Q&A </Link>
               </li>
               <li>
-                <a href="/home">실시간 인기게시물</a>
+                <Link to="/home"> 실시간 인기게시물 </Link>
               </li>
               <li>
                 <a href="#">사이드 프로젝트</a>
