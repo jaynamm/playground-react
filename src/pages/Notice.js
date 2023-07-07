@@ -8,7 +8,7 @@ import Moment from 'react-moment';
 import Footer from '../components/Base/Footer';
 
 const Notice = () => {
-  const [notices, setNotices] = useState([]);
+  const [notice, setNotices] = useState([]);
   const navigate = useNavigate();
 
   const noticeViewHandler = (id) => {
@@ -20,20 +20,11 @@ const Notice = () => {
   };
 
   useEffect(() => {
-    axios({
-      method: 'GET',
-      url: '/api/notice',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: localStorage.getItem('accessToken'),
-      },
-    })
+    axios
+      .get('/api/notice') // Assuming the API endpoint is correct
       .then((res) => {
         console.log(res.data);
-
-        let noticeData = res.data;
-
-        setNotices(noticeData);
+        setNotices(res.data.data); // Update the state with the data array
       })
       .catch((err) => {
         console.log(err);
@@ -43,11 +34,11 @@ const Notice = () => {
   return (
     <div>
       <Header />
-      <div align="center" class="notice-board">
-        <div class="notice-title">공지사항</div>
-        <table class="notice-table">
+      <div align="center" className="notice-board">
+        <div className="notice-title">공지사항</div>
+        <table className="notice-table">
           <thead>
-            <tr class="notice-label">
+            <tr className="notice-label">
               <th>글 번호</th>
               <th>제목</th>
               <th>작성자</th>
@@ -56,14 +47,14 @@ const Notice = () => {
             </tr>
           </thead>
           <tbody>
-            {notices.map((notice) => (
-              <tr key={notice.id} onClick={() => noticeViewHandler(notice.id)} class="notice-table-row">
-                <th class="notice-id">{notice.id}</th>
-                <th>{notice.title}</th>
-                <th>{notice.memberId}</th>
-                {/* <th>{notice.viewCount}</th> */}
-                <th class="notice-createdDate">
-                  <Moment format="YYYY-MM-DD HH:mm:ss">{notice.createdDate}</Moment>
+            {notice.map((item) => (
+              <tr key={item.id} onClick={() => noticeViewHandler(item.id)} className="notice-table-row">
+                <th className="notice-id">{item.id}</th>
+                <th>{item.title}</th>
+                <th>{item.member.name}</th>
+                {/* <td>{item.viewCount}</td> */}
+                <th className="notice-createdDate">
+                  <Moment format="YYYY-MM-DD HH:mm:ss">{item.createdDate}</Moment>
                 </th>
               </tr>
             ))}
@@ -71,7 +62,7 @@ const Notice = () => {
         </table>{' '}
         <br />
         <Link to="write">
-          <button type="button" class="btn btn-primary-notice">
+          <button type="button" className="btn btn-primary-notice">
             글쓰기
           </button>
         </Link>
