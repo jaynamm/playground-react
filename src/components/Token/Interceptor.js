@@ -15,8 +15,8 @@ axios.interceptors.response.use(
     return response;
   },
   async (error) => {
-    const [response, config] = error;
-    if (response.status === 401) {
+    const { response, config } = error;
+    if (response && response.status === 401) {
       const { data } = await axios.get('/api', {
         baseURL: 'http://localhost:3000',
         params: {
