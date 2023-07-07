@@ -9,21 +9,14 @@ const NoticeView = () => {
   const location = useLocation();
   const id = location.state.id;
   const navigate = useNavigate();
-  const [notice, setNotice] = useState([]);
-  console.log(id);
+  const [notice, setNotice] = useState(null);
 
   useEffect(() => {
-    axios({
-      method: 'GET',
-      url: `/api/notice/view/${id}`,
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: localStorage.getItem('accessToken'),
-      },
-    })
+    axios
+      .get(`/api/notice/view/${id}`)
       .then((res) => {
         console.log(res.data);
-        setNotice(res.data);
+        setNotice(res.data.data);
       })
       .catch((err) => {
         console.log(err);
@@ -63,50 +56,51 @@ const NoticeView = () => {
   return (
     <div>
       <Header />
-      <div align="center" class="notice-view-board">
-        <div class="notice-title">공지사항</div>
-        <table class="notice-view-table">
-          <tr class="notice-view-title">
-            {/* <td>제목</td> */}
-            <td>{notice.title}</td>
-          </tr>
-          <tr>
-            <div class="view-member-id">
-              <td class="view-member-id2">작성자</td>
-              <td>{notice.memberId}</td>
-            </div>
-            <div class="view-created-date">
-              <td class="view-created-date2">작성일시</td>
-              <td class="view-created-date3">
-                <Moment format="YYYY-MM-DD HH:mm:ss">{notice.createdDate}</Moment>
-              </td>
-            </div>
-          </tr>
-          {/* <tr>조회수 : {notice.viewCount}</tr><br/> */}
-          <tr class="view-content">
-            <td>{notice.content}</td>
-          </tr>
-        </table>
-        <div class="view-buttons">
-          <button type="submit" className="btn btn-primary-view" onClick={() => noticeDeleteHandler()}>
-            삭제하기
-          </button>
+      {notice && (
+        <div align="center" className="notice-view-board">
+          <div className="notice-title">공지사항</div>
+          <table className="notice-view-table">
+            <tbody>
+              <tr className="notice-view-title">
+                <td>{notice.title}</td>
+              </tr>
+              <tr>
+                <div className="view-member-id">
+                  <td className="view-member-id2">작성자</td>
+                  <td>{notice.member.name}</td>
+                </div>
+                <tr className="view-created-date">
+                  <td className="view-created-date2">작성일시</td>
+                  <td className="view-created-date3">
+                    <Moment format="YYYY-MM-DD HH:mm:ss">{notice.createdDate}</Moment>
+                  </td>
+                </tr>
+              </tr>
 
-          <button type="submit" className="btn btn-primary-view" onClick={() => noticeModifyHandler()}>
-            수정하기
-          </button>
-
-          <button
-            type="submit"
-            className="btn btn-primary-view"
-            onClick={() => {
-              navigate('/notice');
-            }}
-          >
-            목록보기
-          </button>
+              <tr className="view-content">
+                <td>{notice.content}</td>
+              </tr>
+            </tbody>
+          </table>
+          <div className="view-buttons">
+            <button type="submit" className="btn btn-primary-view" onClick={noticeDeleteHandler}>
+              삭제하기
+            </button>
+            <button type="submit" className="btn btn-primary-view" onClick={noticeModifyHandler}>
+              수정하기
+            </button>
+            <button
+              type="submit"
+              className="btn btn-primary-view"
+              onClick={() => {
+                navigate('/notice');
+              }}
+            >
+              목록보기
+            </button>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
