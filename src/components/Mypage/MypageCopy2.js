@@ -10,8 +10,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { Avatar } from '@mui/material';
 import Button from '@mui/material/Button';
 import '../../styles/Mypage.css';
-import axios from '../Token/Interceptor';
-import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -54,8 +53,6 @@ const MyPage = () => {
   const [folowMyPage, setFollowMyPage] = useState([]);
   const [myPageFeedDtoList, setMyPageFeedDtoList] = useState([]);
   const [myPageCommentDtoList, setMyPageCommentDtoList] = useState([]);
-  const [myPageQuestionDtoList, setMyPageQuestionDtoList] = useState([]);
-  const createdDateProfile = new Date(mypage.createdDate);
   const createdDate = new Date(myPageFeedDtoList.createdDate);
   const formattedDate = createdDate.toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' });
   const createdDateComment = createdDate.toLocaleDateString('ko-KR', {
@@ -63,17 +60,30 @@ const MyPage = () => {
     month: '2-digit',
     day: '2-digit',
   });
-  const creactedDatePro = createdDateProfile.toLocaleDateString('ko-KR', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  });
 
+  const refreshToken = async () => {
+    try {
+      const response = await axios({
+        method: 'POST',
+        url: '/api/refresh-token',
+        headers: {
+          'Content-Type': 'application/json',
+          'refresh-token': localStorage.getItem('refreshToken'),
+        },
+      });
+      const newAccessToken = response.data.accesstoken;
+      localStorage.setItem('accessToken', newAccessToken);
+      return newAccessToken;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
   //refreshTokne을 다시 받습니다.
   useEffect(() => {
     axios({
       method: 'GET',
-      url: '/api/mypage',
+      url: 'api/mypage',
       headers: {
         'Content-Type': 'application/json',
         Authorization: localStorage.getItem('accessToken'),
@@ -81,12 +91,41 @@ const MyPage = () => {
     })
       .then((response) => {
         setMypage(response.data.memberDto);
-        setFollowMyPage(response.data.followMyPageDto);
-        setMyPageFeedDtoList.filter(response.data.myPageFeedDtoList);
-        setMyPageQuestionDtoList(response.data.myPageQuestionDtoList[0]);
+        setMyPageFeedDtoList(response.data.myPageFeedDtoList[0]);
+        setFollowMyPage(response.data.folowMyPage);
+        setMyPageCommentDtoList(response.data.myPageCommentDtoList[0]);
       })
-      .catch((error) => {
-        console.log(error);
+      .catch(async (error) => {
+        if (error.response && error.response.status === 401) {
+          try {
+            const newAccessToken = await refreshToken();
+            axios({
+              method: 'GET',
+              url: '/api/mypage',
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: newAccessToken,
+              },
+            })
+              .then((response) => {
+                setMypage(response.data.memberDto);
+                setMyPageFeedDtoList(response.data.myPageFeedDtoList[0]);
+                setFollowMyPage(response.data.folowMyPage);
+                setMyPageCommentDtoList(response.data.myPageCommentDtoList[0]);
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          } catch (error) {
+            delete axios.defaults.headers.common['Authorization'];
+            localStorage.removeItem('accessToken');
+            localStorage.removeItem('refresh-token');
+            console.log(error);
+            //refreshToken이 없으면 로그아웃
+          }
+        } else {
+          console.log(error);
+        }
       });
   }, []);
 
@@ -108,22 +147,26 @@ const MyPage = () => {
         </div>
         <div className="table profile_info">
           <table>
-            <tbody>
+            <tr id="firstrow">
+              <td> </td>
+              <td id="modify_button">
+                {/* <button type="submit" className="btn btn-primary" onClick={() => myPageModifyHandler()}>
+                  수정
+                </button> */}
+              </td>
+            </tr>
+            <tr>
               {mypage && folowMyPage && (
-                <tr id="firstrow">
-                  <td>
-                    <div>
-                      <p>이름 : {mypage.name} </p>
-                      <p>이메일 : {mypage.email} </p>
-                      <p>교육과정 : {mypage.curriculum} </p>
-                      <p>가입날짜 : {creactedDatePro} </p>
-                      <p navigate="/mypage/following">팔로잉 : {folowMyPage.followingCount}</p>
-                      <p>팔로워 : {folowMyPage.followerCount}</p>
-                    </div>
-                  </td>
-                </tr>
+                <div>
+                  <p>이름 : {mypage.name} </p>
+                  <p>이메일 : {mypage.email} </p>
+                  <p>교육과정 : {mypage.curriculum} </p>
+                  <p>가입날짜 : {mypage.createdDate} </p>
+                  <p navigate="/mypage/following">팔로잉 : {folowMyPage.followingCount}</p>
+                  <p>팔로워 : {folowMyPage.followerCount}</p>
+                </div>
               )}
-            </tbody>
+            </tr>
           </table>
         </div>
       </div>
@@ -137,10 +180,7 @@ const MyPage = () => {
           </Tabs>
           <TabPanel value={value} index={0}>
             <div>
-              <Button>
-                {' '}
-                <Link to="/Mypage/MySkill">스킬 추가</Link>
-              </Button>
+              <Button href="/Mypage/CheckSkill">스킬 추가</Button>
             </div>
           </TabPanel>
           <TabPanel value={value} index={1}>
@@ -165,14 +205,14 @@ const MyPage = () => {
           </TabPanel>
           <TabPanel value={value} index={2}>
             <div>
-              {myPageQuestionDtoList && (
+              {myPageCommentDtoList && (
                 <div>
                   <table>
                     <tbody>
                       <td>
                         <tr>
-                          <th>닉네임: {myPageQuestionDtoList.userId}</th>
-                          <th>내용 : {myPageQuestionDtoList.content}</th>
+                          <th>닉네임: {myPageCommentDtoList.userId}</th>
+                          <th>내용 : {myPageCommentDtoList.content}</th>
                           <th>작성일 : {createdDateComment} </th>
                         </tr>
                       </td>

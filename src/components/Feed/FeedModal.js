@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import '../../styles/Feed/Modal.css';
-import axios from 'axios';
+import axios from '../Token/Interceptor';
 
 const FeedModal = () => {
   const [feedArticle, setFeedArticle] = useState('');

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from '../Token/Interceptor';
 import Header from '../../components/Base/Header';
 import { useNavigate } from 'react-router-dom';
 import '../../styles/Notice/NoticeWrite.css';
