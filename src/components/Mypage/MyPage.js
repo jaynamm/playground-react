@@ -73,7 +73,7 @@ const MyPage = () => {
       },
     })
       .then((response) => {
-        setMypage(response.data.memberDto);
+        setMypage(response.data.memberMyPageDto);
         setFollowMyPage(response.data.followMyPageDto);
         setMyPageFeedDtoList(response.data.myPageFeedDtoList);
         setMyPageQuestionDtoList(response.data.myPageQuestionDtoList);
