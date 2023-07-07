@@ -9,10 +9,6 @@ const FeedModal = () => {
     axios({
       method: 'post',
       url: '/api/feed/write',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: localStorage.getItem('accessToken'),
-      },
       data: {
         memberId: 'userid',
         content: feedArticle,

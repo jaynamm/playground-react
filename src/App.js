@@ -19,6 +19,11 @@ import { QnaView } from './components/Qna/QnaView';
 
 import MyPage from './components/Mypage/MyPage';
 import MyPageModify from './components/Mypage/MyPageModify';
+
+import Create from './components/Feed/Create';
+import Comments from './components/Feed/View';
+import View from './components/Feed/View';
+import Modify from './components/Feed/Modify';
 import MySkill from './components/Mypage/MySkill';
 
 function App() {
@@ -44,9 +49,17 @@ function App() {
           <Route path="/qna/write" element={<QnaWrite />} />
           <Route path="/qna/view/:id" element={<QnaView />} />
 
+          <Route path="/qna" element={<Qna />} />
+          <Route path="/qna/write" element={<QnaWrite />} />
+          <Route path="/qna/view/:id" element={<QnaView />} />
+
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/mypage/modify" element={<MyPageModify />} />
           <Route path="/mypage/myskill" element={<MySkill />} />
+
+          <Route path="/createfeed" element={<Create />} />
+          <Route path="/feed/view/:id" element={<View />} />
+          <Route path="/feed/modify/:id" element={<Modify />} />
         </Routes>
       </BrowserRouter>
     </div>

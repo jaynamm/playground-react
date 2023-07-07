@@ -2,11 +2,11 @@ import React from 'react';
 import '../../styles/Main.css';
 import { Link } from 'react-router-dom';
 import { redirect } from 'react-router-dom';
-import logout from '../Login/LogOut';
 import axios from 'axios';
 
 const action = () => {
-  <logout />;
+  localStorage.removeItem('accessToken');
+  localStorage.removeItem('refreshToken');
 };
 //로그아웃 기능
 
@@ -27,13 +27,13 @@ export default function Nav() {
                 <Link to="/qna"> Q&A </Link>
               </li>
               <li>
-                <Link to="/home"> 실시간 인기게시물 </Link>
+                <Link to="/home">실시간 인기게시물</Link>
               </li>
               <li>
-                <a>사이드 프로젝트</a>
+                <a href="#">사이드 프로젝트</a>
               </li>
               <li>
-                <a>채용정보</a>
+                <a href="#">채용정보</a>
               </li>
             </ul>
           </div>
@@ -53,7 +53,7 @@ export default function Nav() {
             </li>
             <li>
               <button>
-                <i className="fa-regular fa-bell"></i>
+                <i class="fa-regular fa-bell"></i>
               </button>
             </li>
             {/* <li><button><i class="fa-solid fa-user"></i></button></li> */}
@@ -64,19 +64,23 @@ export default function Nav() {
                   <i class="fa-solid fa-user"></i>
                 </li>
               </button>
-              <ul className="dropdown-menu">
+              <ul class="dropdown-menu">
                 <li>
-                  <Link to="/mypage" class="dropdown-item" style={{ textDecoration: 'none' }}>
+                  <Link to="/mypage" className="dropdown-item" style={{ textDecoration: 'none' }}>
                     프로필
                   </Link>
                 </li>
                 <li>
-                  <a className="dropdown-item" onClick={action}>
-                    <Link to="/logout">로그아웃</Link>
+                  <a className="dropdown-item">
+                    <Link to="/" onClick={action}>
+                      로그아웃
+                    </Link>
                   </a>
                 </li>
                 <li>
-                  <a class="dropdown-item">고객센터</a>
+                  <a className="dropdown-item" href="#">
+                    고객센터
+                  </a>
                 </li>
               </ul>
             </div>

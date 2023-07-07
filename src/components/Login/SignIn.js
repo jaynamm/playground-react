@@ -55,7 +55,7 @@ export default function SignIn() {
         console.log(axios.defaults);
         // const refreshToken = response.data['refresh-token'];
         if (jwtToken && refreshToken) {
-          axios.defaults.headers.common['Authorization'] = jwtToken;
+          // axios.defaults.headers.common['Authorization'] = jwtToken;
           localStorage.setItem('accessToken', jwtToken);
           localStorage.setItem('refreshToken', refreshToken);
 
@@ -64,7 +64,7 @@ export default function SignIn() {
         }
         alert('로그인 성공했습니다.');
 
-        navigate('/mypage', {
+        navigate('/home', {
           // state: responseData,
         });
       })

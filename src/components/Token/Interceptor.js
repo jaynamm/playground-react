@@ -2,7 +2,7 @@ import axios from 'axios';
 
 axios.interceptors.request.use(
   function (request) {
-    request.headers['accessToken'] = localStorage.getItem('accessToken');
+    request.headers['Authorization'] = localStorage.getItem('accessToken');
     return request;
   },
   function (error) {
@@ -28,7 +28,7 @@ axios.interceptors.response.use(
       //액세스 토큰을 localStorege에 저장
       localStorage.setItem('accessToken', accessToken);
       // 새 액세스 토큰을 header에 저장
-      config.headers['accessToken'] = accessToken;
+      config.headers['Authorization'] = accessToken;
       // 재요청
       return await axios(config);
     }

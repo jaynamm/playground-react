@@ -55,12 +55,12 @@ const MyPage = () => {
   const [myPageFeedDtoList, setMyPageFeedDtoList] = useState([]);
   const [myPageQuestionDtoList, setMyPageQuestionDtoList] = useState([]);
 
-  const createdDateProfile = new Date(mypage.createdDate);
-  const creactedDatePro = createdDateProfile.toLocaleDateString('ko-KR', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  });
+  // const createdDateProfile = new Date(mypage.createdDate);
+  // const creactedDatePro = createdDateProfile.toLocaleDateString('ko-KR', {
+  //   year: 'numeric',
+  //   month: '2-digit',
+  //   day: '2-digit',
+  // });
 
   //refreshTokne을 다시 받습니다.
   useEffect(() => {
@@ -110,8 +110,8 @@ const MyPage = () => {
                       <p>이름 : {mypage.name} </p>
                       <p>이메일 : {mypage.email} </p>
                       <p>교육과정 : {mypage.curriculum} </p>
-                      <p>가입날짜 : {creactedDatePro} </p>
-                      <p navigate="/mypage/following">팔로잉 : {folowMyPage.followingCount}</p>
+                      <p>가입날짜 : {folowMyPage.created} </p>
+                      <p>팔로잉 : {folowMyPage.followingCount}</p>
                       <p>팔로워 : {folowMyPage.followerCount}</p>
                     </div>
                   </td>
