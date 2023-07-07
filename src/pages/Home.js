@@ -22,11 +22,6 @@ import Swal from 'sweetalert2';
 //         `
 // })
 
-const action = () => {
-  localStorage.removeItem('token');
-  return redirect('/.signin');
-};
-
 const Home = () => {
   const [likeCount, setLikeCount] = useState(0);
   const [feeds, setFeeds] = useState([]);
