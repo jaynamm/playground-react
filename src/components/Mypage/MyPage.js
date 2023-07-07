@@ -1,4 +1,4 @@
-import React, { createRef, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Footer from '../Base/Footer';
 import Header from '../Base/Header';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Avatar } from '@mui/material';
 import Button from '@mui/material/Button';
 import '../../styles/Mypage.css';
@@ -122,18 +122,22 @@ const MyPage = () => {
         </div>
       </div>
 
-      <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center', marginTop: '30px', marginBottom: '500px' }}>
+      <Box sx={{ width: '116%', display: 'flex', justifyContent: 'center', marginTop: '30px', marginBottom: '500px' }}>
         <Box>
-          <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-            <Tab label="프로필" {...a11yProps(0)} />
-            <Tab label="내가 쓴 글" {...a11yProps(1)} />
-            <Tab label="내가 쓴 댓글" {...a11yProps(2)} />
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            aria-label="basic tabs example"
+            sx={{ display: 'flex', justifyContent: 'center' }}
+          >
+            <Tab sx={{ width: '250px' }} label="프로필" {...a11yProps(0)} />
+            <Tab sx={{ width: '250px' }} label="내가 쓴 글" {...a11yProps(1)} />
+            <Tab sx={{ width: '250px' }} label="내가 쓴 댓글" {...a11yProps(2)} />
           </Tabs>
           <TabPanel value={value} index={0}>
             <div>
               <Box sx={{ width: '1000px', display: 'flex', justifyContent: 'center' }}>
                 <Button>
-                  {' '}
                   <Link to="/Mypage/MySkill">스킬 추가</Link>
                 </Button>
               </Box>

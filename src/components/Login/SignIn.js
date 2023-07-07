@@ -57,14 +57,14 @@ export default function SignIn() {
         if (jwtToken && refreshToken) {
           axios.defaults.headers.common['Authorization'] = jwtToken;
           localStorage.setItem('accessToken', jwtToken);
-          localStorage.setItem('refresh-token', refreshToken);
+          localStorage.setItem('refreshToken', refreshToken);
 
           // axios.defaults.data.common['refresh-token'] = refreshToken;
           // localStorage.setItem('refreshToken', refreshToken);
         }
         alert('로그인 성공했습니다.');
 
-        navigate('/home', {
+        navigate('/mypage', {
           // state: responseData,
         });
       })
