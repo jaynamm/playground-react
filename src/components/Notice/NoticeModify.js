@@ -3,6 +3,9 @@ import { useLocation } from 'react-router-dom';
 import Header from '../../components/Base/Header';
 import axios from '../Token/Interceptor';
 import { useNavigate } from 'react-router-dom';
+import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
+import Input from '@mui/material/Input';
 import '../../styles/Notice/NoticeModify.css';
 
 export default function NoticeModify() {
@@ -54,23 +57,35 @@ export default function NoticeModify() {
         <div class="notice-title">공지사항</div>
         <table class="notice-modify-table">
           <tr>
-            <input className="modify-title" defaultValue={notice.title} onChange={(e) => setTitle(e.target.value)} />
+            <TextField
+              className="modify-title"
+              id="outlined-multiline-static"
+              label="제목"
+              multiline
+              rows={1}
+              defaultValue={notice.title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
           </tr>
           <tr>
-            <div class="modify-member-id">
-              <td class="modify-member-id2">작성자</td>
-              <td>{notice.memberId}</td>
-            </div>
-            <div class="modify-createdDate">
-              <td class="modify-createdDate2">작성일시</td>
-              <td class="modify-createdDate3">{notice.createdDate}</td>
+            <div>
+              <TextField
+                sx={{ marginRight: '66%', marginTop: '3%' }}
+                disabled
+                defaultValue={`작성자 :   ${notice.member.name}`}
+              />
+              {/* <TextField sx={{ marginLeft: '55%' }} disabled defaultValue={`작성일자: ${notice.createdDate}`} /> */}
             </div>
           </tr>
           {/* <p>조회수 : {notice.viewCount}</p><br/> */}
           <tr>
             <td>
-              <textarea
+              <TextField
                 className="modify-content"
+                id="outlined-multiline-static"
+                label="내용"
+                multiline
+                rows={10}
                 defaultValue={notice.content}
                 onChange={(e) => setContent(e.target.value)}
               />

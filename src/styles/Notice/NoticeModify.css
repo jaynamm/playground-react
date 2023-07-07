@@ -1,70 +1,66 @@
 .notice-modify-board {
-    font-family: Arial, sans-serif;
-    padding: 20px;
-    margin: 0 auto;
-    max-width: 90%;
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  margin: 0 auto;
+  max-width: 90%;
 }
 
 body {
-    overflow-y: scroll;
+  overflow-y: scroll;
 }
 
 .notice-modify-table {
-    width : 100%;
-    text-align: center;
-    margin-bottom : 5%;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 5%;
 }
 
 .modify-title {
-    float : left;
-    margin-left : 6.25%;
-    width: 82.5%;
-    margin-bottom: 1%;
+  width: 78%;
+  height: 30px;
 }
 
 .modify-member-id {
-    float : left;
-    margin-left : 5%;
+  width: 60%;
+  height: 30px;
 }
 
 .modify-member-id2 {
-    font-weight : bold;
+  font-weight: bold;
 }
 
 .modify-createdDate {
-    float : right;
-    margin-right : 10%;
+  float: right;
+  margin-right: 10%;
 }
 
 .modify-createdDate2 {
-    font-weight : bold;
+  font-weight: bold;
 }
 
 .modify-createdDate3 {
-    font-size : smaller;
+  font-size: smaller;
 }
 
 .modify-content {
-    float : left;
-    margin-left : 5%;
-    height : 250px;
-    width: 85%;
+  margin-left: 5%;
+  height: 250px;
+  width: 80%;
 }
 
 .btn-primary-modify {
-    background-color: #F0E4FF;
-    color: #000;
-    font-weight: bold;
-    padding: 10px 20px;
-    border: none;
-    text-decoration: none;
-    cursor: pointer;
-    float: right;   
-    margin-right: 11%; 
+  background-color: #f0e4ff;
+  color: #000;
+  font-weight: bold;
+  padding: 10px 20px;
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
+  float: right;
+  margin-right: 11%;
 }
 
 .btn-primary-modify:hover {
-    background-color: #F0E4FF;
-    color : #7D7D7D;
-
+  background-color: #f0e4ff;
+  color: #7d7d7d;
 }
