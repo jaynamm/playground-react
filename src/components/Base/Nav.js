@@ -29,12 +29,6 @@ export default function Nav() {
               <li>
                 <Link to="/home">실시간 인기게시물</Link>
               </li>
-              <li>
-                <a href="#">사이드 프로젝트</a>
-              </li>
-              <li>
-                <a href="#">채용정보</a>
-              </li>
             </ul>
           </div>
         </div>
