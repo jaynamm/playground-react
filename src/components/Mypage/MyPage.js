@@ -53,16 +53,9 @@ const MyPage = () => {
   const [mypage, setMypage] = useState([]);
   const [folowMyPage, setFollowMyPage] = useState([]);
   const [myPageFeedDtoList, setMyPageFeedDtoList] = useState([]);
-  const [myPageCommentDtoList, setMyPageCommentDtoList] = useState([]);
   const [myPageQuestionDtoList, setMyPageQuestionDtoList] = useState([]);
+
   const createdDateProfile = new Date(mypage.createdDate);
-  const createdDate = new Date(myPageFeedDtoList.createdDate);
-  const formattedDate = createdDate.toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' });
-  const createdDateComment = createdDate.toLocaleDateString('ko-KR', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  });
   const creactedDatePro = createdDateProfile.toLocaleDateString('ko-KR', {
     year: 'numeric',
     month: '2-digit',
@@ -82,8 +75,9 @@ const MyPage = () => {
       .then((response) => {
         setMypage(response.data.memberDto);
         setFollowMyPage(response.data.followMyPageDto);
-        setMyPageFeedDtoList.filter(response.data.myPageFeedDtoList);
-        setMyPageQuestionDtoList(response.data.myPageQuestionDtoList[0]);
+        setMyPageFeedDtoList(response.data.myPageFeedDtoList);
+        setMyPageQuestionDtoList(response.data.myPageQuestionDtoList);
+        console.log(response.data.myPageQuestionDtoList);
       })
       .catch((error) => {
         console.log(error);
@@ -137,49 +131,52 @@ const MyPage = () => {
           </Tabs>
           <TabPanel value={value} index={0}>
             <div>
-              <Button>
-                {' '}
-                <Link to="/Mypage/MySkill">스킬 추가</Link>
-              </Button>
+              <Box sx={{ width: '1000px', display: 'flex', justifyContent: 'center' }}>
+                <Button>
+                  {' '}
+                  <Link to="/Mypage/MySkill">스킬 추가</Link>
+                </Button>
+              </Box>
             </div>
           </TabPanel>
           <TabPanel value={value} index={1}>
             <div>
-              {myPageFeedDtoList && (
-                <div>
-                  <table>
-                    <tbody>
-                      <td>
-                        <tr>
-                          <th>닉네임 : </th>
-                          <td>{myPageFeedDtoList.userId}</td>
-                          <th>내용 : {myPageFeedDtoList.content} </th>
-                          <th>작성일 : {formattedDate} </th>
-                        </tr>
-                      </td>
-                    </tbody>
-                  </table>
-                </div>
-              )}
+              <Box sx={{ width: '1000px', justifyContent: 'center' }}>
+                {myPageFeedDtoList.map((feed) => (
+                  <div key={feed.id}>
+                    <table>
+                      <tbody>
+                        <td>
+                          <tr>
+                            <th>내용 : {feed.content} </th>
+                            <th>작성일 : {feed.createdDate} </th>
+                          </tr>
+                        </td>
+                      </tbody>
+                    </table>
+                  </div>
+                ))}
+              </Box>
             </div>
           </TabPanel>
           <TabPanel value={value} index={2}>
             <div>
-              {myPageQuestionDtoList && (
-                <div>
-                  <table>
-                    <tbody>
-                      <td>
-                        <tr>
-                          <th>닉네임: {myPageQuestionDtoList.userId}</th>
-                          <th>내용 : {myPageQuestionDtoList.content}</th>
-                          <th>작성일 : {createdDateComment} </th>
-                        </tr>
-                      </td>
-                    </tbody>
-                  </table>
-                </div>
-              )}
+              <Box sx={{ width: '1000px', justifyContent: 'center' }}>
+                {myPageQuestionDtoList.map((question) => (
+                  <div key={question.id}>
+                    <table>
+                      <tbody>
+                        <td>
+                          <tr>
+                            <th>내용 : {question.content}</th>
+                            <th>작성일 : {question.createdDate} </th>
+                          </tr>
+                        </td>
+                      </tbody>
+                    </table>
+                  </div>
+                ))}
+              </Box>
             </div>
           </TabPanel>
         </Box>
