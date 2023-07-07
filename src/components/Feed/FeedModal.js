@@ -13,12 +13,16 @@ const FeedModal = () => {
                 "memberId": "userid",
                 "content": feedArticle
             }
-        }).then((res) => {
-            console.log(res.data)
-            window.location.replace('/home');
-        }).catch((error) => {
-            console.log(error)
         })
+            .then((res) => {
+                console.log(res.data)
+                window
+                    .location
+                    .replace('/home');
+            })
+            .catch((error) => {
+                console.log(error)
+            })
     }
     return (
         <div>
@@ -51,7 +55,11 @@ const FeedModal = () => {
                                 aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" onChange={(e) => setFeedArticle(e.target.value)}></textarea>
+                            <textarea
+                                class="form-control"
+                                id="exampleFormControlTextarea1"
+                                rows="3"
+                                onChange={(e) => setFeedArticle(e.target.value)}></textarea>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>

@@ -27,11 +27,12 @@ const Main = () => {
                 <p className="text">요즘 개발자들의 커뮤니티</p>
                 <p className="text2">플레이 그라운드</p>
                 <p className="text3">개발 트렌드부터 Q&A,네트워킹까지</p>
+
                 <Link to="/signin">
                     <button className="start-button">지금 시작하기</button>
                 </Link>
             </div>
-            
+
             <Footer />
         </>
 
