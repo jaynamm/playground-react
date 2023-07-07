@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
@@ -6,8 +7,8 @@ import './styles/App.css';
 import Home from './pages/Home';
 import Main from './pages/Main';
 import Notice from './pages/Notice';
-import Idsearch from'./components/Login/Idsearch';
-import PasswordSearch from'./components/Login/PasswordSearch';
+import Idsearch from './components/Login/Idsearch';
+import PasswordSearch from './components/Login/PasswordSearch';
 import SignIn from './components/Login/SignIn';
 import SignUp from './components/Login/SignUp';
 import NoticeView from './components/Notice/NoticeView'
@@ -19,6 +20,11 @@ import { QnaView } from './components/Qna/QnaView';
 
 import MyPage from './components/Mypage/MyPage';
 import MyPageModify from './components/Mypage/MyPageModify';
+
+import Create from './components/Feed/Create';
+import Comments from './components/Feed/View';
+import View from './components/Feed/View';
+import Modify from './components/Feed/Modify';
 
 
 
@@ -32,10 +38,10 @@ function App() {
 
           <Route path='/signin' element={<SignIn />} />
           <Route path='/signup' element={<SignUp />} />
-          
-          <Route path='/idsearch' element={<Idsearch />}/>
-          <Route path='/passwordsearch' element={<PasswordSearch />}/>
-          
+
+          <Route path='/idsearch' element={<Idsearch />} />
+          <Route path='/passwordsearch' element={<PasswordSearch />} />
+
           <Route path='/notice' element={<Notice />} />
           <Route path='/notice/write' element={<NoticeWrite />} />
           <Route path='/notice/view/:id' element={<NoticeView />} />
@@ -45,8 +51,16 @@ function App() {
           <Route path='/qna/write' element={<QnaWrite />} />
           <Route path='/qna/view/:id' element={<QnaView />} />
 
+          <Route path='/qna' element={<Qna />} />
+          <Route path='/qna/write' element={<QnaWrite />} />
+          <Route path='/qna/view/:id' element={<QnaView />} />
+
           <Route path='/mypage' element={<MyPage />} />
           <Route path='/mypage/modify' element={<MyPageModify />} />
+
+          <Route path='/createfeed' element={<Create />} />
+          <Route path='/feed/view/:id' element={<View />} />
+          <Route path='/feed/modify/:id' element={<Modify />} />
         </Routes>
       </BrowserRouter>
     </div>

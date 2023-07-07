@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import { kakaoURL } from'../../config/KakaoAuth';
+import { kakaoURL } from '../../config/KakaoAuth';
 import { ButtonGroup } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
-import { styles } from'./styles'
+import { styles } from './styles'
 import axios from "axios"
 
 import Button from '@mui/material/Button';
@@ -31,41 +31,41 @@ export default function SignIn() {
   ]
 
   const signUpHandler = () => {
-    if (userId.length === 0 || userPassword.length === 0){
-        alert("이메일과 비밀번호를 입력하세요.");
-        return;
+    if (userId.length === 0 || userPassword.length === 0) {
+      alert("이메일과 비밀번호를 입력하세요.");
+      return;
     } // 아무런 값을 입력하지 않았을 때 alert를 호출합니다.
 
-  const data = {
-    "userid": userId,
-    "password": userPassword,
-  };
+    const data = {
+      "userid": userId,
+      "password": userPassword,
+    };
 
-  axios //입력한 데이터를 받음.
-    .post("/api/member/login", data)
-    .then((response) => {             
-      console.log(response.data);
-      const responseData = response.data;
+    axios //입력한 데이터를 받음.
+      .post("/api/member/login", data)
+      .then((response) => {
+        console.log(response.data);
+        const responseData = response.data;
 
-      // Request 헤더에서 토큰을 가져와서 localStorage 에 저장한다.
-      let jwtToken = response.headers.get("Authorization");
-      localStorage.setItem("Authorizaion", jwtToken);
+        // Request 헤더에서 토큰을 가져와서 localStorage 에 저장한다.
+        let jwtToken = response.headers.get("Authorization");
+        localStorage.setItem("Authorization", jwtToken);
 
-      alert("로그인 성공했습니다.");
+        alert("로그인 성공했습니다.");
 
-      navigate('/home', {
-        state : responseData
+        navigate('/home', {
+          state: responseData
+        })
       })
-    })
-    .then((result) => {
-      console.log(result);
-    })
-    .catch((error) =>{
-      console.log(error);
-      alert('로그인에 실패했습니다.') //axios값에 데이터가 일치 하지 않으면 함수를 호출함
-    });   
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((error) => {
+        console.log(error);
+        alert('로그인에 실패했습니다.') //axios값에 데이터가 일치 하지 않으면 함수를 호출함
+      });
   };
-  
+
 
   return (
 
@@ -85,7 +85,7 @@ export default function SignIn() {
         />
 
         <Grid item xs={12} sm={5} md={4.0} component={Paper} elevation={3} square>
-          <Box 
+          <Box
             sx={{
               my: 14,
               mx: 5,
@@ -121,16 +121,16 @@ export default function SignIn() {
               />
 
               <Button
-              type="button"
-              fullWidth
-              variant="contained" color="secondary"
-              sx={{ mt: 3, mb: 3 }}
-              onClick={() => signUpHandler()}
+                type="button"
+                fullWidth
+                variant="contained" color="secondary"
+                sx={{ mt: 3, mb: 3 }}
+                onClick={() => signUpHandler()}
               >
                 PLAY LOGIN
               </Button>
-                <Box
-                
+              <Box
+
                 sx={{
                   display: 'flex',
                   flexDirection: 'column',
@@ -139,32 +139,32 @@ export default function SignIn() {
                 <ButtonGroup fullWidth style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                   {buttons}
                 </ButtonGroup>
-                </Box>
-                <br></br>
-                
-                {/* 카카오 로그인 버튼 입니다. */}
-                <Button 
-              fullWidth
-              href={kakaoURL}
-              startIcon={<ChatBubbleIcon />}
-              sx={{
-                backgroundColor:'#FEE500',
-                color:'#191919'
-              }}>
+              </Box>
+              <br></br>
+
+              {/* 카카오 로그인 버튼 입니다. */}
+              <Button
+                fullWidth
+                href={kakaoURL}
+                startIcon={<ChatBubbleIcon />}
+                sx={{
+                  backgroundColor: '#FEE500',
+                  color: '#191919'
+                }}>
                 <span>카카오계정 로그인</span>
               </Button>
 
             </Box>
           </Box>
         </Grid>
-      </Grid> 
+      </Grid>
       {/* 뒷 배경을 가져온 것 입니다. */}
-        <div class="ocean"> 
-          <div class="wave"></div>
-          <div class="wave"></div>
-        </div>
+      <div class="ocean">
+        <div class="wave"></div>
+        <div class="wave"></div>
+      </div>
     </ThemeProvider>
-    
+
   );
 }
 
