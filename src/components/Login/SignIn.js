@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { kakaoURL } from '../../config/KakaoAuth';
 import { ButtonGroup } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { styles } from './styles';
 import axios from 'axios';
 
@@ -23,13 +23,13 @@ export default function SignIn() {
   const theme = createTheme();
 
   const buttons = [
-    <Button href="/Idsearch" color="primary">
+    <Button color="primary" key="idSearch" component={Link} to="/Idsearch">
       아이디 찾기
     </Button>,
-    <Button href="/PasswordSearch" color="success">
+    <Button color="success" key="PasswordSearch" component={Link} to="/PasswordSearch">
       비밀번호 찾기
     </Button>,
-    <Button href="/signup" color="secondary">
+    <Button color="secondary" key="signUp" component={Link} to="/signup">
       회원가입
     </Button>,
   ];
@@ -159,9 +159,9 @@ export default function SignIn() {
         </Grid>
       </Grid>
       {/* 뒷 배경을 가져온 것 입니다. */}
-      <div class="ocean">
-        <div class="wave"></div>
-        <div class="wave"></div>
+      <div className="ocean">
+        <div className="wave"></div>
+        <div className="wave"></div>
       </div>
     </ThemeProvider>
   );
