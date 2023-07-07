@@ -30,10 +30,10 @@ export default function SignUp() {
 
   const idCheck = () => {
     axios
-      .post('/api/member/checkid', { userId })
+      .post('/api/member/checkid', { userid: userId })
       .then((response) => {
         console.log(response);
-        if (response.data.available) {
+        if (response.data.responseMessage.includes('USERID_USEABLE')) {
           alert('사용 가능한 아이디입니다.');
           setCheckId(true);
         } else {
