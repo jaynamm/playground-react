@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../styles/Home.css';
-import { redirect, useHistory } from 'react-router-dom';
 import NewsFeed from '../components/Feed/NewsFeed';
 import Header from '../components/Base/Header';
 import Footer from '../components/Base/Footer';
