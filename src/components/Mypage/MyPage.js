@@ -69,7 +69,7 @@ const MyPage = () => {
       url: '/api/mypage',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: localStorage.getItem('accessToken'),
+        // Authorization: localStorage.getItem('accessToken'),
       },
     })
       .then((response) => {
