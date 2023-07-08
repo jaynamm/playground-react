@@ -19,7 +19,7 @@ export default function Nav() {
             <div className="logo">Play</div>
           </Link>
           <div className="menu">
-            <ul>
+            <ul className="topTitle">
               <li>
                 <Link to="/notice"> 공지사항 </Link>
               </li>
@@ -34,7 +34,7 @@ export default function Nav() {
         </div>
 
         <div className="icon">
-          <ul>
+          <ul className="topTitle">
             <li>
               <button>
                 <i className="fa-solid fa-magnifying-glass"></i>
