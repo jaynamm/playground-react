@@ -29,6 +29,12 @@ export default function SignUp() {
   const theme = createTheme();
 
   const idCheck = () => {
+    const reid = /^[a-zA-z0-9]{4,12}$/;
+    if (userId.match(reid) === null) {
+      alert('아이디 형식에 맞지 않습니다.');
+      return;
+    }
+
     axios
       .post('/api/member/checkid', { userid: userId })
       .then((response) => {
