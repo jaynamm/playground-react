@@ -2,7 +2,7 @@ import React from 'react';
 import '../../styles/Main.css';
 import { Link } from 'react-router-dom';
 import { redirect } from 'react-router-dom';
-import axios from 'axios';
+import axios from '../Token/Interceptor';
 
 const action = () => {
   localStorage.removeItem('accessToken');
