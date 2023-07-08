@@ -61,11 +61,11 @@ const Notice = () => {
           </tbody>
         </table>{' '}
         <br />
-        {/* <Link to="write">
+        <Link to="write">
           <button type="button" className="btn btn-primary-notice">
             글쓰기
           </button>
-        </Link> */}
+        </Link>
       </div>
       <Footer />
     </div>

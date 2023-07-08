@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from '../Token/Interceptor';
-import Header from '../../components/Base/Header';
+import Header from '../Base/Header';
 import { useNavigate, useLocation } from 'react-router-dom';
 import '../../styles/Notice/NoticeView.css';
 import Moment from 'react-moment';
@@ -83,12 +83,12 @@ const NoticeView = () => {
             </tbody>
           </table>
           <div className="view-buttons">
-            {/* <button type="submit" className="btn btn-primary-view" onClick={noticeDeleteHandler}>
+            <button type="submit" className="btn btn-primary-view" onClick={noticeDeleteHandler}>
               삭제하기
             </button>
             <button type="submit" className="btn btn-primary-view" onClick={noticeModifyHandler}>
               수정하기
-            </button> */}
+            </button>
             <button
               type="submit"
               className="btn btn-primary-view"

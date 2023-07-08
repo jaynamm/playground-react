@@ -4,12 +4,6 @@ import { Link } from 'react-router-dom';
 import { redirect } from 'react-router-dom';
 import axios from '../Token/Interceptor';
 
-const action = () => {
-  localStorage.removeItem('accessToken');
-  localStorage.removeItem('refreshToken');
-};
-//로그아웃 기능
-
 export default function Nav() {
   return (
     <header>
