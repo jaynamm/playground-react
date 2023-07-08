@@ -1,4 +1,4 @@
-const Jop = [
+const Job = [
   { title: '웹 개발자' },
   { title: '서버 개발자' },
   { title: '소프트웨어 엔지니어' },
@@ -36,4 +36,4 @@ const Jop = [
   { title: 'VR 엔지니어' },
 ];
 
-export default Jop;
+export default Job;

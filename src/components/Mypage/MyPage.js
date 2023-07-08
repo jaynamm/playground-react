@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Footer from '../Base/Footer';
 import Header from '../Base/Header';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import { Avatar } from '@mui/material';
 import Button from '@mui/material/Button';
 import '../../styles/Mypage.css';
@@ -48,7 +48,7 @@ function a11yProps(index) {
 const MyPage = () => {
   // const location = useLocation();
   // const member = location.state; // notice 가 mypage로 바뀜
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [value, setValue] = React.useState(0);
   const [mypage, setMypage] = useState([]);
   const [folowMyPage, setFollowMyPage] = useState([]);

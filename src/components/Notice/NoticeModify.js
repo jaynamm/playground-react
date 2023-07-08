@@ -4,8 +4,6 @@ import Header from '../../components/Base/Header';
 import axios from '../Token/Interceptor';
 import { useNavigate } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
-import Box from '@mui/material/Box';
-import Input from '@mui/material/Input';
 import '../../styles/Notice/NoticeModify.css';
 
 export default function NoticeModify() {
