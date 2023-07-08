@@ -49,10 +49,6 @@ function App() {
           <Route path="/qna/write" element={<QnaWrite />} />
           <Route path="/qna/view/:id" element={<QnaView />} />
 
-          <Route path="/qna" element={<Qna />} />
-          <Route path="/qna/write" element={<QnaWrite />} />
-          <Route path="/qna/view/:id" element={<QnaView />} />
-
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/mypage/modify" element={<MyPageModify />} />
           <Route path="/mypage/myskill" element={<MySkill />} />
