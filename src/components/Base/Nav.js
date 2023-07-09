@@ -1,6 +1,7 @@
 import React from 'react';
 import '../../styles/Main.css';
 import { Link } from 'react-router-dom';
+import zIndex from '@mui/material/styles/zIndex';
 // import { redirect } from 'react-router-dom';
 // import axios from '../Token/Interceptor';
 
@@ -12,7 +13,7 @@ const action = () => {
 
 export default function Nav() {
   return (
-    <header>
+    <header style={{ zIndex: 100 }}>
       <nav>
         <div className="bar">
           <Link to="/" style={{ textDecoration: 'none' }}>
@@ -30,7 +31,7 @@ export default function Nav() {
                 <Link to="/home">실시간 인기게시물</Link>
               </li>
               <li>
-              <Link to="/recommend">채용 추천</Link>
+                <Link to="/recommend">채용 추천</Link>
               </li>
             </ul>
           </div>

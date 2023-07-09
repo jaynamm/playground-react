@@ -1,25 +1,29 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../Base/Header';
 import Footer from '../Base/Footer';
-// import axios from 'axios';
-import axios from '../Token/Interceptor';
+import axios from 'axios';
+// import axios from '../Token/Interceptor';
 
 import jobNameList from '../Data/Job';
 import jobSkillList from '../Data/Skill';
 import jobLocationList from '../Data/Location';
-import { Autocomplete, Button, Grid, IconButton, List, ListItem, TextField } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
-import RecommendView from './RecommendView';
-
+import { Autocomplete, Box, Button, CircularProgress, Dialog, DialogContent, DialogTitle, Grid, IconButton, List, ListItem, TextField } from '@mui/material';
+import CancelIcon from '@mui/icons-material/Cancel';
+import { useNavigate } from 'react-router-dom';
 
 
 const Recommend = () => {
+  const navigate = useNavigate();
+
   const [jobName, setJobName] = useState("");
   const [jobLocaction, setJobLocation] = useState("");
   const [jobSkill, setJobSkill] = useState("");
   const [jobSkillSet, setJobSkillSet] = useState([]);
   const [jobGrade, setJobGrade] = useState("");
   const jobGradeList = ["초급", "중급", "고급"]
+
+  const [isLoading, setIsLoading] = useState(false);
+
 
   const addSkillHandler = () => {
     if (jobSkill === "" || jobGrade === "") {
@@ -57,6 +61,8 @@ const Recommend = () => {
       return;
     }
 
+    setIsLoading(true);
+
     const skillSetDict = jobSkillSet.reduce((dict, item) => {
       let gradePoint = 0;
 
@@ -74,14 +80,14 @@ const Recommend = () => {
     }, {});
 
     const inputData = {
-      "job_name": jobName,
-      "location": jobLocaction,
-      "skils": skillSetDict
+      "jobName": jobName,
+      "jobLocation": jobLocaction,
+      "jobSkills": skillSetDict
     };
 
     console.log(inputData);
 
-    axios.post('/api/recommend/list', inputData, 
+    axios.post('/api/recommend/list', {inputData: inputData}, 
       { 
         headers: { 
           'Content-Type': 'application/json' 
@@ -89,20 +95,28 @@ const Recommend = () => {
       }
     )
     .then((res) => {
-      console.log(res.data)
+      console.log(res.data.data)
+
+      const result = JSON.parse(res.data.data);
+
+      navigate('/recommend/result', { state: result });
     })
     .catch((err) => {
       console.log(err)
     })
+    .finally(() => {
+      setIsLoading(false);
+    });
   };
 
   return (
-      <>
+      <>  
         <Header />
         <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', placeContent: 'center', alignItems: 'center', padding: 50, marginBottom: 200 }}>
-          <div className='fs-1 fw-bold'>채용 사이트 추천</div>
+          <div className='fs-1 fw-bold'>채용 공고 추천</div>
 
           <br></br>
+          <p>내가 가진 실력으로 어떤 기업에 지원할 수 있을까요?</p>
 
           <br></br>
 
@@ -123,7 +137,7 @@ const Recommend = () => {
               id="controllable-states-demo"
               options={jobNameList.map((option) => option.title)}
               sx={{ width: 300, margin: 1 }}
-              renderInput={(params) => <TextField {...params} label="직무" />}
+              renderInput={(params) => <TextField {...params} label="직무" placeholder="직무"/>}
             />
 
             <Autocomplete
@@ -144,7 +158,7 @@ const Recommend = () => {
           
           <br></br>
           
-          <div className='fw-bold'>기술 / 스택 과 등급을 선택해주세요.</div>
+          <div>기술 / 스택 과 등급을 선택해주세요.</div>
 
           <br></br>
 
@@ -172,37 +186,45 @@ const Recommend = () => {
             />
 
           </div>
-          <Button variant="outlined" color="secondary" className="btn btn-warning" onClick={addSkillHandler}>기술/스택 추가</Button>
+          <Button variant="outlined" color="secondary" onClick={addSkillHandler}>기술/스택 추가</Button>
 
           <br></br>
           
-          <div>기술/스택 목록 (최대 20개)</div>
+          <div className='fw-bold'>기술/스택 목록 (최대 20개)</div>
 
           <br></br>
 
-          <div style={{width: '60%'}}>
+          <div style={{width: '80%'}}>
             <List style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', placeContent: 'center', alignItems: 'center' }}>
             <Grid container spacing={2} columns={{ xs: 4, sm: 8, md: 12 }}>
               {jobSkillSet.map((item, index) => (
-                <ListItem key={index} style={{ width: 'fit-content' }}>
-                  {item}
-                  <IconButton aria-label="delete" size='small' color="error" 
-                    onClick={() => removeSkillHandler(index)}>
-                      <DeleteIcon fontSize="inherit" />
-                  </IconButton>
+                <ListItem key={index} sx={{ width: 'fit-content', placeItems: 'center' }}>
+                  <Box component="span" sx={{ p: 1, paddingLeft: 2, borderRadius: 8, backgroundColor: '#3dbbb0'}}>
+                    {item}
+                    <IconButton aria-label="delete" size='small' color="error" 
+                                sx={{ ":hover": {'backgroundColor':'transparent'} }}
+                                onClick={() => removeSkillHandler(index)} >
+                      <CancelIcon fontSize="small" color='action' sx={{paddingBottom: 0.2}}></CancelIcon>
+                    </IconButton>
+                  </Box>
                 </ListItem>
               ))}
             </Grid>
             </List>
           </div>
-          
-          
 
           <br></br>
 
-          <Button variant="contained" color="success" className="btn btn-primary" onClick={recommendedDataHandler}>채용 공고 추천 받기</Button>
+          <Button variant="contained" color="success" className="btn btn-primary" onClick={recommendedDataHandler}>채용 공고 추천</Button>
 
-          <RecommendView />
+          {isLoading && (
+            <Dialog open={isLoading} onClose={() => {}} aria-labelledby="loading-dialog-title" disableBackdropClick disableEscapeKeyDown>
+              <DialogTitle id="loading-dialog-title">채용 공고 추천중</DialogTitle>
+              <DialogContent sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+              <CircularProgress color="secondary" />
+              </DialogContent>
+            </Dialog>
+          )}
         </div>
         <Footer />
       </>
