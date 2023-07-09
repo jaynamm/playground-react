@@ -3,7 +3,6 @@ import axios from '../components/Token/Interceptor';
 import '../styles/Home.css';
 import NewsFeed from '../components/Feed/NewsFeed';
 import Header from '../components/Base/Header';
-import Footer from '../components/Base/Footer';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
