@@ -29,6 +29,12 @@ export default function SignUp() {
   const theme = createTheme();
 
   const idCheck = () => {
+    const reid = /^[a-zA-z0-9]{4,12}$/;
+    if (userId.match(reid) === null) {
+      alert('아이디 형식에 맞지 않습니다.');
+      return;
+    }
+
     axios
       .post('/api/member/checkid', { userid: userId })
       .then((response) => {
@@ -197,10 +203,10 @@ export default function SignUp() {
                     label="Curriculm"
                     onChange={(e) => setCurriculum(e.target.value)}
                   >
-                    <MenuItem value={1}>빅데이터</MenuItem>
-                    <MenuItem value={2}>인공지능</MenuItem>
-                    <MenuItem value={3}>클라우드</MenuItem>
-                    <MenuItem value={4}>백엔드</MenuItem>
+                    <MenuItem value="빅데이터">빅데이터</MenuItem>
+                    <MenuItem value="인공지능">인공지능</MenuItem>
+                    <MenuItem value="클라우드">클라우드</MenuItem>
+                    <MenuItem value="백엔드">백엔드</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>

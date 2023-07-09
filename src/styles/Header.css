@@ -1,77 +1,72 @@
 @import url('reset.css');
 
 header {
-    position: sticky;
-    top: 0;
-    align-items: center;
-    background-color: white;
-    padding: 10px;
-    box-shadow: 0px 2px 5px #888888;
-    z-index: 1;
+  position: sticky;
+  top: 0;
+  align-items: center;
+  background-color: white;
+  padding: 10px;
+  box-shadow: 0px 2px 5px #888888;
+  z-index: 1;
 }
 
-header>nav>div.bar {
-    display: flex;
-    justify-content: left;
+header > nav > div.bar {
+  display: flex;
+  justify-content: left;
 }
 
 .logo {
-    font-weight: bold;
-    font-size: 24px;
-    color: #13837a;
-    display: flex;
+  font-weight: bold;
+  font-size: 24px;
+  color: #13837a;
+  display: flex;
 }
 
 .logo::after {
-    content: "Ground。";
-    font-size: 24px;
-    color: #bb55d2;
+  content: 'Ground。';
+  font-size: 24px;
+  color: #bb55d2;
 }
 
 .menu {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .menu a {
-    color: black;
-    font-weight: bold;
-    margin-right: 20px;
-    font-size: 14px;
-    text-decoration: none;
-    transition: all 0.3s ease-in-out;
+  color: black;
+  font-weight: bold;
+  margin-right: 20px;
+  font-size: 14px;
+  text-decoration: none;
+  transition: all 0.3s ease-in-out;
 }
 
 .menu a:hover {
-    color: #9536f4;
+  color: #9536f4;
 }
 
-
 @media screen and (max-width: 768px) {
-    .menu {
-        display: none;
-
-    }
+  .menu {
+    display: none;
+  }
 }
 
 nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 50px;
 }
 
-
-ul {
-    display: flex;
-    
+.topTitle {
+  display: flex;
 }
-
 
 li {
-    margin-left: 20px;
+  margin-left: 20px;
 }
 
 div.icon ::before {
-    color: #151212;
+  color: #151212;
 }
