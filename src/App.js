@@ -26,6 +26,8 @@ import View from './components/Feed/View';
 import Modify from './components/Feed/Modify';
 import MySkill from './components/Mypage/MySkill';
 
+import Recommend from './components/Recommend/Recommend';
+
 function App() {
   return (
     <div>
@@ -49,9 +51,7 @@ function App() {
           <Route path="/qna/write" element={<QnaWrite />} />
           <Route path="/qna/view/:id" element={<QnaView />} />
 
-          <Route path="/qna" element={<Qna />} />
-          <Route path="/qna/write" element={<QnaWrite />} />
-          <Route path="/qna/view/:id" element={<QnaView />} />
+          <Route path="/recommend" element={<Recommend />} />
 
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/mypage/modify" element={<MyPageModify />} />
