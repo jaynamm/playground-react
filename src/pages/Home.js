@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from '../components/Token/Interceptor';
 import '../styles/Home.css';
 import NewsFeed from '../components/Feed/NewsFeed';
 import Header from '../components/Base/Header';
@@ -28,10 +28,6 @@ const Home = () => {
     axios({
       method: 'GET',
       url: '/api/feed/list',
-      headers: {
-        // 'Content-Type': 'application/json',
-        Authorization: localStorage.getItem('Authorization'),
-      },
     })
       .then((res) => {
         console.log(res.data);

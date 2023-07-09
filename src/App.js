@@ -47,10 +47,6 @@ function App() {
           <Route path="/notice/view/:id" element={<NoticeView />} />
           <Route path="/notice/modify" element={<NoticeModify />} />
 
-          <Route path="/qna" element={<Qna />} />
-          <Route path="/qna/write" element={<QnaWrite />} />
-          <Route path="/qna/view/:id" element={<QnaView />} />
-
           <Route path="/recommend" element={<Recommend />} />
 
           <Route path="/mypage" element={<MyPage />} />
