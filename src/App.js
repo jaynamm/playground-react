@@ -29,6 +29,7 @@ import MySkill from './components/Mypage/MySkill';
 import Recommend from './components/Recommend/Recommend';
 import RecommendResult from './components/Recommend/RecommendResult';
 
+
 function App() {
   return (
     <div>
@@ -62,6 +63,7 @@ function App() {
           <Route path="/createfeed" element={<Create />} />
           <Route path="/feed/view/:id" element={<View />} />
           <Route path="/feed/modify/:id" element={<Modify />} />
+
         </Routes>
       </BrowserRouter>
     </div>
