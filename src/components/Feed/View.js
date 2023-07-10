@@ -30,9 +30,11 @@ export default function View() {
 
   const [feed, setFeed] = useState([]);
   const [comments, setComments] = useState([]);
-
+  const [editButton, setEditButton] = useState();
   const location = useLocation();
   const feedId = location.state.id;
+
+
 
   useEffect(() => {
     axios({
@@ -45,13 +47,13 @@ export default function View() {
     })
       .then((res) => {
         console.log(res.data);
-
         let feedData = res.data.data;
 
         setFeed(feedData.feed);
         console.log(feedData.feed);
         setComments(feedData.comments.content);
         console.log(feedData.comments);
+        setEditButton(!res.data.responseMessage.includes("FAILED"));
       })
       .catch((err) => {
         console.log(err);
@@ -154,15 +156,11 @@ export default function View() {
                 </button>
               </div>
             </div>
-            <div className="p-4">
-              <h1 className="mb-6 font-bold text-xl">{feed.content}</h1>
-              <p className="auto-line-break text-base text-slate-900 whitespace-pre-wrap">
-                <a
-                  className="text-slate-900 mt-6 flex underline"
-                  target="_blank"
-                  rel="origin"
-                  href="https://www.lipsum.com/"
-                >
+            <div className='p-4'>
+              <h1 className='mb-6 font-bold text-xl'>플레이그라운드</h1>
+              <p className='auto-line-break text-base text-slate-900 whitespace-pre-wrap'>
+                {feed.content}
+                <a className='text-slate-900 mt-6 flex underline' target="_blank" rel='origin' href="https://www.lipsum.com/">
                   https://www.lipsum.com/
                 </a>
               </p>
@@ -195,15 +193,19 @@ export default function View() {
               {/* <p className='text-xs text-slate-500 false'>
                 조회 <b>224</b>
               </p> */}
-              <div id="modifyDeleteButton">
-                <button type="button" className="px-2" onClick={() => modifyHandler(feed.id)}>
-                  <i class="fa-solid fa-pen"></i>
-                </button>
+              {editButton && (
+                <div id="modifyDeleteButton">
 
-                <button type="button" className="px-2" onClick={feedDelete}>
-                  <i class="fa-solid fa-trash"></i>
-                </button>
-              </div>
+                  <button type="button" className='px-2' onClick={() => modifyHandler(feed.id)}>
+                    <i class="fa-solid fa-pen"></i>
+                  </button>
+
+
+                  <button type='button' className='px-2' onClick={feedDelete}>
+                    <i class="fa-solid fa-trash"></i>
+                  </button>
+                </div>
+              )}
 
               {/* <div className=''>
                 <button><i ref={optionsRef} class="fa-solid fa-ellipsis-vertical" onClick={toggleDrop}></i></button>
@@ -264,9 +266,8 @@ export default function View() {
                   </div>
                   <button
                     type="button"
-                    className={`flex-none border border-solid bg-red-500 px-3 py-2 rounded-md text-white text-xs ${
-                      textareaValue === '' ? 'opacity-50' : ''
-                    }`}
+                    className={`flex-none border border-solid bg-red-500 px-3 py-2 rounded-md text-white text-xs ${textareaValue === '' ? 'opacity-50' : ''
+                      }`}
                     disabled={textareaValue === ''}
                     onClick={handleCommentRegistration}
                   >
