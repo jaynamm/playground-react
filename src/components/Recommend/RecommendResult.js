@@ -27,12 +27,19 @@ export const RecommendResult = () => {
       <Typography variant="h4" align="center" gutterBottom> 추천받은 채용 공고를 확인해보세요 </Typography>
 
       <br></br>
-      
-      <Button href="/recommend" variant="contained" color="success" className="btn btn-primary">돌아가기</Button>
+      {result ? (
+        <Button href="/recommend" variant="contained" color="success" className="btn btn-primary">다시 추천 받기</Button>
+      ) : (
+        <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center" placeContent="center" padding={10}>
+            <Typography variant="h6" component="div">다시 채용추천 페이지로 이동해주세요 :)</Typography>  
+            <br />
+            <Button href="/recommend" variant="contained" color="success" className="btn btn-primary">돌아가기</Button>      
+        </Box>
+      )}
 
       <br></br>
 
-      <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center" placeContent="center">
+      <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center" placeContent="center" marginBottom={10}>
         {result ? (
           Object.values(result).map((jobDescription, index) => (
             <Grid container spacing={2} columns={{ xs: 4, sm: 8, md: 12 }} style={{ margin: 1 }}>
@@ -48,7 +55,7 @@ export const RecommendResult = () => {
             </Grid>
           ))
         ) : (
-          <div>다시 채용추천 페이지로 이동해주세요.</div>
+          <></>
         )}
       </Box>
 
