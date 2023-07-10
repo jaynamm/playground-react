@@ -61,11 +61,12 @@ body {
     float: right;   
     margin-left: 20px; 
     margin-bottom: 5%;
+    margin-top: 2%;
+    
 }
 
 .btn-primary-write:hover {
     background-color: #F0E4FF;
     color : #7D7D7D;
-
 }
 
