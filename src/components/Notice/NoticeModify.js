@@ -4,6 +4,7 @@ import Header from '../../components/Base/Header';
 import axios from '../Token/Interceptor';
 import { useNavigate } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 import '../../styles/Notice/NoticeModify.css';
 
 export default function NoticeModify() {
@@ -90,9 +91,11 @@ export default function NoticeModify() {
             </td>
           </tr>
         </table>
-        <button type="submit" className="btn btn-primary-modify" onClick={() => modifyCompleteHandler()}>
-          수정하기
-        </button>
+        <div className="noticeMDbutton">
+          <Button variant="contained" size="medium" color="inherit" onClick={() => modifyCompleteHandler()}>
+            수정하기
+          </Button>
+        </div>
       </div>
     </div>
   );
