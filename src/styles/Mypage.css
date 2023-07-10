@@ -1,164 +1,163 @@
 body {
-    font-family: Arial, sans-serif;
+  font-family: Arial, sans-serif;
 }
 
 .title {
-    font-weight: bold;
-    font-size: 25px;
-    display: flex;
-    flex-direction: row;
+  font-weight: bold;
+  font-size: 25px;
+  display: flex;
+  flex-direction: row;
 
-    min-width: 150px;
-    max-width: 800px;
-    width: auto;
+  min-width: 150px;
+  max-width: 800px;
+  width: auto;
 
-    max-height: 250px;
-    padding: 10px 15px ;
-    margin: 20px auto 10px auto;
-    
+  max-height: 250px;
+  padding: 10px 15px;
+  margin: 20px auto 10px auto;
 }
 
 #profile {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 
-    min-width: 150px;
-    max-width: 800px;
-    width: auto;
+  min-width: 150px;
+  max-width: 800px;
+  width: auto;
 
-    max-height: 250px;
-    padding:  15px;
-    margin: 0px auto;
-    border-top: 4px solid #397a758b;
-    border-bottom: 4px solid #397a758b;
-    /* border-radius: 25px; */
+  max-height: 250px;
+  padding: 15px;
+  margin: 0px auto;
+  border-top: 4px solid #397a758b;
+  border-bottom: 4px solid #397a758b;
+  /* border-radius: 25px; */
 }
 
-.profile_info td{
-    padding:4px;
-    font-size: 15px;
+.profile_info td {
+  padding: 4px;
+  font-size: 15px;
 }
-
 
 .profile_image {
-    /* text-align:center; */
-    width: 20%;
-    min-width: 30px;
-    max-width: 240px;
-    aspect-ratio: 1/1;
-    margin: auto;
-    display: flex;
-    justify-content: center;
-    align-items:center;
+  /* text-align:center; */
+  width: 20%;
+  min-width: 30px;
+  max-width: 240px;
+  aspect-ratio: 1/1;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #image {
-    min-Width:50px;
-    min-Height:50px;
-    width:80%;
-    height:80%;
-    aspect-ratio:1/1;
-
+  min-width: 50px;
+  min-height: 50px;
+  width: 80%;
+  height: 80%;
+  aspect-ratio: 1/1;
 }
 
 .profile_info {
-    min-width: 105px;
-    width: 70%;
-    max-width: 560px;
+  min-width: 105px;
+  width: 70%;
+  max-width: 560px;
 }
 
 #modify_button {
-    text-align: right;
-    width: 100px;
-    height: 30px;
-
+  text-align: right;
+  width: 100px;
+  height: 30px;
 }
 
 .btn-primary {
-    font-size: 10px;
-    background-color: white;
-    border: 1.5px solid #3b3a3a4e;
-    --bs-btn-color: black ;
-    --bs-btn-border-color: white;
-    --bs-btn-hover-color: white;
-    --bs-btn-hover-bg: #3b3a3a4e;
-    --bs-btn-hover-border-color: #3b3a3a4e;
+  font-size: 10px;
+  background-color: white;
+  border: 1.5px solid #3b3a3a4e;
+  --bs-btn-color: black;
+  --bs-btn-border-color: white;
+  --bs-btn-hover-color: white;
+  --bs-btn-hover-bg: #3b3a3a4e;
+  --bs-btn-hover-border-color: #3b3a3a4e;
 }
 
-div.table{
-    height: 100%;
-    margin: 0;
+div.table {
+  height: 100%;
+  margin: 0;
 }
 
 .profile_info table {
-    width: 100%;
+  width: 100%;
 }
 
-.profile_info tr{
-    height: 25%;
-    width: 100px;
+.profile_info tr {
+  height: 25%;
+  width: 100px;
 }
 
 #firstrow td {
-    padding:0;
+  padding: 0;
 }
 
 #preview h1 {
-    margin: 10px 0px;
-    font-size: 20px;
-    font-weight: bold;
+  margin: 10px 0px;
+  font-size: 20px;
+  font-weight: bold;
 }
 
-#preview table{
-    width: 100%
+#preview table {
+  width: 100%;
 }
 
 #preview {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 
-    min-width: 150px;
-    max-width: 800px;
-    min-height: 250px;
-    max-height: 500px;
-    padding: 15px;
-    margin: 0px auto;
-    border-bottom: 4px solid #397a758b;
-    /* border-radius: 25px; */
+  min-width: 150px;
+  max-width: 800px;
+  min-height: 250px;
+  max-height: 500px;
+  padding: 15px;
+  margin: 0px auto;
+  border-bottom: 4px solid #397a758b;
+  /* border-radius: 25px; */
 }
 
 th.contentContainer {
-    width: 50%;
-    padding: 10px;
-    border: 2px solid #397a7318;
-    /* border-radius:25px; */
+  width: 50%;
+  padding: 10px;
+  border: 2px solid #397a7318;
+  /* border-radius:25px; */
 
-    height: 130px;
-    }
+  height: 130px;
+}
 
 div.content {
-    white-space: normal;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    height: 85px;
-    width: 100%;
-    max-height: 85px; 
-    max-width: 350px;
-    margin-bottom: 5px;
-    padding-top: 5px;
-    font-size: 14px;
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 85px;
+  width: 100%;
+  max-height: 85px;
+  max-width: 350px;
+  margin-bottom: 5px;
+  padding-top: 5px;
+  font-size: 14px;
 }
 
-div #createdDate{
-    height: 12px;
-    font-size: 10px;
-    padding-top:10px;
+div #createdDate {
+  height: 12px;
+  font-size: 10px;
+  padding-top: 10px;
 }
 
-div.space{
-    height: 500px;
+div.space {
+  height: 500px;
 }
 
-
-
-
+.myPageModify {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh; /* 필요한 높이 값으로 변경 가능 */
+}
