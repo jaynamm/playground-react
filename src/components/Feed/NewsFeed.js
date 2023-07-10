@@ -55,9 +55,9 @@ export default function NewsFeed({ feed, likeCount, setLikeCount }) {
                     </div>
                 </div>
                 <div className='p-4'>
-                    <h1 className='mb-6 font-bold text-xl'>{feed.content}</h1>
+                    <h1 className='mb-6 font-bold text-xl'>플레이그라운드</h1>
                     <p className='auto-line-break text-base text-slate-900 whitespace-pre-wrap'>
-
+                        {feed.content}
                         <a className='text-slate-900 mt-6 flex underline' target="_blank" rel='origin' href="https://www.lipsum.com/">
                             https://www.lipsum.com/
                         </a>
