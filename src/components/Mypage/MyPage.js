@@ -91,18 +91,33 @@ const MyPage = () => {
       <Header />
       <div>
         <Box sx={{ display: 'flex', justifyContent: 'center', marginRight: '100px' }}>
-          {mypage && folowMyPage && (
-            <Card sx={{ width: 260, height: 300, minWidth: 275, marginTop: '80px', backgroundColor: '#EDF4FF' }}>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            {mypage && folowMyPage && (
+              <Card sx={{ width: 260, height: 300, minWidth: 275, marginTop: '80px', backgroundColor: '#EDF4FF' }}>
+                <CardContent>
+                  <Typography variant="h5" component="div" sx={{ textAlign: 'center', marginBottom: '10px' }}>
+                    {mypage.name}
+                  </Typography>
+                  <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                    이메일 : {mypage.email}
+                    <br />
+                    팔로잉 : {folowMyPage.followingCount}
+                    <br />
+                    팔로워 : {folowMyPage.followerCount}
+                  </Typography>
+                  <Typography variant="body2">{mypage.myskill}</Typography>
+                </CardContent>
+                <CardActions sx={{ justifyContent: 'center' }}>
+                  <Button variant="contained">
+                    <Link to="/mypage/modify">비밀번호 수정</Link>
+                  </Button>
+                </CardActions>
+              </Card>
+            )}
+            <Card sx={{ width: 260, height: 200, minWidth: 275, marginTop: '80px', backgroundColor: '#EDF4FF' }}>
               <CardContent>
                 <Typography variant="h5" component="div" sx={{ textAlign: 'center', marginBottom: '10px' }}>
-                  {mypage.name}
-                </Typography>
-                <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                  이메일 : {mypage.email}
-                  <br />
-                  팔로잉 : {folowMyPage.followingCount}
-                  <br />
-                  팔로워 : {folowMyPage.followerCount}
+                  나의 스킬
                 </Typography>
                 <Typography variant="body2">{mypage.myskill}</Typography>
               </CardContent>
@@ -112,7 +127,7 @@ const MyPage = () => {
                 </Button>
               </CardActions>
             </Card>
-          )}
+          </div>
 
           <Box sx={{ marginLeft: '80px' }}>
             <Tabs

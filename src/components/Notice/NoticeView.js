@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from '../Token/Interceptor';
 import Header from '../../components/Base/Header';
 import { useNavigate, useLocation } from 'react-router-dom';
+import Button from '@mui/material/Button';
 import '../../styles/Notice/NoticeView.css';
 import Moment from 'react-moment';
 
@@ -83,21 +84,34 @@ const NoticeView = () => {
             </tbody>
           </table>
           <div className="view-buttons">
-            {/* <button type="submit" className="btn btn-primary-view" onClick={noticeDeleteHandler}>
+            <Button
+              variant="contained"
+              size="medium"
+              color="inherit"
+              onClick={noticeDeleteHandler}
+              sx={{ marginRight: '15px' }}
+            >
               삭제하기
-            </button>
-            <button type="submit" className="btn btn-primary-view" onClick={noticeModifyHandler}>
+            </Button>
+            <Button
+              variant="contained"
+              size="medium"
+              color="inherit"
+              onClick={noticeModifyHandler}
+              sx={{ marginRight: '15px' }}
+            >
               수정하기
-            </button> */}
-            <button
-              type="submit"
-              className="btn btn-primary-view"
+            </Button>
+            <Button
+              variant="contained"
+              size="medium"
+              color="inherit"
               onClick={() => {
                 navigate('/notice');
               }}
             >
               목록보기
-            </button>
+            </Button>
           </div>
         </div>
       )}

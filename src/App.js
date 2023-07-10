@@ -21,13 +21,13 @@ import MyPage from './components/Mypage/MyPage';
 import MyPageModify from './components/Mypage/MyPageModify';
 
 import Create from './components/Feed/Create';
-import Comments from './components/Feed/View';
 import View from './components/Feed/View';
 import Modify from './components/Feed/Modify';
 import MySkill from './components/Mypage/MySkill';
 
 import Recommend from './components/Recommend/Recommend';
 import RecommendResult from './components/Recommend/RecommendResult';
+
 
 function App() {
   return (
@@ -62,6 +62,7 @@ function App() {
           <Route path="/createfeed" element={<Create />} />
           <Route path="/feed/view/:id" element={<View />} />
           <Route path="/feed/modify/:id" element={<Modify />} />
+
         </Routes>
       </BrowserRouter>
     </div>
