@@ -1,178 +1,188 @@
-import React from 'react';
-// import { useEffect, useState } from 'react'
-// import axios from 'axios'
-import Footer from '../Base/Footer';
-import Header from "../Base/Header";
-import { useNavigate, useLocation } from 'react-router-dom';
-import { Avatar } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import axios from '../Token/Interceptor';
+
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Typography from '@mui/material/Typography';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
+import Accordion from '@mui/material/Accordion';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+
+import Header from '../Base/Header';
 import '../../styles/Mypage.css';
-const MyPage = () =>{
-    const location = useLocation();
-    const member = location.state;   // notice 가 mypage로 바뀜
-    const navigate = useNavigate();
-    const myPageModifyHandler = () => {
-        navigate('/mypage/modify', {state:member})
-    }
-    const myFeedDetailHandler = () => {
-        navigate('/feed/list/:id', {state:member})
-    }
-    // const myCommentDetailHandler = () => {
-    //     navigate('/feed/Comment/list/:id', {state:member})
-    // }
-    const myQnaDetailHandler = () => {
-        navigate('/qna/question/list/:id', {state:member})
-    }
-    const myQnaAnswerDetailHandler = () => {
-        navigate('/qna/answer/list/{id}', {state:member})
-    }
-    return (
-        <div>
-            <Header />
-            <div className='title'>
-                마이 페이지
-            </div>
-            <div className='container' id='profile'>
-                <div className='profile_image'>
-                    <Avatar src="/broken-image.jpg" id="image" />
-                </div>
-                <div className='table profile_info'>
-                    <table>
-                        <tr id="firstrow"><td>  </td>
-                            <td id='modify_button'>
-                                <button type="submit" className="btn btn-primary"
-                                onClick={() => myPageModifyHandler()}>
-                                    수정
-                                </button>
-                            </td>
-                        </tr>
-                        <tr><td>이름 : 유수빈 (유수빈)</td></tr>
-                        <tr><td>이메일 : aaaaaa@aaa.aaa</td> </tr>
-                        <tr><td>교육과정 : 빅데이터 </td></tr>
-                        <tr><td> 가입날짜: 2023.05.17 </td></tr>
-                        {/* <thead> 이름 : {member.name} ({member.nickname})</thead>
-                            <tr className='modify_button'>
-                                <button type="submit" className="btn btn-primary"
-                                onClick={() => myPageModifyHandler()}>
-                                    수정하기
-                                </button>
-                            </tr>
-                            <tr><td>이메일 {member.email}</td> </tr>
-                            <tr><td>교육과정 : {member.curriculum}</td></tr>
-                            <tr><td> 가입날짜: {member.createdDate} </td></tr> */}
-                    </table>
-                </div>
-            </div>
-            <div className='container' id="preview">
-                <h1>MY FEED</h1>
-                <table>
-                    <tr>
-                        <th className='contentContainer'>
-                            <div className='content'>나 오늘 라면 먹음</div>
-                            <div id="createdDate">작성일자: feed.createdDate</div>
-                        </th>
-                        <th className='contentContainer'>
-                            <div className='content'>
-                                어려서부터 우리 집은 가난했었고 남들 다하는 외식 몇 번 한 적이 없었고 일터에 나가신 어머니 집에 없으면
-                                언제나 혼자서 끓여먹었던 라면
-                                그러다 라면이 너무 지겨워서
-                                맛있는 것 좀 먹자고 대들었었어
-                            </div>
-                            <div id="createdDate">작성일자: feed.createdDate</div>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th className='contentContainer'>
-                            <div className='content'>난 오늘 버거킹 불고기 와퍼 먹을 예정</div>
-                            <div id="createdDate">작성일자: feed.createdDate</div>
-                        </th>
-                        <th className='contentContainer'>
-                            <div className='content'>신전 떡볶이 순한맛 + 김말이 + 김밥 먹고싶다</div>
-                            <div id="createdDate">작성일자: feed.createdDate</div>
-                        </th>
-                    </tr>
-                </table>
-                <div style={{alignSelf:"center", padding:"5px"}}>
-                    <button type="submit" className="btn btn-primary"
-                    onClick={() => myFeedDetailHandler()} >
-                        더보기
-                </button>
-                </div>
-            </div>
-            <div className='container' id="preview">
-                <h1>MY QUESTIONS</h1>
-                <table>
-                    <tr>
-                        <th className='contentContainer'>
-                            <div className='content'>내일 점심 뭐 먹지?</div>
-                            <div id="createdDate">작성일자: question.createdDate</div>
-                        </th>
-                        <th className='contentContainer'>
-                            <div className='content'>
-                                내일 햄버거 먹을 사람? (내일 되면 내가 먹고싶지 않을지도)
-                            </div>
-                            <div id="createdDate">작성일자: question.createdDate</div>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th className='contentContainer'>
-                            <div className='content'>오늘 몇시까지 공부하실예정?</div>
-                            <div id="createdDate">작성일자: question.createdDate</div>
-                        </th>
-                        <th className='contentContainer'>
-                            <div className='content'>이번주에 놀러가실 분?</div>
-                            <div id="createdDate">작성일자: question.createdDate</div>
-                        </th>
-                    </tr>
-                </table>
-                <div style={{alignSelf:"center", padding:"5px"}}>
-                    <button type="submit" className="btn btn-primary"
-                    onClick={() => myQnaDetailHandler()} >
-                        더보기
-                    </button>
-                </div>
-            </div>
-            <div className='container' id="preview">
-                <h1>MY ANSWERS</h1>
-                <table>
-                    <tr>
-                        <th className='contentContainer'>
-                            <div className='content'>저는 선택장애 입니다.</div>
-                            <div id="createdDate">작성일자: answer.createdDate</div>
-                        </th>
-                        <th className='contentContainer'>
-                            <div className='content'>
-                                제가 내일 같이 햄버거 먹겠슴돠!
-                            </div>
-                            <div id="createdDate">작성일자: answer.createdDate</div>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th className='contentContainer'>
-                            <div className='content'>한 8 시?</div>
-                            <div id="createdDate">작성일자: answer.createdDate</div>
-                        </th>
-                        <th className='contentContainer'>
-                            <div className='content'>저요!</div>
-                            <div id="createdDate">작성일자: answer.createdDate</div>
-                        </th>
-                    </tr>
-                </table>
-                <div style={{alignSelf:"center", padding:"5px"}}>
-                    <button type="submit" className="btn btn-primary"
-                    onClick={() => myQnaAnswerDetailHandler()} >
-                        더보기
-                            </button>
-                </div>
-            </div>
-            <Footer/>
-        </div>
-    );
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
 }
-    export default MyPage;
+TabPanel.prototype = {
+  children: PropTypes.node,
+  index: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired,
+};
 
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`,
+  };
+}
 
+const MyPage = () => {
+  const [value, setValue] = React.useState(0);
+  const [mypage, setMypage] = useState([]);
+  const [folowMyPage, setFollowMyPage] = useState([]);
+  const [myPageFeedDtoList, setMyPageFeedDtoList] = useState([]);
+  const [myPageQuestionDtoList, setMyPageQuestionDtoList] = useState([]);
+  const [expanded, setExpanded] = React.useState(false);
 
+  useEffect(() => {
+    axios({
+      method: 'GET',
+      url: '/api/mypage',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => {
+        setMypage(response.data.memberMyPageDto);
+        setFollowMyPage(response.data.followMyPageDto);
+        setMyPageFeedDtoList(response.data.myPageFeedDtoList);
+        setMyPageQuestionDtoList(response.data.myPageQuestionDtoList);
+        console.log(response.data.myPageQuestionDtoList);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
+  const handleChanges = (panelId) => (event, isExpanded) => {
+    setExpanded(isExpanded ? panelId : null);
+  };
 
+  return (
+    <div>
+      <Header />
+      <div>
+        <Box sx={{ display: 'flex', justifyContent: 'center', marginRight: '100px' }}>
+          {mypage && folowMyPage && (
+            <Card sx={{ width: 260, height: 300, minWidth: 275, marginTop: '80px', backgroundColor: '#EDF4FF' }}>
+              <CardContent>
+                <Typography variant="h5" component="div" sx={{ textAlign: 'center', marginBottom: '10px' }}>
+                  {mypage.name}
+                </Typography>
+                <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                  이메일 : {mypage.email}
+                  <br />
+                  팔로잉 : {folowMyPage.followingCount}
+                  <br />
+                  팔로워 : {folowMyPage.followerCount}
+                </Typography>
+                <Typography variant="body2">{mypage.myskill}</Typography>
+              </CardContent>
+              <CardActions sx={{ justifyContent: 'center' }}>
+                <Button variant="contained">
+                  <Link to="/Mypage/MySkill">스킬 추가</Link>
+                </Button>
+              </CardActions>
+            </Card>
+          )}
 
+          <Box sx={{ marginLeft: '80px' }}>
+            <Tabs
+              value={value}
+              onChange={handleChange}
+              aria-label="basic tabs example"
+              sx={{ display: 'flex', justifyContent: 'center', marginTop: '5%' }}
+            >
+              <Tab sx={{ width: '250px' }} label="내가 쓴 글" {...a11yProps(1)} />
+              <Tab sx={{ width: '250px' }} label="내가 쓴 댓글" {...a11yProps(2)} />
+            </Tabs>
+            <TabPanel value={value} index={0}>
+              <div>
+                <Box sx={{ justifyContent: 'center' }}>
+                  {myPageFeedDtoList.map((feed) => (
+                    <div key={feed.id}>
+                      <Accordion
+                        expanded={expanded === feed.id}
+                        onChange={handleChanges(feed.id)}
+                        sx={{ marginBottom: '1%' }}
+                      >
+                        <AccordionSummary
+                          expandIcon={<ExpandMoreIcon />}
+                          aria-controls={`panel-${feed.id}-content`}
+                          id={`panel-${feed.id}-header`}
+                        >
+                          <Typography sx={{ width: '33%', flexShrink: 0 }}>{feed.nickname}</Typography>
+                          <Typography sx={{ color: 'text.secondary' }}>{feed.createdDate}</Typography>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                          <Typography>{feed.content}</Typography>
+                        </AccordionDetails>
+                      </Accordion>
+                    </div>
+                  ))}
+                </Box>
+              </div>
+            </TabPanel>
+            <TabPanel value={value} index={1}>
+              <div>
+                <Box sx={{ justifyContent: 'center' }}>
+                  {myPageQuestionDtoList.map((question) => (
+                    <div key={question.id}>
+                      <Accordion
+                        expanded={expanded === question.id}
+                        onChange={handleChanges(question.id)}
+                        sx={{ marginBottom: '1%' }}
+                      >
+                        <AccordionSummary
+                          expandIcon={<ExpandMoreIcon />}
+                          aria-controls={`panel-${question.id}-content`}
+                          id={`panel-${question.id}-header`}
+                        >
+                          <Typography sx={{ width: '33%', flexShrink: 0 }}>{question.title}</Typography>
+                          <Typography sx={{ color: 'text.secondary' }}>{question.createdDate}</Typography>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                          <Typography>{question.content}</Typography>
+                        </AccordionDetails>
+                      </Accordion>
+                    </div>
+                  ))}
+                </Box>
+              </div>
+            </TabPanel>
+          </Box>
+        </Box>
+      </div>
+    </div>
+  );
+};
+
+export default MyPage;
