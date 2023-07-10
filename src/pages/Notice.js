@@ -2,9 +2,15 @@ import React, { useEffect, useState } from 'react';
 import axios from '../components/Token/Interceptor';
 import Header from '../components/Base/Header';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import '../styles/Notice/Notice.css';
 import Moment from 'react-moment';
 import Footer from '../components/Base/Footer';
+import Button from '@mui/material/Button';
+
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableRow from '@mui/material/TableRow';
 
 const Notice = () => {
   const [notice, setNotices] = useState([]);
@@ -20,16 +26,15 @@ const Notice = () => {
 
   useEffect(() => {
     axios
-      .get('/api/notice') // Assuming the API endpoint is correct
+      .get('/api/notice')
       .then((res) => {
         console.log(res.data);
-        setNotices(res.data.data); // Update the state with the data array
+        setNotices(res.data.data);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
-
   return (
     <div>
       <Header />
@@ -37,34 +42,33 @@ const Notice = () => {
         <div className="notice-title">공지사항</div>
         <table className="notice-table">
           <thead>
-            <tr className="notice-label">
-              <th>글 번호</th>
-              <th>제목</th>
-              <th>작성자</th>
+            <TableRow className="noticeLabel">
+              <TableCell>글 번호</TableCell>
+              <TableCell>제목</TableCell>
+              <TableCell>작성자</TableCell>
               {/* <th>조회수</th> */}
-              <th>작성일시</th>
-            </tr>
+              <TableCell>작성일시</TableCell>
+            </TableRow>
           </thead>
-          <tbody>
+          <TableBody>
             {notice.map((item) => (
-              <tr key={item.id} onClick={() => noticeViewHandler(item.id)} className="notice-table-row">
-                <th className="notice-id">{item.id}</th>
-                <th>{item.title}</th>
-                <th>{item.member.name}</th>
+              <TableRow key={item.id} onClick={() => noticeViewHandler(item.id)} className="notice-table-row">
+                <TableCell className="notice-id">{item.id}</TableCell>
+                <TableCell>{item.title}</TableCell>
+                <TableCell>{item.member.name}</TableCell>
                 {/* <td>{item.viewCount}</td> */}
-                <th className="notice-createdDate">
+                <TableCell className="notice-createdDate">
                   <Moment format="YYYY-MM-DD HH:mm:ss">{item.createdDate}</Moment>
-                </th>
-              </tr>
+                </TableCell>
+              </TableRow>
             ))}
-          </tbody>
-        </table>{' '}
-        <br />
-        {/* <Link to="write">
-          <button type="button" className="btn btn-primary-notice">
-            글쓰기
-          </button>
-        </Link> */}
+          </TableBody>
+        </table>
+        <div className="buttonContainer">
+          <Button variant="contained" size="large" color="inherit">
+            <Link to="write">글쓰기</Link>
+          </Button>
+        </div>
       </div>
       <Footer />
     </div>

@@ -21,7 +21,6 @@ import MyPage from './components/Mypage/MyPage';
 import MyPageModify from './components/Mypage/MyPageModify';
 
 import Create from './components/Feed/Create';
-import Comments from './components/Feed/View';
 import View from './components/Feed/View';
 import Modify from './components/Feed/Modify';
 import MySkill from './components/Mypage/MySkill';
