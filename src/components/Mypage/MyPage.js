@@ -109,7 +109,7 @@ const MyPage = () => {
                 </CardContent>
                 <CardActions sx={{ justifyContent: 'center' }}>
                   <Button variant="contained">
-                    <Link to="/mypage/modify">회원정보 수정</Link>
+                    <Link to="/mypage/modify">비밀번호 수정</Link>
                   </Button>
                 </CardActions>
               </Card>
