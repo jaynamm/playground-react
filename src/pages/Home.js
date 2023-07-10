@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import axios from '../components/Token/Interceptor';
 import '../styles/Home.css';
 import { redirect, useHistory } from 'react-router-dom';
@@ -6,10 +6,13 @@ import NewsFeed from "../components/Feed/NewsFeed";
 import Header from "../components/Base/Header";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import Skeleton from '../components/Feed/Skeleton';
 
 window.addEventListener('scroll', function () {
-    console.log('123')
+    console.log('scroll')
 });
+
+
 
 const Hello = () => {
     Swal.fire({
@@ -30,6 +33,8 @@ const Hello = () => {
 const Home = () => {
     const [likeCount, setLikeCount] = useState(0);
     const [feeds, setFeeds] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+
     useEffect(() => {
         axios({
             method: 'GET',
@@ -39,11 +44,75 @@ const Home = () => {
                 console.log(res.data);
                 let feedData = res.data.content;
                 setFeeds(feedData);
+                setIsLoading(false);
             })
             .catch((err) => {
                 console.log(err);
+                setIsLoading(false);
             });
     }, []);
+
+
+    // 피드 무한스크롤
+    const lastFeedRef = useRef(null);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [isLast, setIsLast] = useState();
+
+    useEffect(() => {
+        const options = {
+            root: null, // Use the viewport as the root
+            rootMargin: '0px',
+            threshold: 1.0, // Trigger when the entire target is visible
+        };
+
+        const handleIntersect = (entries) => {
+            const lastEntry = entries[entries.length - 1];
+            if (lastEntry.isIntersecting && !isLast) {
+                loadMoreContent();
+            }
+        };
+
+
+        const loadMoreContent = () => {
+            // Add your logic to fetch more feeds or load additional content here
+            axios({
+                method: 'GET',
+                url: '/api/feed/list',
+                params: {
+                    page: currentPage
+                }
+                // Add necessary parameters or headers for the API request
+            })
+                .then((res) => {
+                    // Process the response data and append the new feeds to the existing feeds array
+                    const newFeeds = res.data.content;
+                    setFeeds((prevFeeds) => [...prevFeeds, ...newFeeds]);
+                    const page = res.data.number;
+                    setCurrentPage(page + 1);
+                    const isLast = res.data.last;
+                    setIsLast(isLast);
+                    console.log(isLast);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        };
+
+
+        const observer = new IntersectionObserver(handleIntersect, options);
+        if (lastFeedRef.current) {
+            observer.observe(lastFeedRef.current);
+        }
+
+        return () => {
+            if (lastFeedRef.current) {
+                observer.unobserve(lastFeedRef.current);
+            }
+        };
+    }, [feeds]);
+
+
+
 
     return (
         <>
@@ -70,10 +139,28 @@ const Home = () => {
                         <div className="infinite-scroll-component flex flex-col gap-5 h-auto overflow-auto">
                             <div>
                                 <div className="feed-wrapper">
-                                    {/* <FeedModal /> */}
-                                    {feeds.map((feed) => (
-                                        <NewsFeed feed={feed} />
-                                    ))}
+                                    {isLoading ? (
+                                        // 로딩될 때 스켈레톤 UI 생성
+                                        <>
+                                            <Skeleton />
+                                            <Skeleton />
+                                            <Skeleton />
+
+                                        </>
+                                    ) : (
+                                        // 로딩되면 피드 생성
+                                        feeds.map((feed, index) => {
+                                            if (index === feeds.length - 1) {
+                                                return (
+                                                    <div ref={lastFeedRef} key={feed.id}>
+                                                        <NewsFeed feed={feed} />
+                                                    </div>
+                                                );
+                                            } else {
+                                                return <NewsFeed feed={feed} key={feed.id} />;
+                                            }
+                                        })
+                                    )}
                                 </div>
                             </div>
                         </div>
@@ -113,4 +200,6 @@ const Home = () => {
         </>
     );
 };
+
+
 export default Home;

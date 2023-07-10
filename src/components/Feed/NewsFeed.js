@@ -17,24 +17,24 @@ export default function NewsFeed({ feed, likeCount, setLikeCount }) {
     };
 
     // 수정삭제 마우스다운
-    const optionsRef = useRef(null);
-    useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (optionsRef.current && !optionsRef.current.contains(event.target)) {
-                setOptionsVisible(false);
-            }
-        };
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
-    }, []);
+    // const optionsRef = useRef(null);
+    // useEffect(() => {
+    //     const handleClickOutside = (event) => {
+    //         if (optionsRef.current && !optionsRef.current.contains(event.target)) {
+    //             setOptionsVisible(false);
+    //         }
+    //     };
+    //     document.addEventListener('mousedown', handleClickOutside);
+    //     return () => {
+    //         document.removeEventListener('mousedown', handleClickOutside);
+    //     };
+    // }, []);
 
     // 피드 수정 삭제 드랍다운
-    const [optionsVisible, setOptionsVisible] = useState(false);
-    const toggleDrop = () => {
-        setOptionsVisible(!optionsVisible);
-    };
+    // const [optionsVisible, setOptionsVisible] = useState(false);
+    // const toggleDrop = () => {
+    //     setOptionsVisible(!optionsVisible);
+    // };
 
 
 
@@ -46,7 +46,7 @@ export default function NewsFeed({ feed, likeCount, setLikeCount }) {
                     <div className='flex gap-4 items-center'>
                         <img src="/user.png" alt="User profile picture" className='w-8 h-8' />
                         <div className='flex-1'>
-                            <p className='text-sm text-slate-900'>{feed.nickname}</p>
+                            <p className='text-sm text-slate-900 font-bold'>{feed.nickname}</p>
                             <p className='text-xs text-slate-700'>{feed.userId}</p>
                         </div>
                     </div>
@@ -96,8 +96,12 @@ export default function NewsFeed({ feed, likeCount, setLikeCount }) {
                     <div className='flex px-1 justify-between'>
                         <div id="likeRepost" className='flex'>
                             <button type="button" className='flex items-center gap-1 p-3 focus:outline-none false'>
-                                👍 <p className='font-bold text-xs text-slate-500'>좋아요</p></button>
-                            <button type="button" className='flex items-center gap-1 p-3 focus:outline-none false'>🔄 <p className='font-bold text-xs text-slate-500'>리포스트</p></button>
+                                <i class="fa-regular fa-thumbs-up"></i>
+                                <p className='font-bold text-xs text-slate-500'>좋아요</p>
+                            </button>
+                            <button type="button" className='flex items-center gap-1 p-3 focus:outline-none false'>
+                                <i class="fa-regular fa-paper-plane"></i>
+                                <p className='font-bold text-xs text-slate-500'>리포스트</p></button>
                         </div>
 
                         <div className='py-3 flex gap-3 pr-6'>
@@ -131,37 +135,6 @@ export default function NewsFeed({ feed, likeCount, setLikeCount }) {
             <br />
             <br />
 
-
-            {/* <div id="news-feed">
-                뉴스피드 박스
-                <div className="post">
-                    <div className="post-header">
-                        <img src="./user.png" alt="User profile picture" />
-                        <div>
-                            <h2>{feed.nickname}</h2>
-                            <p><Moment format="YYYY-MM-DD HH:mm:ss">{feed.createdDate}</Moment></p>
-                        </div>
-                    </div>
-                    <div className="post-content">
-                        <p className="content">{feed.content}</p>
-                        <br></br>
-                    </div>
-                    <div className='likeAct'>
-                        <p>좋아요 {feed.likeCount}</p>
-                        <br></br>
-                    </div>
-                    <div className="post-footer">
-                        <div className='like'>
-                            <button><span onClick={() => { setLikeCount(likeCount + 1) }}><i class="fa-regular fa-heart"></i></span></button>
-                        </div>
-                        <div className='CSD'>
-                            <a><button><i class="fa-regular fa-message" onClick={() => feedViewHandler(feed.id)}></i></button></a>
-                            <a href="#"><i class="fa-solid fa-share-nodes"></i></a>
-                            <a href="#"><i class="fa-solid fa-ellipsis-vertical"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div> */}
         </>
     )
 }
