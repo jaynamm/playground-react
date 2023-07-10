@@ -1,71 +1,81 @@
 .notice-board {
-    font-family: Arial, sans-serif;
-    padding: 20px;
-    margin: 0 auto;
-    max-width: 90%;
-    min-height: 600px;
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  margin: 0 auto;
+  max-width: 90%;
+  min-height: 600px;
 }
 
 body {
-    overflow-y: auto;
+  overflow-y: auto;
 }
 
 .notice-title {
-    font-weight: bold;
-    font-size: 30px;
-    margin-top: 3%;
-    margin-bottom: 3%;
-    float: left;
-    margin-left: 5%;
+  font-weight: bold;
+  font-size: 30px;
+  margin-top: 3%;
+  margin-bottom: 3%;
+  float: left;
+  margin-left: 5%;
 }
 
 .notice-table {
-    width : 90%;
-    text-align: center;
-    margin-bottom : 5%;
+  width: 90%;
+  text-align: center;
+  margin-bottom: 5%;
 }
 
 .notice-label {
-    font-weight: bold;
-    text-align: center;
-    background-color: #F0E4FF;
-
+  font-weight: bold;
+  text-align: center;
+  background-color: #f7f7f7;
 }
 
 .notice-table-row {
-    border-bottom: 1px solid #eaeaea;
+  border-bottom: 1px solid #eaeaea;
 }
 
 .notice-table-row:hover {
-    background-color: #F7F7F7;
+  background-color: #f7f7f7;
 }
 
-table td, table th {
-    padding : 20px;
+table td,
+table th {
+  padding: 20px;
 }
 
 .notice-id {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .notice-createdDate {
-    font-size : smaller;
+  font-size: smaller;
 }
 
 .btn-primary-notice {
-    background-color: #F0E4FF;
-    color: #000;
-    font-weight: bold;
-    padding: 10px 20px;
-    border: none;
-    text-decoration: none;
-    cursor: pointer;
-    float: right;   
-    margin-right: 65px; 
+  background-color: #f0e4ff;
+  color: #000;
+  font-weight: bold;
+  padding: 10px 20px;
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
+  float: right;
+  margin-right: 65px;
 }
 
 .btn-primary-notice:hover {
-    background-color: #F0E4FF;
-    color : #7D7D7D;
+  background-color: #f0e4ff;
+  color: #7d7d7d;
+}
 
+.buttonContainer {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 80px;
+  margin-bottom: 100px;
+}
+
+.noticeLabel {
+  background-color: #e4e4e4;
 }
