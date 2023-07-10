@@ -4,6 +4,7 @@ import Header from '../../components/Base/Header';
 import { useNavigate } from 'react-router-dom';
 import '../../styles/Notice/NoticeWrite.css';
 import Footer from '../Base/Footer';
+import Button from '@mui/material/Button';
 
 export default function NoticeWrite() {
   const [title, setTitle] = useState('');
@@ -76,9 +77,9 @@ export default function NoticeWrite() {
               onChange={(e) => setContent(e.target.value)}
             />
           </tr>
-          <button type="submit" className="btn btn-primary-write" onClick={() => noticeWriteHandler()}>
+          <Button variant="contained" size="medium" color="inherit" onClick={() => noticeWriteHandler()}>
             작성하기
-          </button>
+          </Button>
         </table>
       </div>
       <Footer />
