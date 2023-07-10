@@ -128,7 +128,10 @@ export default function Comments({ comment }) {
                 </p>
               </div>
 
-              <button onClick={toggleDrop}><i class="fa-solid fa-ellipsis-vertical"></i></button>
+              {comment.editable && (
+                <button onClick={toggleDrop}><i class="fa-solid fa-ellipsis-vertical"></i></button>
+              )}
+
 
               <div className='relative'>
                 {optionsVisible && (

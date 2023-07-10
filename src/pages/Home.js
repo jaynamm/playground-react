@@ -8,20 +8,25 @@ import Footer from "../components/Base/Footer";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 
+window.addEventListener('scroll', function () {
+    console.log('123')
+});
 
-// Swal.fire({
-//     title: 'Welcome to PlayGround',
-//     width: 500,
-//     padding: '50',
-//     color: 'white',
-//     background: '#fff url(homeCoding.gif)',
-//     backdrop: `
-//             rgba(0,0,123,0.4)
-//             url("")
-//             left top
-//             no-repeat
-//         `
-// })
+const Hello = () => {
+    Swal.fire({
+        title: 'Welcome to PlayGround',
+        width: 500,
+        padding: '50',
+        color: 'white',
+        background: '#fff url(homeCoding.gif)',
+        backdrop: `
+            rgba(0,0,123,0.4)
+            url("")
+            left top
+            no-repeat
+        `
+    })
+}
 
 
 
@@ -93,7 +98,9 @@ const Home = () => {
                         <div className="flex p-4 bg-white border border-solid border-slate-300">
                             <p className="flex-1 font-bold py-4">PlayGround</p>
                             <div className="relative">
-                                <img className="h-20 w-20" src="/pixelHome3.gif" />
+                                <button onClick={Hello}>
+                                    <img className="h-20 w-20" src="/pixelHome3.gif" />
+                                </button>
                             </div>
                         </div>
 

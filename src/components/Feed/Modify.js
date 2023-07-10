@@ -183,7 +183,6 @@ function Modify() {
             <textarea id="description" className='text-slate-900 placeholder:text-slate-300 border-0 rounded-none px-0 py-6 resize-none focus:ring-0 focus:outline-none caret-color-teal-800 overflow-y-hidden' name="description" style={{ height: '500px', important: true }}
               value={modifyFeed}
               onChange={handleFeedChange}>
-              {/* {feed && feed.content ? feed.content : ''} */}
 
             </textarea>
             <div className='h-4'></div>
