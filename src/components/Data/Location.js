@@ -1,4 +1,5 @@
 const Location = [
+  { title: '전국' },
   { title: '서울' },
   { title: '경기' },
   { title: '강원' },

@@ -9,7 +9,6 @@ import '../styles/Qna/Qna.css';
 const Qna = () => {
   const navigate = useNavigate();
   const [questions, setQuestions] = useState([]);
-  const [id, setId] = useState(0);
 
   useEffect(() => {
     axios({
