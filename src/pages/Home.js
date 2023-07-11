@@ -7,22 +7,35 @@ import Header from "../components/Base/Header";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import Skeleton from '../components/Feed/Skeleton';
+import JSConfetti from "js-confetti";
+import { confetti } from "../App";
 
 window.addEventListener('scroll', function () {
     console.log('scroll')
 });
 
 
-
 const Hello = () => {
+    confetti.addConfetti({
+        confettiColors: [
+            "#FF0000", // Red
+            "#FFA500", // Orange
+            "#FFFF00", // Yellow
+            "#00FF00", // Green
+            "#0000FF", // Blue
+            "#FF00FF", // Magenta
+        ],
+        confettiRadius: 5,
+        confettiNumber: 500,
+    });
     Swal.fire({
         title: 'Welcome to PlayGround',
         width: 500,
         padding: '50',
         color: 'white',
-        background: '#fff url(homeCoding.gif)',
+        background: 'url(homeCoding.gif)',
         backdrop: `
-            rgba(0,0,123,0.4)
+            rgba(0,0,0,0)
             url("")
             left top
             no-repeat
