@@ -10,28 +10,6 @@ import axios from 'axios';
 
 export default function NewsFeed({ feed, likeCount, setLikeCount }) {
 
-    const [userImageUrl, setUserImageUrl] = useState('');
-    useEffect(() => {
-        // Fetch random image URL from Pinterest
-        const fetchRandomImage = async () => {
-            try {
-                const response = await axios.get(
-                    'https://www.pinterest.co.kr/search/pins/?q=animal%20meme&rs=typed'
-                );
-                const html = response.data;
-                const regex = /"https:\/\/i\.pinimg\.com\/(\w+\/){2}\w+\.(jpg|png|gif)"/g;
-                const matches = html.match(regex);
-                if (matches) {
-                    const randomImageUrl = matches[Math.floor(Math.random() * matches.length)];
-                    setUserImageUrl(randomImageUrl.slice(1, -1)); // Remove the double quotes around the URL
-                }
-            } catch (error) {
-                console.error('Failed to fetch user image:', error);
-            }
-        };
-        fetchRandomImage();
-    }, []);
-
 
     const navigate = useNavigate();
     const feedViewHandler = (id) => {
@@ -59,7 +37,7 @@ export default function NewsFeed({ feed, likeCount, setLikeCount }) {
             <div className='bg-white border border-solid border-slate-300'>
                 <div className='flex justify-between items-center p-4'>
                     <div className='flex gap-4 items-center'>
-                        <img src={userImageUrl} alt="User profile picture" className='w-8 h-8' />
+                        <img src='/user.png' alt="User profile " className='w-8 h-8 rounded-full' />
                         <div className='flex-1'>
                             <p className='text-sm text-slate-900 font-bold'>{feed.nickname}</p>
                             <p className='text-xs text-slate-700'>{feed.userId}</p>
