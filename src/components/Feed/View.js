@@ -234,10 +234,12 @@ export default function View() {
             <div className="flex h-11">
               <div className="flex px-1">
                 <button type="button" className="flex items-center gap-1 p-3 focus:outline-none false">
-                  👍 <p className="font-bold text-xs text-slate-500">좋아요</p>
+                  <i class="fa-regular fa-thumbs-up"></i>
+                  <p className="font-bold text-xs text-slate-500">좋아요</p>
                 </button>
                 <button type="button" className="flex items-center gap-1 p-3 focus:outline-none false">
-                  🔄 <p className="font-bold text-xs text-slate-500">리포스트</p>
+                  <i class="fa-regular fa-paper-plane"></i>
+                  <p className="font-bold text-xs text-slate-500">리포스트</p>
                 </button>
               </div>
             </div>
