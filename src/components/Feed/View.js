@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from '../Base/Header';
 import { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
+import axios from '../Token/Interceptor';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Comments from './Comments';
 import Moment from 'react-moment';
@@ -30,7 +30,7 @@ export default function View() {
 
   const [feed, setFeed] = useState([]);
   const [comments, setComments] = useState([]);
-
+  const [editButton, setEditButton] = useState();
   const location = useLocation();
   const feedId = location.state.id;
 
@@ -40,18 +40,18 @@ export default function View() {
       url: `/api/feed/view/${feedId}`,
       headers: {
         // 'Content-Type': 'application/json',
-        // 'Authorization': localStorage.getItem('Authorization')
+        // Authorization: localStorage.getItem('Authorization'),
       },
     })
       .then((res) => {
         console.log(res.data);
-
         let feedData = res.data.data;
 
         setFeed(feedData.feed);
         console.log(feedData.feed);
         setComments(feedData.comments.content);
         console.log(feedData.comments);
+        setEditButton(!res.data.responseMessage.includes('FAILED'));
       })
       .catch((err) => {
         console.log(err);
@@ -141,7 +141,7 @@ export default function View() {
               <div className="flex gap-4 items-center">
                 <img src="/user.png" alt="User profile picture" className="w-8 h-8" />
                 <div className="flex-1">
-                  <p className="text-sm text-slate-900 font-bold">{feed.nickname}</p>
+                  <p className="text-sm text-slate-900">{feed.nickname}</p>
                   <p className="text-xs text-slate-700">{feed.userId}</p>
                 </div>
               </div>
@@ -155,8 +155,9 @@ export default function View() {
               </div>
             </div>
             <div className="p-4">
-              <h1 className="mb-6 font-bold text-xl">{feed.content}</h1>
+              <h1 className="mb-6 font-bold text-xl">플레이그라운드</h1>
               <p className="auto-line-break text-base text-slate-900 whitespace-pre-wrap">
+                {feed.content}
                 <a
                   className="text-slate-900 mt-6 flex underline"
                   target="_blank"
@@ -195,15 +196,17 @@ export default function View() {
               {/* <p className='text-xs text-slate-500 false'>
                 조회 <b>224</b>
               </p> */}
-              <div id="modifyDeleteButton">
-                <button type="button" className="px-2" onClick={() => modifyHandler(feed.id)}>
-                  <i class="fa-solid fa-pen"></i>
-                </button>
+              {editButton && (
+                <div id="modifyDeleteButton">
+                  <button type="button" className="px-2" onClick={() => modifyHandler(feed.id)}>
+                    <i class="fa-solid fa-pen"></i>
+                  </button>
 
-                <button type="button" className="px-2" onClick={feedDelete}>
-                  <i class="fa-solid fa-trash"></i>
-                </button>
-              </div>
+                  <button type="button" className="px-2" onClick={feedDelete}>
+                    <i class="fa-solid fa-trash"></i>
+                  </button>
+                </div>
+              )}
 
               {/* <div className=''>
                 <button><i ref={optionsRef} class="fa-solid fa-ellipsis-vertical" onClick={toggleDrop}></i></button>
@@ -232,11 +235,11 @@ export default function View() {
             <div className="flex h-11">
               <div className="flex px-1">
                 <button type="button" className="flex items-center gap-1 p-3 focus:outline-none false">
-                  <i className="fa-regular fa-thumbs-up"></i>
+                  <i class="fa-regular fa-thumbs-up"></i>
                   <p className="font-bold text-xs text-slate-500">좋아요</p>
                 </button>
                 <button type="button" className="flex items-center gap-1 p-3 focus:outline-none false">
-                  <i className="fa-regular fa-paper-plane"></i>
+                  <i class="fa-regular fa-paper-plane"></i>
                   <p className="font-bold text-xs text-slate-500">리포스트</p>
                 </button>
               </div>
@@ -246,7 +249,7 @@ export default function View() {
           {/* 댓글 */}
 
           <div id="comment">
-            <h3 className="false m-0 py-6 font-bold mx-1 text-2xl">댓글 {feed.commentCount}</h3>
+            <h3 class="false m-0 py-6 font-bold mx-1 text-2xl">댓글 {feed.commentCount}</h3>
             <div className="bg-white border border-solid border-slate-300">
               <form className="p-4">
                 <div className="flex gap-4 items-center">

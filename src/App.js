@@ -28,6 +28,7 @@ import MySkill from './components/Mypage/MySkill';
 
 import Recommend from './components/Recommend/Recommend';
 import RecommendResult from './components/Recommend/RecommendResult';
+import JSConfetti from 'js-confetti';
 
 function App() {
   return (
@@ -70,3 +71,4 @@ function App() {
 }
 
 export default App;
+export const confetti = new JSConfetti();

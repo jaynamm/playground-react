@@ -6,6 +6,8 @@ import Header from '../components/Base/Header';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import Skeleton from '../components/Feed/Skeleton';
+import JSConfetti from 'js-confetti';
+import { confetti } from '../App';
 
 window.addEventListener('scroll', function () {
   console.log('scroll');

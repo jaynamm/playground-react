@@ -2,13 +2,39 @@ import React, { useState, useEffect, useRef } from 'react'
 import '../../styles/Feed/Newfeed.css'
 import Moment from 'react-moment'
 import { useNavigate, Link } from 'react-router-dom';
+import { toast, ToastContainer } from "react-toastify"
+import 'react-toastify/dist/ReactToastify.css';
+import { confetti } from '../../App';
+import axios from 'axios';
 
 
 export default function NewsFeed({ feed, likeCount, setLikeCount }) {
 
+    const [userImageUrl, setUserImageUrl] = useState('');
+    useEffect(() => {
+        // Fetch random image URL from Pinterest
+        const fetchRandomImage = async () => {
+            try {
+                const response = await axios.get(
+                    'https://www.pinterest.co.kr/search/pins/?q=animal%20meme&rs=typed'
+                );
+                const html = response.data;
+                const regex = /"https:\/\/i\.pinimg\.com\/(\w+\/){2}\w+\.(jpg|png|gif)"/g;
+                const matches = html.match(regex);
+                if (matches) {
+                    const randomImageUrl = matches[Math.floor(Math.random() * matches.length)];
+                    setUserImageUrl(randomImageUrl.slice(1, -1)); // Remove the double quotes around the URL
+                }
+            } catch (error) {
+                console.error('Failed to fetch user image:', error);
+            }
+        };
+        fetchRandomImage();
+    }, []);
+
+
     const navigate = useNavigate();
     const feedViewHandler = (id) => {
-
         navigate(`/feed/view/${id}`, {
             state: {
                 "id": id
@@ -16,27 +42,16 @@ export default function NewsFeed({ feed, likeCount, setLikeCount }) {
         })
     };
 
-    // 수정삭제 마우스다운
-    // const optionsRef = useRef(null);
-    // useEffect(() => {
-    //     const handleClickOutside = (event) => {
-    //         if (optionsRef.current && !optionsRef.current.contains(event.target)) {
-    //             setOptionsVisible(false);
-    //         }
-    //     };
-    //     document.addEventListener('mousedown', handleClickOutside);
-    //     return () => {
-    //         document.removeEventListener('mousedown', handleClickOutside);
-    //     };
-    // }, []);
-
-    // 피드 수정 삭제 드랍다운
-    // const [optionsVisible, setOptionsVisible] = useState(false);
-    // const toggleDrop = () => {
-    //     setOptionsVisible(!optionsVisible);
-    // };
-
-
+    // 팔로잉 토스트 알람
+    const notify = () => toast.success("팔로잉 했어요 !", { position: "top-center", autoClose: 2000, hideProgressBar: true })
+    // confetti 효과
+    const confettiClick = () => {
+        confetti.addConfetti({
+            emojis: ["👍"],
+            emojiSize: 80,
+            confettiNumber: 30,
+        });
+    };
 
 
     return (
@@ -44,14 +59,15 @@ export default function NewsFeed({ feed, likeCount, setLikeCount }) {
             <div className='bg-white border border-solid border-slate-300'>
                 <div className='flex justify-between items-center p-4'>
                     <div className='flex gap-4 items-center'>
-                        <img src="/user.png" alt="User profile picture" className='w-8 h-8' />
+                        <img src={userImageUrl} alt="User profile picture" className='w-8 h-8' />
                         <div className='flex-1'>
                             <p className='text-sm text-slate-900 font-bold'>{feed.nickname}</p>
                             <p className='text-xs text-slate-700'>{feed.userId}</p>
                         </div>
                     </div>
                     <div className='flex-none'>
-                        <button className='btn btn-sm btn-coral-100 bg-slate-300 hover:bg-slate-200 text-coral-600 font-bold' type='button'>팔로우</button>
+                        <button className='btn btn-sm btn-coral-100 bg-slate-300 hover:bg-slate-200 text-coral-600 font-bold' type='button' onClick={notify}>팔로우</button>
+                        <ToastContainer />
                     </div>
                 </div>
                 <div className='p-4'>
@@ -76,7 +92,6 @@ export default function NewsFeed({ feed, likeCount, setLikeCount }) {
                             <span className='box-border inline-block overflow-hidden w-auto h-auto bg-transparent opacity-100 border-0 m-0 p-0 relative max-w-full'>
                                 <span className='box-border block w-auto h-auto bg-transparent opacity-100 border-0 m-0 p-0 max-w-full'>
                                 </span>
-                                {/* <img alt aria-hidden='true' src="/" className='block max-w-full w-auto h-auto bg-transparent opacity-100 border-0 m-0 p-0' /> */}
                             </span>
                         </div>
                     </a>
@@ -95,7 +110,7 @@ export default function NewsFeed({ feed, likeCount, setLikeCount }) {
                 <div className=''>
                     <div className='flex px-1 justify-between'>
                         <div id="likeRepost" className='flex'>
-                            <button type="button" className='flex items-center gap-1 p-3 focus:outline-none false'>
+                            <button type="button" className='flex items-center gap-1 p-3 focus:outline-none false' onClick={confettiClick}>
                                 <i class="fa-regular fa-thumbs-up"></i>
                                 <p className='font-bold text-xs text-slate-500'>좋아요</p>
                             </button>
@@ -106,27 +121,6 @@ export default function NewsFeed({ feed, likeCount, setLikeCount }) {
 
                         <div className='py-3 flex gap-3 pr-6'>
                             <button><i class="fa-regular fa-message" onClick={() => feedViewHandler(feed.id)}></i></button>
-                            {/* <button><i ref={optionsRef} class="fa-solid fa-ellipsis-vertical" onClick={toggleDrop}></i></button> */}
-                            {/* <div className='relative'>
-                                {optionsVisible && (
-                                    <div className='absolute top shadow-lg bg-white rounded border border-slate-300 transform opacity-100 scale-100'>
-
-                                        <button type="button" className='py-2 px-4 hover:bg-slate-50' >
-                                            <span className='text-slate-900 text-sm text-keep whitespace-nowrap'>
-                                                <i class="fa-solid fa-pen"></i>
-                                                수정
-                                            </span>
-                                        </button>
-
-                                        <button type='button' className='py-2 px-4 hover:bg-slate-50'>
-                                            <span className='text-slate-900 text-sm whitespace-nowrap'>
-                                                <i class="fa-solid fa-trash"></i>
-                                                삭제
-                                            </span>
-                                        </button>
-                                    </div>
-                                )}
-                            </div> */}
                         </div>
 
                     </div>
