@@ -6,7 +6,6 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { confetti } from '../../App';
 import axios from 'axios';
-
 export default function NewsFeed({ feed, likeCount, setLikeCount }) {
   const navigate = useNavigate();
   const feedViewHandler = (id) => {
@@ -16,7 +15,6 @@ export default function NewsFeed({ feed, likeCount, setLikeCount }) {
       },
     });
   };
-
   // 팔로잉 토스트 알람
   const notify = () =>
     toast.success('팔로잉 했어요 !', { position: 'top-center', autoClose: 2000, hideProgressBar: true });
@@ -28,13 +26,12 @@ export default function NewsFeed({ feed, likeCount, setLikeCount }) {
       confettiNumber: 30,
     });
   };
-
   return (
     <>
       <div className="bg-white border border-solid border-slate-300">
         <div className="flex justify-between items-center p-4">
           <div className="flex gap-4 items-center">
-            <img src="/user.png" alt="User profile picture" className="w-8 h-8" />
+            <img src="/user.png" alt="User profile " className="w-8 h-8 rounded-full" />
             <div className="flex-1">
               <p className="text-sm text-slate-900 font-bold">{feed.nickname}</p>
               <p className="text-xs text-slate-700">{feed.userId}</p>
@@ -65,7 +62,6 @@ export default function NewsFeed({ feed, likeCount, setLikeCount }) {
             </a>
           </p>
         </div>
-
         <div id="article" className="px-4 py-2">
           <a href="https://www.lipsum.com/" target="_blank" rel="origin">
             <div className="border border-solid border-slate-200 rounded-lg overflow-hidden bg-slate-50 flex">
@@ -79,7 +75,6 @@ export default function NewsFeed({ feed, likeCount, setLikeCount }) {
             </div>
           </a>
         </div>
-
         <div className=" mx-4 mb-2 border-slate-500 py-3 flex justify-between">
           <p className="text-sm text-slate-500">
             <Moment format="YYYY-MM-DD HH:mm:ss">{feed.createdDate}</Moment>
@@ -88,7 +83,6 @@ export default function NewsFeed({ feed, likeCount, setLikeCount }) {
             댓글 <b>{feed.commentCount}</b> * 조회 <b>224</b>
           </p>
         </div>
-
         <div className="">
           <div className="flex px-1 justify-between">
             <div id="likeRepost" className="flex">
@@ -105,7 +99,6 @@ export default function NewsFeed({ feed, likeCount, setLikeCount }) {
                 <p className="font-bold text-xs text-slate-500">리포스트</p>
               </button>
             </div>
-
             <div className="py-3 flex gap-3 pr-6">
               <button>
                 <i class="fa-regular fa-message" onClick={() => feedViewHandler(feed.id)}></i>

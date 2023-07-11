@@ -6,7 +6,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import Comments from './Comments';
 import Moment from 'react-moment';
 import Swal from 'sweetalert2';
-
 export default function View() {
   // 수정삭제 마우스다운
   // const optionsRef = useRef(null);
@@ -21,19 +20,16 @@ export default function View() {
   //     document.removeEventListener('mousedown', handleClickOutside);
   //   };
   // }, []);
-
   // 피드 수정 삭제 드랍다운
   // const [optionsVisible, setOptionsVisible] = useState(false);
   // const toggleDrop = () => {
   //   setOptionsVisible(!optionsVisible);
   // };
-
   const [feed, setFeed] = useState([]);
   const [comments, setComments] = useState([]);
   const [editButton, setEditButton] = useState();
   const location = useLocation();
   const feedId = location.state.id;
-
   useEffect(() => {
     axios({
       method: 'GET',
@@ -46,7 +42,6 @@ export default function View() {
       .then((res) => {
         console.log(res.data);
         let feedData = res.data.data;
-
         setFeed(feedData.feed);
         console.log(feedData.feed);
         setComments(feedData.comments.content);
@@ -57,7 +52,6 @@ export default function View() {
         console.log(err);
       });
   }, []);
-
   // 수정화면으로 id 들고가기
   const navigate = useNavigate();
   const modifyHandler = (id) => {
@@ -67,19 +61,16 @@ export default function View() {
       },
     });
   };
-
   const [textareaValue, setTextareaValue] = useState('');
   const handleTextareaChange = (e) => {
     setTextareaValue(e.target.value);
   };
-
   const handleCommentRegistration = () => {
     // Create the comment object with the required information
     const commentData = {
       feedId: feedId, // Replace with the actual feedId value
       content: textareaValue,
     };
-
     axios
       .post('/api/comment/write', commentData, {
         headers: {
@@ -94,7 +85,6 @@ export default function View() {
         console.log('Error registering comment:', err);
       });
   };
-
   // 피드 삭제
   const feedDelete = () => {
     Swal.fire({
@@ -130,7 +120,6 @@ export default function View() {
       }
     });
   };
-
   return (
     <>
       <Header />
@@ -168,7 +157,6 @@ export default function View() {
                 </a>
               </p>
             </div>
-
             <div id="article" className="px-4 py-2">
               <a href="https://www.lipsum.com/" target="_blank" rel="origin">
                 <div className="border border-solid border-slate-200 rounded-lg overflow-hidden bg-slate-50 flex">
@@ -188,7 +176,6 @@ export default function View() {
                 </div>
               </a>
             </div>
-
             <div className=" mx-4 mb-2 border-slate-500 py-3 flex justify-between">
               <p className="text-sm text-slate-500">
                 <Moment format="YYYY-MM-DD HH:mm:ss">{feed.createdDate}</Moment>
@@ -201,26 +188,22 @@ export default function View() {
                   <button type="button" className="px-2" onClick={() => modifyHandler(feed.id)}>
                     <i class="fa-solid fa-pen"></i>
                   </button>
-
                   <button type="button" className="px-2" onClick={feedDelete}>
                     <i class="fa-solid fa-trash"></i>
                   </button>
                 </div>
               )}
-
               {/* <div className=''>
                 <button><i ref={optionsRef} class="fa-solid fa-ellipsis-vertical" onClick={toggleDrop}></i></button>
                 <div className='relative'>
                   {optionsVisible && (
                     <div className='absolute top shadow-lg bg-white rounded border border-slate-300 transform opacity-100 scale-100'>
-
                       <button type="button" className='py-2 px-4 hover:bg-slate-50'>
                         <span className='text-slate-900 text-sm text-keep whitespace-nowrap'>
                           <i class="fa-solid fa-pen"></i>
                           수정
                         </span>
                       </button>
-
                       <button type='button' className='py-2 px-4 hover:bg-slate-50'>
                         <span className='text-slate-900 text-sm whitespace-nowrap'>
                           <i class="fa-solid fa-trash"></i>
@@ -245,9 +228,7 @@ export default function View() {
               </div>
             </div>
           </div>
-
           {/* 댓글 */}
-
           <div id="comment">
             <h3 class="false m-0 py-6 font-bold mx-1 text-2xl">댓글 {feed.commentCount}</h3>
             <div className="bg-white border border-solid border-slate-300">
@@ -279,14 +260,12 @@ export default function View() {
                   </button>
                 </div>
               </form>
-
               {comments.map((comment) => (
                 <Comments comment={comment} />
               ))}
             </div>
           </div>
         </div>
-
         {/* 추천 게시물  */}
         <div className="hidden md:inline col-span-4 sticky top-14 h-[calc(100vh-56px)] overflow-scroll overscroll-y-contain hide-scroll-bar">
           <div className="py-8 flex flex-col gap-5">
@@ -296,7 +275,6 @@ export default function View() {
                   <h5 className="mb-0 font-bold">주간 인기 TOP 10</h5>
                   <p className="text-sm text-slate700 mt-2">지난주 인기 있던 게시물이에요!</p>
                 </div>
-
                 <div className="pb-4">
                   <div></div>
                 </div>

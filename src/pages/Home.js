@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import axios from '../components/Token/Interceptor';
 import '../styles/Home.css';
+import { redirect, useHistory } from 'react-router-dom';
 import NewsFeed from '../components/Feed/NewsFeed';
 import Header from '../components/Base/Header';
 import { Link } from 'react-router-dom';
@@ -8,32 +9,40 @@ import Swal from 'sweetalert2';
 import Skeleton from '../components/Feed/Skeleton';
 import JSConfetti from 'js-confetti';
 import { confetti } from '../App';
-
 window.addEventListener('scroll', function () {
   console.log('scroll');
 });
-
 const Hello = () => {
+  confetti.addConfetti({
+    confettiColors: [
+      '#FF0000', // Red
+      '#FFA500', // Orange
+      '#FFFF00', // Yellow
+      '#00FF00', // Green
+      '#0000FF', // Blue
+      '#FF00FF', // Magenta
+    ],
+    confettiRadius: 5,
+    confettiNumber: 500,
+  });
   Swal.fire({
     title: 'Welcome to PlayGround',
     width: 500,
     padding: '50',
     color: 'white',
-    background: '#fff url(homeCoding.gif)',
+    background: 'url(homeCoding.gif)',
     backdrop: `
-            rgba(0,0,123,0.4)
+            rgba(0,0,0,0)
             url("")
             left top
             no-repeat
         `,
   });
 };
-
 const Home = () => {
   const [likeCount, setLikeCount] = useState(0);
   const [feeds, setFeeds] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
   useEffect(() => {
     axios({
       method: 'GET',
@@ -50,26 +59,22 @@ const Home = () => {
         setIsLoading(false);
       });
   }, []);
-
   // 피드 무한스크롤
   const lastFeedRef = useRef(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [isLast, setIsLast] = useState();
-
   useEffect(() => {
     const options = {
       root: null, // Use the viewport as the root
       rootMargin: '0px',
       threshold: 1.0, // Trigger when the entire target is visible
     };
-
     const handleIntersect = (entries) => {
       const lastEntry = entries[entries.length - 1];
       if (lastEntry.isIntersecting && !isLast) {
         loadMoreContent();
       }
     };
-
     const loadMoreContent = () => {
       // Add your logic to fetch more feeds or load additional content here
       axios({
@@ -94,19 +99,16 @@ const Home = () => {
           console.log(err);
         });
     };
-
     const observer = new IntersectionObserver(handleIntersect, options);
     if (lastFeedRef.current) {
       observer.observe(lastFeedRef.current);
     }
-
     return () => {
       if (lastFeedRef.current) {
         observer.unobserve(lastFeedRef.current);
       }
     };
   }, [feeds]);
-
   return (
     <>
       <Header />
@@ -126,7 +128,6 @@ const Home = () => {
             </div>
           </div>
           {/* 피드작성 */}
-
           {/* 피드 */}
           <div className="infinite-scroll-component__outerdiv">
             <div className="infinite-scroll-component flex flex-col gap-5 h-auto overflow-auto">
@@ -159,7 +160,6 @@ const Home = () => {
           </div>
         </div>
         {/* 피드 */}
-
         {/* 추천게시물 */}
         <div className="hidden md:inline col-span-4 sticky top-14 h-[calc(100vh-56px)] overflow-scroll overscroll-contain hide-scroll-bar ">
           <div className="py-8 flex flex-col gap-5">
@@ -171,7 +171,6 @@ const Home = () => {
                 </button>
               </div>
             </div>
-
             <div className="bg-white border border-solid border-slate-300">
               {/*상단 탭*/}
               <div>
@@ -180,7 +179,6 @@ const Home = () => {
                   <p className="text-sm text-slate-700 mt-2">지난주 인기 있던 게시물이에요!</p>
                 </div>
                 {/*상단 탭*/}
-
                 {/*하단 탭 */}
                 <div className="pb-4"></div>
               </div>
@@ -192,5 +190,4 @@ const Home = () => {
     </>
   );
 };
-
 export default Home;
