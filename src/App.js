@@ -16,6 +16,7 @@ import NoticeModify from './components/Notice/NoticeModify';
 import Qna from './pages/Qna';
 import { QnaWrite } from './components/Qna/QnaWrite';
 import { QnaView } from './components/Qna/QnaView';
+import QnaModify from './components/Qna/QnaModify';
 
 import MyPage from './components/Mypage/MyPage';
 import MyPageModify from './components/Mypage/MyPageModify';
@@ -27,7 +28,7 @@ import MySkill from './components/Mypage/MySkill';
 
 import Recommend from './components/Recommend/Recommend';
 import RecommendResult from './components/Recommend/RecommendResult';
-
+import JSConfetti from 'js-confetti';
 
 function App() {
   return (
@@ -51,6 +52,7 @@ function App() {
           <Route path="/qna" element={<Qna />} />
           <Route path="/qna/write" element={<QnaWrite />} />
           <Route path="/qna/view/:id" element={<QnaView />} />
+          <Route path="/qna/qnaModify" element={<QnaModify />} />
 
           <Route path="/recommend" element={<Recommend />} />
           <Route path="/recommend/result" element={<RecommendResult />} />
@@ -62,7 +64,6 @@ function App() {
           <Route path="/createfeed" element={<Create />} />
           <Route path="/feed/view/:id" element={<View />} />
           <Route path="/feed/modify/:id" element={<Modify />} />
-
         </Routes>
       </BrowserRouter>
     </div>
@@ -70,3 +71,4 @@ function App() {
 }
 
 export default App;
+export const confetti = new JSConfetti();
