@@ -53,8 +53,8 @@ export default function NoticeModify() {
     <div>
       <Header />
       <div align="center" class="notice-modify-board">
-        <div class="notice-title">공지사항</div>
-        <table class="notice-modify-table">
+        <div className="notice-title">공지사항</div>
+        <table className="notice-modify-table">
           <tr>
             <TextField
               className="modify-title"
@@ -67,28 +67,22 @@ export default function NoticeModify() {
             />
           </tr>
           <tr>
-            <div>
-              <TextField
-                sx={{ marginRight: '66%', marginTop: '3%' }}
-                disabled
-                defaultValue={`작성자 :   ${notice.member.name}`}
-              />
-              {/* <TextField sx={{ marginLeft: '55%' }} disabled defaultValue={`작성일자: ${notice.createdDate}`} /> */}
-            </div>
+            <TextField
+              sx={{ marginRight: '66%', marginTop: '3%' }}
+              disabled
+              defaultValue={`작성자 :   ${notice.member.name}`}
+            />
           </tr>
-          {/* <p>조회수 : {notice.viewCount}</p><br/> */}
           <tr>
-            <td>
-              <TextField
-                className="modify-content"
-                id="outlined-multiline-static"
-                label="내용"
-                multiline
-                rows={10}
-                defaultValue={notice.content}
-                onChange={(e) => setContent(e.target.value)}
-              />
-            </td>
+            <TextField
+              className="modify-content"
+              id="outlined-multiline-static"
+              label="내용"
+              multiline
+              rows={10}
+              defaultValue={notice.content}
+              onChange={(e) => setContent(e.target.value)}
+            />
           </tr>
         </table>
         <div className="noticeMDbutton">
