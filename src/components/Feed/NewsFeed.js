@@ -135,7 +135,7 @@ export default function NewsFeed({ feed }) {
 
                     </p>
                     <p className='text-xs text-slate-500 false'>
-                        댓글 <b>{feed.commentCount}</b> * 조회 <b>224</b>
+                        댓글 <b>{feed.commentCount}</b> * 조회 <b>{feed.viewCount}</b>
                     </p>
                 </div>
 
