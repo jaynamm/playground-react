@@ -20,9 +20,6 @@ export default function View() {
   const [editButton, setEditButton] = useState();
   const location = useLocation();
   const feedId = location.state.id;
-
-
-
   useEffect(() => {
     axios({
       method: 'GET',
@@ -33,18 +30,16 @@ export default function View() {
       .then((res) => {
         console.log(res.data);
         let feedData = res.data.data;
-
         setFeed(feedData.feed);
         console.log(feedData.feed);
         setComments(feedData.comments.content);
         console.log(feedData.comments);
-        setEditButton(!res.data.responseMessage.includes("FAILED"));
+        setEditButton(!res.data.responseMessage.includes('FAILED'));
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
-
   // 수정화면으로 id 들고가기
   const navigate = useNavigate();
   const modifyHandler = (id) => {
@@ -54,19 +49,16 @@ export default function View() {
       },
     });
   };
-
   const [textareaValue, setTextareaValue] = useState('');
   const handleTextareaChange = (e) => {
     setTextareaValue(e.target.value);
   };
-
   const handleCommentRegistration = () => {
     // Create the comment object with the required information
     const commentData = {
       feedId: feedId, // Replace with the actual feedId value
       content: textareaValue,
     };
-
     axios
       .post('/api/comment/write', commentData, {
         headers: {
@@ -81,7 +73,6 @@ export default function View() {
         console.log('Error registering comment:', err);
       });
   };
-
   // 피드 삭제
   const feedDelete = () => {
     Swal.fire({
@@ -265,16 +256,20 @@ export default function View() {
 
 
             </div>
-            <div className='p-4'>
-              <h1 className='mb-6 font-bold text-xl'>플레이그라운드</h1>
-              <p className='auto-line-break text-base text-slate-900 whitespace-pre-wrap'>
+            <div className="p-4">
+              <h1 className="mb-6 font-bold text-xl">플레이그라운드</h1>
+              <p className="auto-line-break text-base text-slate-900 whitespace-pre-wrap">
                 {feed.content}
-                <a className='text-slate-900 mt-6 flex underline' target="_blank" rel='origin' href="https://www.lipsum.com/">
+                <a
+                  className="text-slate-900 mt-6 flex underline"
+                  target="_blank"
+                  rel="origin"
+                  href="https://www.lipsum.com/"
+                >
                   https://www.lipsum.com/
                 </a>
               </p>
             </div>
-
             <div id="article" className="px-4 py-2">
               <a href="https://www.lipsum.com/" target="_blank" rel="origin">
                 <div className="border border-solid border-slate-200 rounded-lg overflow-hidden bg-slate-50 flex">
@@ -303,14 +298,11 @@ export default function View() {
 
               {editButton && (
                 <div id="modifyDeleteButton">
-
-                  <button type="button" className='px-2' onClick={() => modifyHandler(feed.id)}>
+                  <button type="button" className="px-2" onClick={() => modifyHandler(feed.id)}>
                     <i class="fa-solid fa-pen"></i>
                   </button>
-
-
-                  <button type='button' className='px-2' onClick={feedDelete}>
-                    <i class="fa-solid fa-trash"></i>
+                  <button type="button" className="px-2" onClick={feedDelete}>
+                    <i className="fa-solid fa-trash"></i>
                   </button>
                 </div>
               )}
@@ -346,9 +338,8 @@ export default function View() {
           </div >
 
           {/* 댓글 */}
-
           <div id="comment">
-            <h3 class="false m-0 py-6 font-bold mx-1 text-2xl">댓글 {feed.commentCount}</h3>
+            <h3 className="false m-0 py-6 font-bold mx-1 text-2xl">댓글 {feed.commentCount}</h3>
             <div className="bg-white border border-solid border-slate-300">
               <form className="p-4">
                 <div className="flex gap-4 items-center">
@@ -398,7 +389,6 @@ export default function View() {
             </div>
           </div>
         </div>
-
         {/* 추천 게시물  */}
         <div className="hidden md:inline col-span-4 sticky top-14 h-[calc(100vh-56px)] overflow-scroll overscroll-y-contain hide-scroll-bar">
           <div className="py-8 flex flex-col gap-5">
@@ -408,7 +398,6 @@ export default function View() {
                   <h5 className="mb-0 font-bold">주간 인기 TOP 10</h5>
                   <p className="text-sm text-slate700 mt-2">지난주 인기 있던 게시물이에요!</p>
                 </div>
-
                 <div className="pb-4">
 
                   {/* 박스디자인 */}

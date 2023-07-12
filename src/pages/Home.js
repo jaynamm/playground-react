@@ -2,10 +2,10 @@ import React, { useEffect, useState, useRef } from 'react';
 import axios from '../components/Token/Interceptor';
 import '../styles/Home.css';
 import { redirect, useHistory } from 'react-router-dom';
-import NewsFeed from "../components/Feed/NewsFeed";
-import Header from "../components/Base/Header";
-import { Link } from "react-router-dom";
-import Swal from "sweetalert2";
+import NewsFeed from '../components/Feed/NewsFeed';
+import Header from '../components/Base/Header';
+import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import Skeleton from '../components/Feed/Skeleton';
 import { confetti } from "../App";
 
@@ -13,12 +13,12 @@ import { confetti } from "../App";
 const Hello = () => {
     confetti.addConfetti({
         confettiColors: [
-            "#FF0000", // Red
-            "#FFA500", // Orange
-            "#FFFF00", // Yellow
-            "#00FF00", // Green
-            "#0000FF", // Blue
-            "#FF00FF", // Magenta
+            '#FF0000', // Red
+            '#FFA500', // Orange
+            '#FFFF00', // Yellow
+            '#00FF00', // Green
+            '#0000FF', // Blue
+            '#FF00FF', // Magenta
         ],
         confettiRadius: 5,
         confettiNumber: 500,
@@ -336,6 +336,4 @@ const Home = () => {
         </>
     );
 };
-
-
 export default Home;

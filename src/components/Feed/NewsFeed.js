@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react'
-import '../../styles/Feed/Newfeed.css'
-import Moment from 'react-moment'
+import React, { useState, useEffect, useRef } from 'react';
+import '../../styles/Feed/Newfeed.css';
+import Moment from 'react-moment';
 import { useNavigate, Link } from 'react-router-dom';
-import { toast, ToastContainer } from "react-toastify"
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { confetti } from '../../App';
 import axios from '../Token/Interceptor';
