@@ -7,12 +7,7 @@ import Header from "../components/Base/Header";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import Skeleton from '../components/Feed/Skeleton';
-import JSConfetti from "js-confetti";
 import { confetti } from "../App";
-
-window.addEventListener('scroll', function () {
-    console.log('scroll')
-});
 
 
 const Hello = () => {
@@ -44,7 +39,6 @@ const Hello = () => {
 }
 
 const Home = () => {
-    const [likeCount, setLikeCount] = useState(0);
     const [feeds, setFeeds] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -203,7 +197,136 @@ const Home = () => {
                                 {/*상단 탭*/}
 
                                 {/*하단 탭 */}
-                                <div className="pb-4"></div>
+                                <div className="pb-4">
+
+                                    {/* 박스디자인 */}
+                                    <button>
+                                        <div className='md:hover:bg-slate-50 h-20 px-4 flex items-center gap-3'>
+                                            <div className='flex-none w-[24px] flex justify-center'>
+                                                <span className='leading-none font-bold text-xl text-cyan-600'>
+                                                    1
+                                                </span>
+                                            </div>
+                                            <div className='relative flex-none w-10 h-10 border border-slate-200 bg-white rounded-full'>
+
+                                            </div>
+                                            <div className='flex-1 pl-1'>
+                                                <p className='mb-1 text-sm text-slate-900 line-clamp-2'>
+                                                    우아한형제들에서 시니어 개발자로 일하면 어떨까? – (1) 일
+                                                </p>
+                                                <p className='text-xs text-slate-700 line-clamp-1'>
+                                                    <span className='font0bold text-slate-900'>
+                                                        우아한형제들
+                                                    </span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </button>
+
+                                    {/* 박스디자인 */}
+                                    <button>
+                                        <div className='md:hover:bg-slate-50 h-20 px-4 flex items-center gap-3'>
+                                            <div className='flex-none w-[24px] flex justify-center'>
+                                                <span className='leading-none font-bold text-xl text-cyan-600'>
+                                                    2
+                                                </span>
+                                            </div>
+                                            <div className='relative flex-none w-10 h-10 border border-slate-200 bg-white rounded-full'>
+
+                                            </div>
+                                            <div className='flex-1 pl-1'>
+                                                <p className='mb-1 text-sm text-slate-900 line-clamp-2'>
+                                                    사이드 프로젝트에 사용하기 좋은 upstash.com 서비스
+                                                </p>
+                                                <p className='text-xs text-slate-700 line-clamp-1'>
+                                                    <span className='font0bold text-slate-900'>
+                                                        asbubam
+                                                    </span>
+                                                    당근마켓 SRE팀
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </button>
+
+                                    {/* 박스디자인 */}
+                                    <button>
+                                        <div className='md:hover:bg-slate-50 h-20 px-4 flex items-center gap-3'>
+                                            <div className='flex-none w-[24px] flex justify-center'>
+                                                <span className='leading-none font-bold text-xl text-cyan-600'>
+                                                    3
+                                                </span>
+                                            </div>
+                                            <div className='relative flex-none w-10 h-10 border border-slate-200 bg-white rounded-full'>
+
+                                            </div>
+                                            <div className='flex-1 pl-1'>
+                                                <p className='mb-1 text-sm text-slate-900 line-clamp-2'>
+                                                    사이드 프로젝트에 사용하기 좋은 upstash.com 서비스
+                                                </p>
+                                                <p className='text-xs text-slate-700 line-clamp-1'>
+                                                    <span className='font0bold text-slate-900'>
+                                                        asbubam
+                                                    </span>
+                                                    당근마켓 SRE팀
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </button>
+
+                                    {/* 박스디자인 */}
+                                    <button>
+                                        <div className='md:hover:bg-slate-50 h-20 px-4 flex items-center gap-3'>
+                                            <div className='flex-none w-[24px] flex justify-center'>
+                                                <span className='leading-none font-bold text-xl text-cyan-600'>
+                                                    4
+                                                </span>
+                                            </div>
+                                            <div className='relative flex-none w-10 h-10 border border-slate-200 bg-white rounded-full'>
+
+                                            </div>
+                                            <div className='flex-1 pl-1'>
+                                                <p className='mb-1 text-sm text-slate-900 line-clamp-2'>
+                                                    사이드 프로젝트에 사용하기 좋은 upstash.com 서비스
+                                                </p>
+                                                <p className='text-xs text-slate-700 line-clamp-1'>
+                                                    <span className='font0bold text-slate-900'>
+                                                        asbubam
+                                                    </span>
+                                                    당근마켓 SRE팀
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </button>
+
+                                    {/* 박스디자인 */}
+                                    <button>
+                                        <div className='md:hover:bg-slate-50 h-20 px-4 flex items-center gap-3'>
+                                            <div className='flex-none w-[24px] flex justify-center'>
+                                                <span className='leading-none font-bold text-xl text-cyan-600'>
+                                                    5
+                                                </span>
+                                            </div>
+                                            <div className='relative flex-none w-10 h-10 border border-slate-200 bg-white rounded-full'>
+
+                                            </div>
+                                            <div className='flex-1 pl-1'>
+                                                <p className='mb-1 text-sm text-slate-900 line-clamp-2'>
+                                                    사이드 프로젝트에 사용하기 좋은 upstash.com 서비스
+                                                </p>
+                                                <p className='text-xs text-slate-700 line-clamp-1'>
+                                                    <span className='font0bold text-slate-900'>
+                                                        asbubam
+                                                    </span>
+                                                    당근마켓 SRE팀
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </button>
+
+
+
+
+                                </div>
                             </div>
                         </div>
                     </div>

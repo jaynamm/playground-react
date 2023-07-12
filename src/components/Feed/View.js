@@ -165,6 +165,65 @@ export default function View() {
   };
 
 
+  // 피드 무한스크롤
+  const lastFeedRef = useRef(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [isLast, setIsLast] = useState();
+
+  useEffect(() => {
+    const options = {
+      root: null, // Use the viewport as the root
+      rootMargin: '0px',
+      threshold: 1.0, // Trigger when the entire target is visible
+    };
+
+    const handleIntersect = (entries) => {
+      const lastEntry = entries[entries.length - 1];
+      if (lastEntry.isIntersecting && !isLast) {
+        loadMoreContent();
+      }
+    };
+
+
+    const loadMoreContent = () => {
+      // Add your logic to fetch more feeds or load additional content here
+      axios({
+        method: 'GET',
+        url: `/api/comment/list/${feedId}`,
+        params: {
+          page: currentPage
+        }
+      })
+        .then((res) => {
+          console.log(res.data);
+          let commentData = res.data.content;
+          setComments([...comments, ...commentData]);
+          const page = res.data.number;
+          setCurrentPage(page + 1);
+          let isLast = res.data.last;
+          setIsLast(isLast);
+          console.log(isLast);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+
+
+    const observer = new IntersectionObserver(handleIntersect, options);
+    if (lastFeedRef.current) {
+      observer.observe(lastFeedRef.current);
+    }
+
+    return () => {
+      if (lastFeedRef.current) {
+        observer.unobserve(lastFeedRef.current);
+      }
+    };
+  }, [comments]);
+
+
+
 
 
 
@@ -319,9 +378,23 @@ export default function View() {
                 </div>
               </form>
 
-              {comments.map((comment) => (
+              {/* {comments.map((comment) => (
                 <Comments comment={comment} />
-              ))}
+              ))} */}
+
+              {comments.map((comment, index) => {
+                if (index === comments.length - 1) {
+                  return (
+                    <div ref={lastFeedRef} key={comment.id}>
+                      <Comments comment={comment} />
+                    </div>
+                  );
+                } else {
+                  return <Comments comment={comment} key={comment.id} />;
+                }
+              })}
+
+
             </div>
           </div>
         </div>
@@ -337,13 +410,151 @@ export default function View() {
                 </div>
 
                 <div className="pb-4">
-                  <div></div>
+
+                  {/* 박스디자인 */}
+                  <button>
+                    <div className='md:hover:bg-slate-50 h-20 px-4 flex items-center gap-3'>
+                      <div className='flex-none w-[24px] flex justify-center'>
+                        <span className='leading-none font-bold text-xl text-cyan-600'>
+                          1
+                        </span>
+                      </div>
+                      <div className='relative flex-none w-10 h-10 border border-slate-200 bg-white rounded-full'>
+
+                      </div>
+                      <div className='flex-1 pl-1'>
+                        <p className='mb-1 text-sm text-slate-900 line-clamp-2'>
+                          우아한형제들에서 시니어 개발자로 일하면 어떨까? – (1) 일
+                        </p>
+                        <p className='text-xs text-slate-700 line-clamp-1'>
+                          <span className='font0bold text-slate-900'>
+                            우아한형제들
+                          </span>
+                        </p>
+                      </div>
+                    </div>
+                  </button>
+
+                  {/* 박스디자인 */}
+                  <button>
+                    <div className='md:hover:bg-slate-50 h-20 px-4 flex items-center gap-3'>
+                      <div className='flex-none w-[24px] flex justify-center'>
+                        <span className='leading-none font-bold text-xl text-cyan-600'>
+                          2
+                        </span>
+                      </div>
+                      <div className='relative flex-none w-10 h-10 border border-slate-200 bg-white rounded-full'>
+
+                      </div>
+                      <div className='flex-1 pl-1'>
+                        <p className='mb-1 text-sm text-slate-900 line-clamp-2'>
+                          사이드 프로젝트에 사용하기 좋은 upstash.com 서비스
+                        </p>
+                        <p className='text-xs text-slate-700 line-clamp-1'>
+                          <span className='font0bold text-slate-900'>
+                            asbubam
+                          </span>
+                          당근마켓 SRE팀
+                        </p>
+                      </div>
+                    </div>
+                  </button>
+
+                  {/* 박스디자인 */}
+                  <button>
+                    <div className='md:hover:bg-slate-50 h-20 px-4 flex items-center gap-3'>
+                      <div className='flex-none w-[24px] flex justify-center'>
+                        <span className='leading-none font-bold text-xl text-cyan-600'>
+                          3
+                        </span>
+                      </div>
+                      <div className='relative flex-none w-10 h-10 border border-slate-200 bg-white rounded-full'>
+
+                      </div>
+                      <div className='flex-1 pl-1'>
+                        <p className='mb-1 text-sm text-slate-900 line-clamp-2'>
+                          사이드 프로젝트에 사용하기 좋은 upstash.com 서비스
+                        </p>
+                        <p className='text-xs text-slate-700 line-clamp-1'>
+                          <span className='font0bold text-slate-900'>
+                            asbubam
+                          </span>
+                          당근마켓 SRE팀
+                        </p>
+                      </div>
+                    </div>
+                  </button>
+
+                  {/* 박스디자인 */}
+                  <button>
+                    <div className='md:hover:bg-slate-50 h-20 px-4 flex items-center gap-3'>
+                      <div className='flex-none w-[24px] flex justify-center'>
+                        <span className='leading-none font-bold text-xl text-cyan-600'>
+                          4
+                        </span>
+                      </div>
+                      <div className='relative flex-none w-10 h-10 border border-slate-200 bg-white rounded-full'>
+
+                      </div>
+                      <div className='flex-1 pl-1'>
+                        <p className='mb-1 text-sm text-slate-900 line-clamp-2'>
+                          사이드 프로젝트에 사용하기 좋은 upstash.com 서비스
+                        </p>
+                        <p className='text-xs text-slate-700 line-clamp-1'>
+                          <span className='font0bold text-slate-900'>
+                            asbubam
+                          </span>
+                          당근마켓 SRE팀
+                        </p>
+                      </div>
+                    </div>
+                  </button>
+
+                  {/* 박스디자인 */}
+                  <button>
+                    <div className='md:hover:bg-slate-50 h-20 px-4 flex items-center gap-3'>
+                      <div className='flex-none w-[24px] flex justify-center'>
+                        <span className='leading-none font-bold text-xl text-cyan-600'>
+                          5
+                        </span>
+                      </div>
+                      <div className='relative flex-none w-10 h-10 border border-slate-200 bg-white rounded-full'>
+
+                      </div>
+                      <div className='flex-1 pl-1'>
+                        <p className='mb-1 text-sm text-slate-900 line-clamp-2'>
+                          사이드 프로젝트에 사용하기 좋은 upstash.com 서비스
+                        </p>
+                        <p className='text-xs text-slate-700 line-clamp-1'>
+                          <span className='font0bold text-slate-900'>
+                            asbubam
+                          </span>
+                          당근마켓 SRE팀
+                        </p>
+                      </div>
+                    </div>
+                  </button>
+
+
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+
+      {/* <div className="w-[1024px] px-6 grid grid-cols-12 gap-12 bg-slate-50 mx-auto">
+        <div className="flex flex-col false py-8 col-span-8 gap-5">
+          <div className="bg-white border border-slate-300">
+            <div className="items-center flex text-sm text-slate-400">
+              <i class="fa-regular fa-comments p-4"></i>
+              <p>이 글의 첫 댓글을 달아보세요!</p>
+            </div>
+          </div>
+        </div>
+      </div> */}
+
     </>
   );
 }
