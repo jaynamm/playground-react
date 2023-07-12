@@ -5,6 +5,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link, useNavigate } from 'react-router-dom';
 import { styles } from './styles';
 import axios from 'axios';
+import { toast, ToastContainer } from "react-toastify"
 
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -62,7 +63,7 @@ export default function SignIn() {
           // axios.defaults.data.common['refresh-token'] = refreshToken;
           // localStorage.setItem('refreshToken', refreshToken);
         }
-        alert('로그인 성공했습니다.');
+
 
         navigate('/home', {
           // state: responseData,
@@ -73,7 +74,8 @@ export default function SignIn() {
       })
       .catch((error) => {
         console.log(error);
-        alert('로그인에 실패했습니다.'); //axios값에 데이터가 일치 하지 않으면 함수를 호출함
+        toast.error("로그인에 실패했습니다.", { position: "top-center", hideProgressBar: true, autoClose: 1000 });
+        //axios값에 데이터가 일치 하지 않으면 함수를 호출함
       });
   };
 
@@ -129,6 +131,7 @@ export default function SignIn() {
               >
                 PLAY LOGIN
               </Button>
+              <ToastContainer />
               <Box
                 sx={{
                   display: 'flex',
