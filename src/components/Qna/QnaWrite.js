@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import Header from '../Base/Header';
 import Footer from '../Base/Footer';
 import axios from '../Token/Interceptor';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 import '../../styles/Qna/QnaWrite.css';
 
 export const QnaWrite = () => {
@@ -40,26 +42,12 @@ export const QnaWrite = () => {
   return (
     <div>
       <Header />
-      <div align="center" className="top-margin">
-        <div className="notice-title">질문 작성하기</div>
-        <table className="notice-write-table">
-          <tr className="write-member-id">
-            <td className="write-member-id2">
-              작성자
-              <input
-                className="qna-memberid"
-                type="text"
-                id="author"
-                name="memberId"
-                value={memberId}
-                onChange={(e) => setMemberId(e.target.value)}
-              />
-            </td>
-          </tr>
+      <div align="center" class="notice-modify-board">
+        <div className="notice-title">Q n A</div>
+        <table className="notice-modify-table">
           <tr>
-            <input
-              className="write-title"
-              type="text"
+            <TextField
+              className="modify-title"
               id="title"
               name="title"
               value={title}
@@ -68,19 +56,26 @@ export const QnaWrite = () => {
             />
           </tr>
           <br></br>
-          <textarea
-            type="text"
-            className="write-content"
-            id="content"
-            name="content"
-            view={content}
-            placeholder="내용을 입력하세요."
-            onChange={(e) => setContent(e.target.value)}
-          />
-          <button className="qnabutton" type="button" onClick={onSubmitQnaHandler}>
-            질문 등록
-          </button>
+          <br></br>
+          <br></br>
+          <br></br>
+          <tr>
+            <TextField
+              className="modify-content"
+              id="outlined-multiline-static"
+              label="내용"
+              multiline
+              rows={10}
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+            />
+          </tr>
         </table>
+        <div className="noticeMDbutton">
+          <Button variant="contained" color="inherit" onClick={() => onSubmitQnaHandler()}>
+            작성하기
+          </Button>
+        </div>
       </div>
       <Footer />
     </div>
