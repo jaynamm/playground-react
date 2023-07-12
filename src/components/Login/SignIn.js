@@ -149,7 +149,7 @@ export default function SignIn() {
               <br></br>
 
               {/* 카카오 로그인 버튼 입니다. */}
-              <Button
+              {/* <Button
                 fullWidth
                 href={kakaoURL}
                 startIcon={<ChatBubbleIcon />}
@@ -159,7 +159,7 @@ export default function SignIn() {
                 }}
               >
                 <span>카카오계정 로그인</span>
-              </Button>
+              </Button> */}
             </Box>
           </Box>
         </Grid>
