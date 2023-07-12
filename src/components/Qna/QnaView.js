@@ -2,6 +2,7 @@ import axios from '../Token/Interceptor';
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+// import Comments from './Comments';
 import Moment from 'react-moment';
 import Header from '../../components/Base/Header';
 import Button from '@mui/material/Button';
@@ -111,7 +112,7 @@ export const QnaView = () => {
                 <tr className="view-created-date">
                   <td className="view-created-date2">작성일시</td>
                   <td className="view-created-date3">
-                    <Moment format="YYYY-MM-DD HH:mm:ss">{questionViewData.createdDate}</Moment>
+                    <Moment format="YYYY년 MM월 DD일 HH:mm">{questionViewData.createdDate}</Moment>
                   </td>
                 </tr>
               </tr>
@@ -125,31 +126,32 @@ export const QnaView = () => {
               variant="contained"
               size="medium"
               color="inherit"
-              onClick={qnaDeleteHandler}
-              sx={{ marginRight: '15px' }}
-            >
-              삭제하기
-            </Button>
-            <Button
-              variant="contained"
-              size="medium"
-              color="inherit"
               onClick={qnaModifyHandler}
               sx={{ marginRight: '15px' }}
             >
               수정하기
             </Button>
+
             <Button
               variant="contained"
               size="medium"
-              color="inherit"
-              onClick={() => {
-                navigate('/qna');
-              }}
+              color="error"
+              onClick={qnaDeleteHandler}
+              sx={{ marginLeft: '10px' }}
             >
-              목록보기
+              삭제하기
             </Button>
           </div>
+          <Button
+            variant="contained"
+            size="medium"
+            color="inherit"
+            onClick={() => {
+              navigate('/qna');
+            }}
+          >
+            목록보기
+          </Button>
         </div>
       )}
     </div>
