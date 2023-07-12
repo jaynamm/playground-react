@@ -102,19 +102,19 @@ const NoticeView = () => {
                   variant="contained"
                   size="medium"
                   color="inherit"
-                  onClick={noticeDeleteHandler}
-                  sx={{ marginRight: '15px' }}
-                >
-                  삭제하기
-                </Button>
-                <Button
-                  variant="contained"
-                  size="medium"
-                  color="inherit"
                   onClick={noticeModifyHandler}
                   sx={{ marginRight: '15px' }}
                 >
                   수정하기
+                </Button>
+                <Button
+                  variant="contained"
+                  size="medium"
+                  color="error"
+                  onClick={noticeDeleteHandler}
+                  sx={{ marginRight: '15px' }}
+                >
+                  삭제하기
                 </Button>
               </div>
             )}

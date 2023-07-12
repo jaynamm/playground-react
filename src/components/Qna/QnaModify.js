@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import Header from '../../components/Base/Header';
 import axios from '../Token/Interceptor';
@@ -67,15 +68,8 @@ export default function QnaModify() {
                 />
               </td>
             </tr>
-            <tr>
-              <td>
-                <TextField
-                  sx={{ marginRight: '66%', marginTop: '3%' }}
-                  disabled
-                  defaultValue={`작성자 :   ${questionViewData?.member?.name}`}
-                />
-              </td>
-            </tr>
+            <br></br>
+            <br></br>
             <tr>
               <td>
                 <TextField
@@ -94,6 +88,9 @@ export default function QnaModify() {
         <div className="noticeMDbutton">
           <Button variant="contained" size="medium" color="inherit" onClick={() => modifyCompleteHandler()}>
             수정하기
+          </Button>
+          <Button variant="contained" size="medium" color="error" sx={{ marginLeft: '10px' }}>
+            <Link to="/qna">취소하기</Link>
           </Button>
         </div>
       </div>
