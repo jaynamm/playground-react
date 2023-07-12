@@ -189,7 +189,7 @@ export default function View() {
                     <i class="fa-solid fa-pen"></i>
                   </button>
                   <button type="button" className="px-2" onClick={feedDelete}>
-                    <i class="fa-solid fa-trash"></i>
+                    <i className="fa-solid fa-trash"></i>
                   </button>
                 </div>
               )}
@@ -218,7 +218,7 @@ export default function View() {
             <div className="flex h-11">
               <div className="flex px-1">
                 <button type="button" className="flex items-center gap-1 p-3 focus:outline-none false">
-                  <i class="fa-regular fa-thumbs-up"></i>
+                  <i className="fa-regular fa-thumbs-up"></i>
                   <p className="font-bold text-xs text-slate-500">좋아요</p>
                 </button>
                 <button type="button" className="flex items-center gap-1 p-3 focus:outline-none false">
@@ -230,7 +230,7 @@ export default function View() {
           </div>
           {/* 댓글 */}
           <div id="comment">
-            <h3 class="false m-0 py-6 font-bold mx-1 text-2xl">댓글 {feed.commentCount}</h3>
+            <h3 className="false m-0 py-6 font-bold mx-1 text-2xl">댓글 {feed.commentCount}</h3>
             <div className="bg-white border border-solid border-slate-300">
               <form className="p-4">
                 <div className="flex gap-4 items-center">
