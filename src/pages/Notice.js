@@ -15,6 +15,7 @@ import TableRow from '@mui/material/TableRow';
 const Notice = () => {
   const [notice, setNotices] = useState([]);
   const navigate = useNavigate();
+  const [editButton, setEditButton] = useState();
 
   const noticeViewHandler = (id) => {
     navigate(`/notice/view/${id}`, {
@@ -30,6 +31,7 @@ const Notice = () => {
       .then((res) => {
         console.log(res.data);
         setNotices(res.data.data);
+        setEditButton(!res.data.responseMessage.includes('NOTICE_USER_ACCESS'));
       })
       .catch((err) => {
         console.log(err);
@@ -58,19 +60,21 @@ const Notice = () => {
                 <TableCell>{item.member.name}</TableCell>
                 {/* <td>{item.viewCount}</td> */}
                 <TableCell className="notice-createdDate">
-                  <Moment format="YYYY-MM-DD HH:mm:ss">{item.createdDate}</Moment>
+                  <Moment format="YYYY년 MM월 DD일 HH:mm">{item.createdDate}</Moment>
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </table>
-        <div className="buttonContainer">
-          <Button variant="contained" size="large" color="inherit">
-            <Link to="write">글쓰기</Link>
-          </Button>
-        </div>
+        {editButton && (
+          <div className="buttonContainer">
+            <Button variant="contained" size="large" color="inherit">
+              <Link to="write">글쓰기</Link>
+            </Button>
+          </div>
+        )}
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

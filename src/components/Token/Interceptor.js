@@ -1,9 +1,7 @@
 import axios from 'axios';
-
-
 axios.interceptors.request.use(
   function (request) {
-    console.log("send request")
+    console.log('send request');
     request.headers['Authorization'] = localStorage.getItem('accessToken');
     return request;
   },
@@ -18,7 +16,7 @@ axios.interceptors.response.use(
   async (error) => {
     const { response, config } = error;
     console.log(response.headers.responsemessage);
-    if (response.status === 401 && response.headers.responsemessage === "ACCESS TOKEN EXPIRED") {
+    if (response.status === 401 && response.headers.responsemessage === 'ACCESS TOKEN EXPIRED') {
       const { data } = await axios.post('/api/refreshtoken', null, {
         headers: {
           'refresh-token': localStorage.getItem('refreshToken'),
@@ -32,9 +30,8 @@ axios.interceptors.response.use(
         // 재요청
         return await axios(config);
     }
-
-    if (response.status === 406){
-      alert("다시 로그인 해주세요.");
+    if (response.status === 406) {
+      alert('다시 로그인 해주세요.');
       window.location.href = '/';
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
@@ -42,4 +39,4 @@ axios.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-export default axios; 
+export default axios;
