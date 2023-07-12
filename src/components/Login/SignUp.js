@@ -62,7 +62,7 @@ export default function SignUp() {
       return;
     }
     if (userPassword.match(regl) === null) {
-      alert('비밀번호 형식에 맞지 않습니다.');
+      alert('비밀번호 형식에 맞지 않습니다. 영문 숫자 포함 8자 이상이여야 합니다. ');
       return;
     }
 
