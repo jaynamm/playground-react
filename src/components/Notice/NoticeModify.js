@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Header from '../../components/Base/Header';
 import axios from '../Token/Interceptor';
 import { useNavigate } from 'react-router-dom';
@@ -66,13 +66,10 @@ export default function NoticeModify() {
               onChange={(e) => setTitle(e.target.value)}
             />
           </tr>
-          <tr>
-            <TextField
-              sx={{ marginRight: '66%', marginTop: '3%' }}
-              disabled
-              defaultValue={`작성자 :   ${notice.member.name}`}
-            />
-          </tr>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
           <tr>
             <TextField
               className="modify-content"
@@ -88,6 +85,9 @@ export default function NoticeModify() {
         <div className="noticeMDbutton">
           <Button variant="contained" size="medium" color="inherit" onClick={() => modifyCompleteHandler()}>
             수정하기
+          </Button>
+          <Button variant="contained" size="medium" color="error" sx={{ marginLeft: '10px' }}>
+            <Link to="/notice">취소하기</Link>
           </Button>
         </div>
       </div>
