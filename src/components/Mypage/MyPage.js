@@ -123,7 +123,11 @@ const MyPage = () => {
                     {mypage.name}
                   </Typography>
                   <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                    아이디 : {mypage.userid}
+                    <br />
                     이메일 : {mypage.email}
+                    <br />
+                    닉네임 : {mypage.nickname}
                     <br />
                     팔로잉 : {folowMyPage.followingCount}
                     <br />
