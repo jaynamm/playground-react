@@ -16,7 +16,7 @@ body {
 }
 
 .modify-title {
-  width: 78%;
+  width: 80%;
   height: 30px;
 }
 
@@ -70,4 +70,8 @@ body {
   justify-content: flex-end;
   margin-right: 170px;
   margin-bottom: 100px;
+}
+
+.left-align {
+  text-align: left;
 }
