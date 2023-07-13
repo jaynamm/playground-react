@@ -6,6 +6,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { confetti } from '../../App';
 import axios from '../Token/Interceptor';
+import Avvvatars from 'avvvatars-react';
 
 export default function NewsFeed({ feed }) {
   // View 창으로 id 들고가기
@@ -61,28 +62,45 @@ export default function NewsFeed({ feed }) {
     setLikeCount((likeCount) => likeCount + 1);
   };
 
+  const detailDate = (a) => {
+		const milliSeconds = new Date() - a;
+		const seconds = milliSeconds / 1000;
+		if (seconds < 60) return `방금 전`;
+		const minutes = seconds / 60;
+		if (minutes < 60) return `${Math.floor(minutes)}분 전`;
+		const hours = minutes / 60;
+		if (hours < 24) return `${Math.floor(hours)}시간 전`;
+		const days = hours / 24;
+		if (days < 7) return `${Math.floor(days)}일 전`;
+		const weeks = days / 7;
+		if (weeks < 5) return `${Math.floor(weeks)}주 전`;
+		const months = days / 30;
+		if (months < 12) return `${Math.floor(months)}개월 전`;
+		const years = days / 365;
+		return `${Math.floor(years)}년 전`;
+	};
+
+  const calcDatetime = detailDate(new Date(feed.createdDate));
+
   return (
     <>
       <div className="bg-white border border-solid border-slate-300">
         <div className="flex justify-between items-center p-4">
-          <div className="flex gap-4 items-center">
-            <img src="/user.png" alt="User profile " className="w-8 h-8 rounded-full" />
+          <div className="flex gap-3 items-center">
+            <Avvvatars value={feed.userId} style="shape" size={40}/>
+            
             <div className="flex-1">
               <p className="text-sm text-slate-900 font-bold">{feed.nickname}</p>
               {/* <p className="text-xs text-slate-700">{feed.userId}</p> */}
             </div>
-            <div className="text-xs">
-              <Moment format="YYYY-MM-DD HH:mm">{feed.createdDate}</Moment>
-            </div>
+            
           </div>
 
           {!follow ? (
             <div className="flex-none">
-              <button
-                className="btn btn-sm btn-coral-100 bg-blue-200 hover:bg-slate-200 text-coral-600 font-bold"
-                type="button"
-                onClick={followHandler}
-              >
+              <button type="button" 
+                      className="btn btn-sm btn-coral-100 bg-blue-200 hover:bg-slate-200 text-coral-600 font-bold" 
+                      onClick={followHandler} >
                 팔로우
               </button>
               <ToastContainer />
@@ -95,7 +113,9 @@ export default function NewsFeed({ feed }) {
               <ToastContainer />
             </div>
           )}
+          
         </div>
+
         <div className="p-4">
           <h1 className="mb-6 font-bold text-xl">{feed.content}</h1>
           <p className="auto-line-break text-base text-slate-900 whitespace-pre-wrap">
@@ -126,35 +146,40 @@ export default function NewsFeed({ feed }) {
         </div>
 
         <div className=" mx-4 mb-2 border-slate-500 py-3 flex justify-between">
-          <p className="text-xs text-slate-500">좋아요 {likeCount}</p>
+          <p className="text-xs text-slate-500">조회 {feed.viewCount} </p>
           <p className="text-xs text-slate-500 false">
-            댓글 <b>{feed.commentCount}</b> * 조회 <b>{feed.viewCount}</b>
+            <pre>좋아요 <b>{likeCount}</b>        댓글 <b>{feed.commentCount}</b></pre>
           </p>
         </div>
 
-        <div className="">
-          <div className="flex px-1 justify-between">
-            <div id="likeRepost" className="flex">
-              {liked ? (
-                <button className="flex items-center gap-1 p-3 focus:outline-none false" onClick={likeHandler}>
-                  <i className="fa-solid fa-thumbs-up"></i>
-                  <p className="font-bold text-xs text-slate-500">좋아요 취소</p>
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  className="flex items-center gap-1 p-3 focus:outline-none false"
-                  onClick={confettiClick}
-                >
-                  <i className="fa-regular fa-thumbs-up"></i>
-                  <p className="font-bold text-xs text-slate-500">좋아요</p>
-                </button>
-              )}
+        {/* <div className="">
+          <div className="flex px-1">
+            <div className="flex px-1 items-center fx-15">
+                  <Moment format="YYYY-MM-DD HH:mm">{feed.createdDate}</Moment>
+            </div>
+            <div className="flex px-1">
+              <div id="likeRepost" className="flex">
+                {liked ? (
+                  <button className="flex items-center gap-1 p-3 focus:outline-none false" onClick={likeHandler}>
+                    <i className="fa-solid fa-thumbs-up"></i>
+                    <p className="font-bold text-xs text-slate-500">좋아요 취소</p>
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    className="flex items-center gap-1 p-3 focus:outline-none false"
+                    onClick={confettiClick}
+                  >
+                    <i className="fa-regular fa-thumbs-up"></i>
+                    <p className="font-bold text-xs text-slate-500">좋아요</p>
+                  </button>
+                )}
 
-              <button type="button" className="flex items-center gap-1 p-3 focus:outline-none false">
-                {/* <i class="fa-regular fa-paper-plane"></i> */}
-                {/* <p className="font-bold text-xs text-slate-500">리포스트</p> */}
-              </button>
+                <button type="button" className="flex items-center gap-1 p-3 focus:outline-none false">
+                  {/* <i class="fa-regular fa-paper-plane"></i> */}
+                  {/* <p className="font-bold text-xs text-slate-500">리포스트</p> */}
+                {/*</div></button>
+                </div>
             </div>
 
             <div className="py-3 flex gap-3 pr-6">
@@ -163,9 +188,51 @@ export default function NewsFeed({ feed }) {
               </button>
             </div>
           </div>
-        </div>
-      </div>
+        </div> */}
 
+<div className="">
+  <div className="flex px-1">
+    <div className="flex px-1 items-center" style={{ marginLeft: "15px", fontSize: "10px" }}>
+      {/* <Moment format="YYYY-MM-DD HH:mm">{feed.createdDate}</Moment> */}
+      {calcDatetime}
+    </div>
+    <div className="flex-grow"></div> {/* 빈 공간을 채우기 위한 추가 요소 */}
+    <div className="flex">
+      <div id="likeRepost" className="flex">
+        {liked ? (
+          <button className="flex gap-1 p-3 focus:outline-none false" onClick={likeHandler}>
+            <i className="fa-solid fa-thumbs-up"></i>
+            <p className="font-bold text-xs text-slate-500">좋아요 취소</p>
+          </button>
+        ) : (
+          <button
+            type="button"
+            className="flex gap-1 p-3 focus:outline-none false"
+            onClick={confettiClick}
+          >
+            <i className="fa-regular fa-thumbs-up" style={{ fontSize: "15px"}}></i>
+            <p className="font-bold text-xs text-slate-500">좋아요</p>
+          </button>
+        )}
+        {/* <button type="button" className="flex items-center gap-1 p-3 focus:outline-none false">
+          <i class="fa-regular fa-paper-plane"></i>
+          <p className="font-bold text-xs text-slate-500">리포스트</p>
+        </button> */}
+      </div>
+    </div>
+    <div className="py-3 flex gap-3 pr-6">
+    <div id="feedComment" className="flex">
+      <button className="flex gap-1" style={{ fontSize: "15px"}} onClick={() => feedViewHandler(feed.id)}>
+        <i class="fa-regular fa-message"></i>
+        <p className="font-bold text-xs text-slate-500">댓글</p>
+      </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+      </div>
       <br />
       <br />
     </>
