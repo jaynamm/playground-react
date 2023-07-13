@@ -50,9 +50,6 @@ export const QnaView = () => {
           console.log(response.data);
           const responseData = response.data;
           alert('댓글이 삭제되었습니다.');
-          {
-            state: responseData;
-          }
         })
         .catch((error) => {
           console(error);
