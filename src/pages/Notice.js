@@ -30,7 +30,7 @@ const Notice = () => {
       .get('/api/notice')
       .then((res) => {
         console.log(res.data);
-        setNotices(res.data.data);
+        setNotices(res.data.data.content);
         setEditButton(!res.data.responseMessage.includes('NOTICE_USER_ACCESS'));
       })
       .catch((err) => {
