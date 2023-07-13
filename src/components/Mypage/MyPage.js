@@ -18,6 +18,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 import Header from '../Base/Header';
 import '../../styles/Mypage.css';
+import Avvvatars from 'avvvatars-react';
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -117,22 +118,30 @@ const MyPage = () => {
         <Box sx={{ display: 'flex', justifyContent: 'center', marginRight: '100px' }}>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             {mypage && folowMyPage && (
-              <Card sx={{ width: 260, height: 300, minWidth: 275, marginTop: '80px', backgroundColor: '#EDF4FF' }}>
+              <Card sx={{ width: 300, height: 450, minWidth: 275, marginTop: '80px', backgroundColor: '#EDF4FF' }}>
                 <CardContent>
-                  <Typography variant="h5" component="div" sx={{ textAlign: 'center', marginBottom: '10px' }}>
+                  <Typography variant="h5" component="div" sx={{ display: 'flex', justifyContent: 'center', marginBottom: '10px' }}>
+                    <Avvvatars value={mypage.userid} style="shape" size={100}/>
+                  </Typography>
+                  <Typography variant="h5" component="div" sx={{ textAlign: 'center', marginBottom: '20px' }}>
                     {mypage.name}
                   </Typography>
-                  <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                    아이디 : {mypage.userid}
-                    <br />
-                    이메일 : {mypage.email}
-                    <br />
-                    닉네임 : {mypage.nickname}
-                    <br />
-                    팔로잉 : {folowMyPage.followingCount}
-                    <br />
-                    팔로워 : {folowMyPage.followerCount}
+                  <Typography sx={{ ml: 1,  mb: 1.5 }} color="text.secondary">
+                    <pre>아이디    {mypage.userid}</pre>
                   </Typography>
+                    <Typography sx={{ ml: 1, mb: 1.5 }} color="text.secondary">
+                    <pre>이메일    {mypage.email}</pre>
+                    </Typography>
+                    <Typography sx={{ ml: 1, mb: 1.5 }} color="text.secondary">
+                    <pre>닉네임    {mypage.nickname}</pre>
+                    </Typography>
+                    <Typography sx={{ ml: 1, mb: 1.5 }} color="text.secondary">
+                    <pre>팔로잉    {folowMyPage.followingCount}</pre>
+                    </Typography>
+                    <Typography sx={{ ml: 1, mb: 1.5 }} color="text.secondary">
+                    <pre>팔로워    {folowMyPage.followerCount}</pre>
+                    </Typography>
+                  
                   <Typography variant="body2">{mypage.myskill}</Typography>
                 </CardContent>
                 <CardActions sx={{ justifyContent: 'center' }}>
