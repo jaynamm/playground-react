@@ -35,6 +35,8 @@ export default function View() {
   const [liked, setLiked] = useState(false); // 좋아요 토글
   const [likeCount, setLikeCount] = useState(0); // 좋아요 카운트
 
+  const [follow, setFollow] = useState(false); // 팔로우 토글
+
   useEffect(() => {
     axios({
       method: 'GET',
@@ -51,6 +53,8 @@ export default function View() {
 
         setLiked(feedData.feed.liked); 
         setLikeCount(feedData.feed.likeCount);
+
+        setFollow(feedData.feed.following);
       })
       .catch((err) => {
         console.log(err);
@@ -128,18 +132,17 @@ export default function View() {
     });
   };
 
-  // 팔로우 토글
-  const [follow, setFollow] = useState(false);
-
   // 팔로우 토스트알람
   const followHandler = () => {
-    setFollow((prevFollow) => !prevFollow);
+    setFollow((prevFollw) => !prevFollw);
     toast.info("팔로우 했어요 !", { position: "top-center", autoClose: 2000, hideProgressBar: true, })
+    axios.post('/api/follow', { toId: feed.memberId });
   }
   // 언팔로우 토스트알람
   const unFollowHandler = () => {
-    setFollow((prevFollow) => !prevFollow);
+    setFollow((prevFollw) => !prevFollw);
     toast.warning("팔로우 취소 했어요 !", { position: "top-center", autoClose: 2000, hideProgressBar: true, })
+    axios.post('/api/unfollow', { toId: feed.memberId });
   }
 
   const likeHandler = () => {
@@ -274,7 +277,6 @@ export default function View() {
                 </div>
               ) : (
                 !follow ? (
-
                   <div className='flex-none'>
                     <button className='btn btn-sm btn-coral-100 bg-blue-200 hover:bg-slate-200 text-coral-600 font-bold' type='button' onClick={followHandler}>팔로우</button>
                     <ToastContainer />
