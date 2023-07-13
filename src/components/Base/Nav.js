@@ -73,18 +73,15 @@ export default function Nav() {
                   <Avvvatars value={userId} style="shape" size={40}/>
                 </li>
               </button>
-              <ul class="dropdown-menu">
+              <ul class="dropdown-menu" style={{ textDecoration: 'none' }} >
                 <li>
-                  <Link to="/mypage" className="dropdown-item" style={{ textDecoration: 'none' }}>
-                    프로필
-                  </Link>
+                  <p style={{ margin: "18px" }}><b>{userId}</b></p>
                 </li>
-                <li>
-                  <a className="dropdown-item">
-                    <Link to="/" onClick={action}>
-                      로그아웃
-                    </Link>
-                  </a>
+                <li style={{ marginBottom: 10}}>
+                  <Link to="/mypage" className="dropdown-item" > 프로필 </Link>
+                </li>
+                <li style={{ marginBottom: 10}}>
+                    <Link to="/" className="dropdown-item" onClick={action}> 로그아웃 </Link>
                 </li>
                 {/* <li>
                   <a className="dropdown-item" href="#">
