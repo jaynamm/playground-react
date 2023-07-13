@@ -68,15 +68,15 @@ function Dashboard() {
                     </div>
                 </nav>
 
-                <div className="bg-white flex items-center gap-4 w-full max-w-screen-md mx-auto px-3 py-2 border border-solid border-slate-300 border-t-0 border-x-0 md:border-x">
+                {/* <div className="bg-white flex items-center gap-4 w-full max-w-screen-md mx-auto px-3 py-2 border border-solid border-slate-300 border-t-0 border-x-0 md:border-x">
                     <button type="button" className="p-1 focus:outline-none">
                         <i class="fa-regular fa-image"></i>
                     </button>
-                </div>
+                </div> */}
 
                 <div className="bg-white border border-solid w-full max-w-3xl flex-1 mx-auto overflow-auto hide-scroll-bar md:border-slate-300 md:border-y-0">
                     <div className="mx-auto w-full max-w-[633px] px-4 flex flex-col py-5">
-                        <div className="flex flex-row gap-3 justify-end">
+                        {/* <div className="flex flex-row gap-3 justify-end">
                             <label className="flex items-center mb-0 justify-end">
                                 <input
                                     type="checkbox"
@@ -92,10 +92,10 @@ function Dashboard() {
                                 />
                                 <p className="ml-2 text-xs font-bold text-slate-500">Facebook 공유</p>
                             </label>
-                        </div>
+                        </div> */}
 
                         <div className="flex flex-col">
-                            {!showElements ? (
+                            {/* {!showElements ? (
                                 <div
                                     role="button"
                                     className="py-3 flex gap-2 items-center group"
@@ -107,7 +107,7 @@ function Dashboard() {
                                         제목 추가
                                     </p>
                                 </div>
-                            ) : null}
+                            ) : null} */}
 
                             {showElements && (
                                 <div className="flex flex-col">
