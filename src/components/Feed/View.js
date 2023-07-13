@@ -6,60 +6,40 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import Comments from './Comments';
 import Moment from 'react-moment';
 import Swal from 'sweetalert2';
+import { toast, ToastContainer } from "react-toastify"
+import 'react-toastify/dist/ReactToastify.css';
+import { confetti } from '../../App';
+
+
 
 export default function View() {
-  // 수정삭제 마우스다운
-  // const optionsRef = useRef(null);
-  // useEffect(() => {
-  //   const handleClickOutside = (event) => {
-  //     if (optionsRef.current && !optionsRef.current.contains(event.target)) {
-  //       setOptionsVisible(false);
-  //     }
-  //   };
-  //   document.addEventListener('mousedown', handleClickOutside);
-  //   return () => {
-  //     document.removeEventListener('mousedown', handleClickOutside);
-  //   };
-  // }, []);
 
-  // 피드 수정 삭제 드랍다운
-  // const [optionsVisible, setOptionsVisible] = useState(false);
-  // const toggleDrop = () => {
-  //   setOptionsVisible(!optionsVisible);
-  // };
 
   const [feed, setFeed] = useState([]);
   const [comments, setComments] = useState([]);
   const [editButton, setEditButton] = useState();
   const location = useLocation();
   const feedId = location.state.id;
-
-
-
   useEffect(() => {
     axios({
       method: 'GET',
       url: `/api/feed/view/${feedId}`,
       headers: {
-        // 'Content-Type': 'application/json',
-        // Authorization: localStorage.getItem('Authorization'),
       },
     })
       .then((res) => {
         console.log(res.data);
         let feedData = res.data.data;
-
         setFeed(feedData.feed);
         console.log(feedData.feed);
         setComments(feedData.comments.content);
         console.log(feedData.comments);
-        setEditButton(!res.data.responseMessage.includes("FAILED"));
+        setEditButton(!res.data.responseMessage.includes('FAILED'));
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
-
   // 수정화면으로 id 들고가기
   const navigate = useNavigate();
   const modifyHandler = (id) => {
@@ -69,19 +49,16 @@ export default function View() {
       },
     });
   };
-
   const [textareaValue, setTextareaValue] = useState('');
   const handleTextareaChange = (e) => {
     setTextareaValue(e.target.value);
   };
-
   const handleCommentRegistration = () => {
     // Create the comment object with the required information
     const commentData = {
       feedId: feedId, // Replace with the actual feedId value
       content: textareaValue,
     };
-
     axios
       .post('/api/comment/write', commentData, {
         headers: {
@@ -96,7 +73,6 @@ export default function View() {
         console.log('Error registering comment:', err);
       });
   };
-
   // 피드 삭제
   const feedDelete = () => {
     Swal.fire({
@@ -133,6 +109,115 @@ export default function View() {
     });
   };
 
+  // 좋아요 토글
+  const [liked, setLiked] = useState(false);
+  useEffect(() => { setLiked(feed.liked); }, [])
+
+  // 좋아요 카운트
+  const [likeCount, setLikeCount] = useState(feed.likeCount);
+
+  // 팔로우 토글
+  const [follow, setFollow] = useState(false);
+
+  // 팔로우 토스트알람
+  const followHandler = () => {
+    setFollow((prevFollow) => !prevFollow);
+    toast.info("팔로우 했어요 !", { position: "top-center", autoClose: 2000, hideProgressBar: true, })
+  }
+  // 언팔로우 토스트알람
+  const unFollowHandler = () => {
+    setFollow((prevFollow) => !prevFollow);
+    toast.warning("팔로우 취소 했어요 !", { position: "top-center", autoClose: 2000, hideProgressBar: true, })
+  }
+
+
+  // 좋아요 api
+  const likeHandler = () => {
+    axios.post('/api/likesCancel', { feedId: feed.id })
+    setLiked(!liked);
+    setLikeCount((likeCount) => likeCount - 1);
+
+  }
+
+
+
+  // confetti 효과 , 좋아요 api
+  const confettiClick = () => {
+
+    axios.post('/api/likes', { feedId: feed.id })
+
+    confetti.addConfetti({
+      emojis: ["👍"],
+      emojiSize: 80,
+      confettiNumber: 30,
+    });
+    setLiked(!liked);
+    setLikeCount((likeCount) => likeCount + 1);
+  };
+
+
+  // 피드 무한스크롤
+  const lastFeedRef = useRef(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [isLast, setIsLast] = useState();
+
+  useEffect(() => {
+    const options = {
+      root: null, // Use the viewport as the root
+      rootMargin: '0px',
+      threshold: 1.0, // Trigger when the entire target is visible
+    };
+
+    const handleIntersect = (entries) => {
+      const lastEntry = entries[entries.length - 1];
+      if (lastEntry.isIntersecting && !isLast) {
+        loadMoreContent();
+      }
+    };
+
+
+    const loadMoreContent = () => {
+      // Add your logic to fetch more feeds or load additional content here
+      axios({
+        method: 'GET',
+        url: `/api/comment/list/${feedId}`,
+        params: {
+          page: currentPage
+        }
+      })
+        .then((res) => {
+          console.log(res.data);
+          let commentData = res.data.content;
+          setComments([...comments, ...commentData]);
+          const page = res.data.number;
+          setCurrentPage(page + 1);
+          let isLast = res.data.last;
+          setIsLast(isLast);
+          console.log(isLast);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+
+
+    const observer = new IntersectionObserver(handleIntersect, options);
+    if (lastFeedRef.current) {
+      observer.observe(lastFeedRef.current);
+    }
+
+    return () => {
+      if (lastFeedRef.current) {
+        observer.unobserve(lastFeedRef.current);
+      }
+    };
+  }, [comments]);
+
+
+
+
+
+
   return (
     <>
       <Header />
@@ -146,26 +231,45 @@ export default function View() {
                   <p className="text-sm text-slate-900">{feed.nickname}</p>
                   <p className="text-xs text-slate-700">{feed.userId}</p>
                 </div>
+
+
+                <div className='text-xs'>
+                  <Moment format="YYYY-MM-DD HH:mm:ss">{feed.createdDate}</Moment>
+                </div>
               </div>
-              <div className="flex-none">
-                <button
-                  className="btn btn-sm btn-coral-100 bg-slate-300 hover:bg-slate-200 text-coral-600 font-bold"
-                  type="button"
-                >
-                  팔로우
-                </button>
-              </div>
+
+              {!follow ? (
+
+                <div className='flex-none'>
+                  <button className='btn btn-sm btn-coral-100 bg-blue-200 hover:bg-slate-200 text-coral-600 font-bold' type='button' onClick={followHandler}>팔로우</button>
+                  <ToastContainer />
+                </div>
+              ) : (
+                <div>
+                  <button className='btn btn-sm bg-red-200 hover:bg-red-100' onClick={unFollowHandler}>
+                    <i class="fa-solid fa-user-xmark"></i>
+                  </button>
+                  <ToastContainer />
+                </div>
+
+              )}
+
+
             </div>
-            <div className='p-4'>
-              <h1 className='mb-6 font-bold text-xl'>플레이그라운드</h1>
-              <p className='auto-line-break text-base text-slate-900 whitespace-pre-wrap'>
+            <div className="p-4">
+              <h1 className="mb-6 font-bold text-xl">플레이그라운드</h1>
+              <p className="auto-line-break text-base text-slate-900 whitespace-pre-wrap">
                 {feed.content}
-                <a className='text-slate-900 mt-6 flex underline' target="_blank" rel='origin' href="https://www.lipsum.com/">
+                <a
+                  className="text-slate-900 mt-6 flex underline"
+                  target="_blank"
+                  rel="origin"
+                  href="https://www.lipsum.com/"
+                >
                   https://www.lipsum.com/
                 </a>
               </p>
             </div>
-
             <div id="article" className="px-4 py-2">
               <a href="https://www.lipsum.com/" target="_blank" rel="origin">
                 <div className="border border-solid border-slate-200 rounded-lg overflow-hidden bg-slate-50 flex">
@@ -186,67 +290,56 @@ export default function View() {
               </a>
             </div>
 
-            <div className=" mx-4 mb-2 border-slate-500 py-3 flex justify-between">
-              <p className="text-sm text-slate-500">
-                <Moment format="YYYY-MM-DD HH:mm:ss">{feed.createdDate}</Moment>
+            <div className=' mx-4 mb-2 border-slate-500 py-3 flex justify-between'>
+              <p className='text-xs text-slate-500'>
+                좋아요 {likeCount}
+
               </p>
-              {/* <p className='text-xs text-slate-500 false'>
-                조회 <b>224</b>
-              </p> */}
+
               {editButton && (
                 <div id="modifyDeleteButton">
-
-                  <button type="button" className='px-2' onClick={() => modifyHandler(feed.id)}>
+                  <button type="button" className="px-2" onClick={() => modifyHandler(feed.id)}>
                     <i class="fa-solid fa-pen"></i>
                   </button>
-
-
-                  <button type='button' className='px-2' onClick={feedDelete}>
-                    <i class="fa-solid fa-trash"></i>
+                  <button type="button" className="px-2" onClick={feedDelete}>
+                    <i className="fa-solid fa-trash"></i>
                   </button>
                 </div>
               )}
-
-              {/* <div className=''>
-                <button><i ref={optionsRef} class="fa-solid fa-ellipsis-vertical" onClick={toggleDrop}></i></button>
-                <div className='relative'>
-                  {optionsVisible && (
-                    <div className='absolute top shadow-lg bg-white rounded border border-slate-300 transform opacity-100 scale-100'>
-
-                      <button type="button" className='py-2 px-4 hover:bg-slate-50'>
-                        <span className='text-slate-900 text-sm text-keep whitespace-nowrap'>
-                          <i class="fa-solid fa-pen"></i>
-                          수정
-                        </span>
-                      </button>
-
-                      <button type='button' className='py-2 px-4 hover:bg-slate-50'>
-                        <span className='text-slate-900 text-sm whitespace-nowrap'>
-                          <i class="fa-solid fa-trash"></i>
-                          삭제
-                        </span>
-                      </button>
-                    </div>
-                  )}
-                </div>
-              </div> */}
             </div>
-            <div className="flex h-11">
-              <div className="flex px-1">
-                <button type="button" className="flex items-center gap-1 p-3 focus:outline-none false">
-                  👍 <p className="font-bold text-xs text-slate-500">좋아요</p>
-                </button>
-                <button type="button" className="flex items-center gap-1 p-3 focus:outline-none false">
-                  🔄 <p className="font-bold text-xs text-slate-500">리포스트</p>
-                </button>
+
+
+            <div className=''>
+              <div className='flex px-1 justify-between'>
+                <div id="likeRepost" className='flex'>
+
+
+                  {liked ? (
+                    <button className="flex items-center gap-1 p-3 focus:outline-none false" onClick={likeHandler}>
+                      <i className="fa-solid fa-thumbs-up"></i>
+                      <p className="font-bold text-xs text-slate-500">좋아요 취소</p>
+                    </button>
+                  ) : (
+                    <button type="button" className="flex items-center gap-1 p-3 focus:outline-none false" onClick={confettiClick}>
+                      <i className="fa-regular fa-thumbs-up"></i>
+                      <p className="font-bold text-xs text-slate-500">좋아요</p>
+                    </button>
+                  )}
+
+                  <button type="button" className='flex items-center gap-1 p-3 focus:outline-none false'>
+                    <i class="fa-regular fa-paper-plane"></i>
+                    <p className='font-bold text-xs text-slate-500'>리포스트</p>
+                  </button>
+                </div>
+
+
               </div>
             </div>
-          </div>
+          </div >
 
           {/* 댓글 */}
-
           <div id="comment">
-            <h3 class="false m-0 py-6 font-bold mx-1 text-2xl">댓글 {feed.commentCount}</h3>
+            <h3 className="false m-0 py-6 font-bold mx-1 text-2xl">댓글 {feed.commentCount}</h3>
             <div className="bg-white border border-solid border-slate-300">
               <form className="p-4">
                 <div className="flex gap-4 items-center">
@@ -276,13 +369,26 @@ export default function View() {
                 </div>
               </form>
 
-              {comments.map((comment) => (
+              {/* {comments.map((comment) => (
                 <Comments comment={comment} />
-              ))}
+              ))} */}
+
+              {comments.map((comment, index) => {
+                if (index === comments.length - 1) {
+                  return (
+                    <div ref={lastFeedRef} key={comment.id}>
+                      <Comments comment={comment} />
+                    </div>
+                  );
+                } else {
+                  return <Comments comment={comment} key={comment.id} />;
+                }
+              })}
+
+
             </div>
           </div>
         </div>
-
         {/* 추천 게시물  */}
         <div className="hidden md:inline col-span-4 sticky top-14 h-[calc(100vh-56px)] overflow-scroll overscroll-y-contain hide-scroll-bar">
           <div className="py-8 flex flex-col gap-5">
@@ -292,15 +398,152 @@ export default function View() {
                   <h5 className="mb-0 font-bold">주간 인기 TOP 10</h5>
                   <p className="text-sm text-slate700 mt-2">지난주 인기 있던 게시물이에요!</p>
                 </div>
-
                 <div className="pb-4">
-                  <div></div>
+
+                  {/* 박스디자인 */}
+                  <button>
+                    <div className='md:hover:bg-slate-50 h-20 px-4 flex items-center gap-3'>
+                      <div className='flex-none w-[24px] flex justify-center'>
+                        <span className='leading-none font-bold text-xl text-cyan-600'>
+                          1
+                        </span>
+                      </div>
+                      <div className='relative flex-none w-10 h-10 border border-slate-200 bg-white rounded-full'>
+
+                      </div>
+                      <div className='flex-1 pl-1'>
+                        <p className='mb-1 text-sm text-slate-900 line-clamp-2'>
+                          우아한형제들에서 시니어 개발자로 일하면 어떨까? – (1) 일
+                        </p>
+                        <p className='text-xs text-slate-700 line-clamp-1'>
+                          <span className='font0bold text-slate-900'>
+                            우아한형제들
+                          </span>
+                        </p>
+                      </div>
+                    </div>
+                  </button>
+
+                  {/* 박스디자인 */}
+                  <button>
+                    <div className='md:hover:bg-slate-50 h-20 px-4 flex items-center gap-3'>
+                      <div className='flex-none w-[24px] flex justify-center'>
+                        <span className='leading-none font-bold text-xl text-cyan-600'>
+                          2
+                        </span>
+                      </div>
+                      <div className='relative flex-none w-10 h-10 border border-slate-200 bg-white rounded-full'>
+
+                      </div>
+                      <div className='flex-1 pl-1'>
+                        <p className='mb-1 text-sm text-slate-900 line-clamp-2'>
+                          사이드 프로젝트에 사용하기 좋은 upstash.com 서비스
+                        </p>
+                        <p className='text-xs text-slate-700 line-clamp-1'>
+                          <span className='font0bold text-slate-900'>
+                            asbubam
+                          </span>
+                          당근마켓 SRE팀
+                        </p>
+                      </div>
+                    </div>
+                  </button>
+
+                  {/* 박스디자인 */}
+                  <button>
+                    <div className='md:hover:bg-slate-50 h-20 px-4 flex items-center gap-3'>
+                      <div className='flex-none w-[24px] flex justify-center'>
+                        <span className='leading-none font-bold text-xl text-cyan-600'>
+                          3
+                        </span>
+                      </div>
+                      <div className='relative flex-none w-10 h-10 border border-slate-200 bg-white rounded-full'>
+
+                      </div>
+                      <div className='flex-1 pl-1'>
+                        <p className='mb-1 text-sm text-slate-900 line-clamp-2'>
+                          사이드 프로젝트에 사용하기 좋은 upstash.com 서비스
+                        </p>
+                        <p className='text-xs text-slate-700 line-clamp-1'>
+                          <span className='font0bold text-slate-900'>
+                            asbubam
+                          </span>
+                          당근마켓 SRE팀
+                        </p>
+                      </div>
+                    </div>
+                  </button>
+
+                  {/* 박스디자인 */}
+                  <button>
+                    <div className='md:hover:bg-slate-50 h-20 px-4 flex items-center gap-3'>
+                      <div className='flex-none w-[24px] flex justify-center'>
+                        <span className='leading-none font-bold text-xl text-cyan-600'>
+                          4
+                        </span>
+                      </div>
+                      <div className='relative flex-none w-10 h-10 border border-slate-200 bg-white rounded-full'>
+
+                      </div>
+                      <div className='flex-1 pl-1'>
+                        <p className='mb-1 text-sm text-slate-900 line-clamp-2'>
+                          사이드 프로젝트에 사용하기 좋은 upstash.com 서비스
+                        </p>
+                        <p className='text-xs text-slate-700 line-clamp-1'>
+                          <span className='font0bold text-slate-900'>
+                            asbubam
+                          </span>
+                          당근마켓 SRE팀
+                        </p>
+                      </div>
+                    </div>
+                  </button>
+
+                  {/* 박스디자인 */}
+                  <button>
+                    <div className='md:hover:bg-slate-50 h-20 px-4 flex items-center gap-3'>
+                      <div className='flex-none w-[24px] flex justify-center'>
+                        <span className='leading-none font-bold text-xl text-cyan-600'>
+                          5
+                        </span>
+                      </div>
+                      <div className='relative flex-none w-10 h-10 border border-slate-200 bg-white rounded-full'>
+
+                      </div>
+                      <div className='flex-1 pl-1'>
+                        <p className='mb-1 text-sm text-slate-900 line-clamp-2'>
+                          사이드 프로젝트에 사용하기 좋은 upstash.com 서비스
+                        </p>
+                        <p className='text-xs text-slate-700 line-clamp-1'>
+                          <span className='font0bold text-slate-900'>
+                            asbubam
+                          </span>
+                          당근마켓 SRE팀
+                        </p>
+                      </div>
+                    </div>
+                  </button>
+
+
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+
+      {/* <div className="w-[1024px] px-6 grid grid-cols-12 gap-12 bg-slate-50 mx-auto">
+        <div className="flex flex-col false py-8 col-span-8 gap-5">
+          <div className="bg-white border border-slate-300">
+            <div className="items-center flex text-sm text-slate-400">
+              <i class="fa-regular fa-comments p-4"></i>
+              <p>이 글의 첫 댓글을 달아보세요!</p>
+            </div>
+          </div>
+        </div>
+      </div> */}
+
     </>
   );
 }

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from '../Token/Interceptor';
 import Header from '../../components/Base/Header';
 import { useNavigate, useLocation } from 'react-router-dom';
+import Button from '@mui/material/Button';
 import '../../styles/Notice/NoticeView.css';
 import Moment from 'react-moment';
 
@@ -10,6 +11,16 @@ const NoticeView = () => {
   const id = location.state.id;
   const navigate = useNavigate();
   const [notice, setNotice] = useState(null);
+  const [editButton, setEditButton] = useState();
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('kr-KO', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
+  };
 
   useEffect(() => {
     axios
@@ -17,6 +28,7 @@ const NoticeView = () => {
       .then((res) => {
         console.log(res.data);
         setNotice(res.data.data);
+        setEditButton(!res.data.responseMessage.includes('NOTICE_WRITER_ACCESS_FAILED'));
       })
       .catch((err) => {
         console.log(err);
@@ -72,7 +84,7 @@ const NoticeView = () => {
                 <tr className="view-created-date">
                   <td className="view-created-date2">작성일시</td>
                   <td className="view-created-date3">
-                    <Moment format="YYYY-MM-DD HH:mm:ss">{notice.createdDate}</Moment>
+                    <Moment format="YYYY년 MM월 DD일 HH:mm">{notice.createdDate}</Moment>
                   </td>
                 </tr>
               </tr>
@@ -82,23 +94,42 @@ const NoticeView = () => {
               </tr>
             </tbody>
           </table>
+
           <div className="view-buttons">
-            {/* <button type="submit" className="btn btn-primary-view" onClick={noticeDeleteHandler}>
-              삭제하기
-            </button>
-            <button type="submit" className="btn btn-primary-view" onClick={noticeModifyHandler}>
-              수정하기
-            </button> */}
-            <button
-              type="submit"
-              className="btn btn-primary-view"
-              onClick={() => {
-                navigate('/notice');
-              }}
-            >
-              목록보기
-            </button>
+            {editButton && (
+              <div>
+                <Button
+                  variant="contained"
+                  size="medium"
+                  color="inherit"
+                  onClick={noticeModifyHandler}
+                  sx={{ marginRight: '15px' }}
+                >
+                  수정하기
+                </Button>
+                <Button
+                  variant="contained"
+                  size="medium"
+                  color="error"
+                  onClick={noticeDeleteHandler}
+                  sx={{ marginRight: '15px' }}
+                >
+                  삭제하기
+                </Button>
+              </div>
+            )}
           </div>
+          <Button
+            sx={{ justifyContent: 'right' }}
+            variant="contained"
+            size="medium"
+            color="inherit"
+            onClick={() => {
+              navigate('/notice');
+            }}
+          >
+            목록보기
+          </Button>
         </div>
       )}
     </div>

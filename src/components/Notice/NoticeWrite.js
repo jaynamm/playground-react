@@ -4,6 +4,8 @@ import Header from '../../components/Base/Header';
 import { useNavigate } from 'react-router-dom';
 import '../../styles/Notice/NoticeWrite.css';
 import Footer from '../Base/Footer';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 
 export default function NoticeWrite() {
   const [title, setTitle] = useState('');
@@ -54,32 +56,36 @@ export default function NoticeWrite() {
       <div align="center" class="notice-write-board">
         <div class="notice-title">공지사항</div>
         <table class="notice-write-table">
-          <tr class="write-member-id">
-            <td class="write-member-id2">작성자</td>
-            <td>kim</td>
-          </tr>
           <tr>
-            <input
-              id="write-title"
-              className="write-title"
+            <TextField
+              className="modify-title"
+              id="title"
+              name="title"
+              value={title}
               placeholder="제목을 입력하세요."
               onChange={(e) => setTitle(e.target.value)}
-            />{' '}
-            <br />
-            <br />
+            />
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
           </tr>
           <tr>
-            <textarea
-              id="write-content"
-              className="write-content"
-              placeholder="내용을 입력하세요."
+            <TextField
+              className="modify-content"
+              id="outlined-multiline-static"
+              label="내용"
+              multiline
+              rows={10}
               onChange={(e) => setContent(e.target.value)}
             />
           </tr>
-          <button type="submit" className="btn btn-primary-write" onClick={() => noticeWriteHandler()}>
-            작성하기
-          </button>
         </table>
+        <div className="noticeMDbutton">
+          <Button variant="contained" size="medium" color="inherit" onClick={() => noticeWriteHandler()}>
+            작성하기
+          </Button>
+        </div>
       </div>
       <Footer />
     </div>

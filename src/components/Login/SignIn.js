@@ -5,6 +5,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link, useNavigate } from 'react-router-dom';
 import { styles } from './styles';
 import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
 
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -34,6 +35,11 @@ export default function SignIn() {
     </Button>,
   ];
 
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') signUpHandler();
+  };
+  // 로그인 시도시 엔터를 치면 바로 로그인할 수 있도록 하였습니다.
+
   const signUpHandler = () => {
     if (userId.length === 0 || userPassword.length === 0) {
       alert('이메일과 비밀번호를 입력하세요.');
@@ -62,8 +68,6 @@ export default function SignIn() {
           // axios.defaults.data.common['refresh-token'] = refreshToken;
           // localStorage.setItem('refreshToken', refreshToken);
         }
-        alert('로그인 성공했습니다.');
-
         navigate('/home', {
           // state: responseData,
         });
@@ -73,7 +77,8 @@ export default function SignIn() {
       })
       .catch((error) => {
         console.log(error);
-        alert('로그인에 실패했습니다.'); //axios값에 데이터가 일치 하지 않으면 함수를 호출함
+        toast.error('로그인에 실패했습니다.', { position: 'top-center', hideProgressBar: true, autoClose: 1000 });
+        //axios값에 데이터가 일치 하지 않으면 함수를 호출함
       });
   };
 
@@ -106,6 +111,7 @@ export default function SignIn() {
                 autoComplete="userId"
                 autoFocus
                 onChange={(e) => setUserid(e.target.value)}
+                onKeyPress={handleKeyPress}
               />
 
               <TextField
@@ -117,6 +123,7 @@ export default function SignIn() {
                 type="password"
                 id="userPassword"
                 onChange={(e) => setPassword(e.target.value)}
+                onKeyPress={handleKeyPress}
               />
 
               <Button
@@ -126,9 +133,11 @@ export default function SignIn() {
                 color="secondary"
                 sx={{ mt: 3, mb: 3 }}
                 onClick={() => signUpHandler()}
+                onKeyPress={handleKeyPress}
               >
                 PLAY LOGIN
               </Button>
+              <ToastContainer />
               <Box
                 sx={{
                   display: 'flex',
@@ -143,7 +152,7 @@ export default function SignIn() {
               <br></br>
 
               {/* 카카오 로그인 버튼 입니다. */}
-              <Button
+              {/* <Button
                 fullWidth
                 href={kakaoURL}
                 startIcon={<ChatBubbleIcon />}
@@ -153,7 +162,7 @@ export default function SignIn() {
                 }}
               >
                 <span>카카오계정 로그인</span>
-              </Button>
+              </Button> */}
             </Box>
           </Box>
         </Grid>

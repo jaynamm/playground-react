@@ -2,8 +2,14 @@ import React, { useEffect, useState } from 'react';
 import Header from '../components/Base/Header';
 import axios from '../components/Token/Interceptor';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 import Footer from '../components/Base/Footer';
+
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableRow from '@mui/material/TableRow';
+import Button from '@mui/material/Button';
 import '../styles/Qna/Qna.css';
 
 const Qna = () => {
@@ -44,48 +50,47 @@ const Qna = () => {
   return (
     <div>
       <Header />
-      <div align="center" class="notice-board">
-        <div class="notice-title">Q & A</div>
-        <table class="notice-table">
+
+      <div align="center" className="notice-board">
+        <div className="notice-title">Q & A</div>
+        <table className="notice-table">
           <thead>
-            <tr class="notice-label">
-              <th>글 번호</th>
-              <th>제목</th>
-              <th>작성자</th>
+            <TableRow className="noticeLabel">
+              <TableCell>글 번호</TableCell>
+              <TableCell>제목</TableCell>
+              <TableCell>작성자</TableCell>
               {/* <th>조회수</th> */}
-              <th>작성일시</th>
-            </tr>
+              <TableCell>작성일시</TableCell>
+            </TableRow>
           </thead>
-          <tbody>
-            {questions.map((question) => (
-              <tr>
-                <td>{question.id}</td>
-                <td
-                  onClick={() => {
-                    onClickQnaViewHandler(question.id);
-                  }}
-                >
-                  {question.title}
-                </td>
-                <td>{question.memberId}</td>
-                <td>
-                  <Moment format="YYYY-MM-DD HH:mm:ss">{question.createdDate}</Moment>
-                </td>
-              </tr>
+          <TableBody>
+            {questions.map((item) => (
+              <TableRow key={item.id} onClick={() => onClickQnaViewHandler(item.id)} className="notice-table-row">
+                <TableCell className="notice-id">{item.id}</TableCell>
+                <TableCell>{item.title}</TableCell>
+                <TableCell>{item.member.name}</TableCell>
+                {/* <td>{item.viewCount}</td> */}
+                <TableCell className="notice-createdDate">
+                  <Moment format="YYYY년 MM월 DD일 HH:mm">{item.createdDate}</Moment>
+                </TableCell>
+              </TableRow>
             ))}
-          </tbody>
+          </TableBody>
         </table>
-        <button
-          class="btn btn-primary-notice"
-          type="button"
-          onClick={() => {
-            onClickCreateQnaHandler();
-          }}
-        >
-          질문하기
-        </button>
+        <div className="buttonContainer">
+          <Button
+            variant="contained"
+            size="large"
+            color="inherit"
+            onClick={() => {
+              onClickCreateQnaHandler();
+            }}
+          >
+            질문하기
+          </Button>
+        </div>
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

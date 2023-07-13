@@ -55,10 +55,34 @@ const MyPage = () => {
   const [mypage, setMypage] = useState([]);
   const [folowMyPage, setFollowMyPage] = useState([]);
   const [myPageFeedDtoList, setMyPageFeedDtoList] = useState([]);
-  const [myPageQuestionDtoList, setMyPageQuestionDtoList] = useState([]);
+  const [myPageCommentDtoList, setPageCommentDtoList] = useState([]);
   const [expanded, setExpanded] = React.useState(false);
+  // const [skill, setSkill] = useState([]);
+  // const [myPageQuestionDtoList, setMyPageQuestionDtoList] = useState([]);
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('kr-KO', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
+  };
 
   useEffect(() => {
+    // axios({
+    //   method: 'GET',
+    //   url: '/api/member/skills',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    // })
+    //   .then((response) => {
+    //     setSkill(response.data.skill);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
     axios({
       method: 'GET',
       url: '/api/mypage',
@@ -69,9 +93,9 @@ const MyPage = () => {
       .then((response) => {
         setMypage(response.data.memberMyPageDto);
         setFollowMyPage(response.data.followMyPageDto);
-        setMyPageFeedDtoList(response.data.myPageFeedDtoList);
-        setMyPageQuestionDtoList(response.data.myPageQuestionDtoList);
-        console.log(response.data.myPageQuestionDtoList);
+        setMyPageFeedDtoList(response.data.myPageFeedDtoList.reverse());
+        // setMyPageQuestionDtoList(response.data.myPageQuestionDtoList);
+        setPageCommentDtoList(response.data.myPageCommentDtoList.reverse());
       })
       .catch((error) => {
         console.log(error);
@@ -91,28 +115,49 @@ const MyPage = () => {
       <Header />
       <div>
         <Box sx={{ display: 'flex', justifyContent: 'center', marginRight: '100px' }}>
-          {mypage && folowMyPage && (
-            <Card sx={{ width: 260, height: 300, minWidth: 275, marginTop: '80px', backgroundColor: '#EDF4FF' }}>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            {mypage && folowMyPage && (
+              <Card sx={{ width: 260, height: 300, minWidth: 275, marginTop: '80px', backgroundColor: '#EDF4FF' }}>
+                <CardContent>
+                  <Typography variant="h5" component="div" sx={{ textAlign: 'center', marginBottom: '10px' }}>
+                    {mypage.name}
+                  </Typography>
+                  <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                    아이디 : {mypage.userid}
+                    <br />
+                    이메일 : {mypage.email}
+                    <br />
+                    닉네임 : {mypage.nickname}
+                    <br />
+                    팔로잉 : {folowMyPage.followingCount}
+                    <br />
+                    팔로워 : {folowMyPage.followerCount}
+                  </Typography>
+                  <Typography variant="body2">{mypage.myskill}</Typography>
+                </CardContent>
+                <CardActions sx={{ justifyContent: 'center' }}>
+                  <Button variant="contained">
+                    <Link to="/mypage/modify">비밀번호 수정</Link>
+                  </Button>
+                </CardActions>
+              </Card>
+            )}
+
+            {/* <Card sx={{ width: 260, height: 200, minWidth: 275, marginTop: '80px', backgroundColor: '#EDF4FF' }}>
               <CardContent>
                 <Typography variant="h5" component="div" sx={{ textAlign: 'center', marginBottom: '10px' }}>
-                  {mypage.name}
+                  나의 스킬
                 </Typography>
-                <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                  이메일 : {mypage.email}
-                  <br />
-                  팔로잉 : {folowMyPage.followingCount}
-                  <br />
-                  팔로워 : {folowMyPage.followerCount}
-                </Typography>
-                <Typography variant="body2">{mypage.myskill}</Typography>
+                <Typography variant="body2">{mypage.title}</Typography>
               </CardContent>
               <CardActions sx={{ justifyContent: 'center' }}>
                 <Button variant="contained">
                   <Link to="/Mypage/MySkill">스킬 추가</Link>
                 </Button>
               </CardActions>
-            </Card>
-          )}
+            </Card> */}
+            {/* 채용 추천하는 부분에서 스킬추가를 할 수 있어서 불필요하다 생각하여 주석처리 하였습니다.  */}
+          </div>
 
           <Box sx={{ marginLeft: '80px' }}>
             <Tabs
@@ -140,7 +185,7 @@ const MyPage = () => {
                           id={`panel-${feed.id}-header`}
                         >
                           <Typography sx={{ width: '33%', flexShrink: 0 }}>{feed.nickname}</Typography>
-                          <Typography sx={{ color: 'text.secondary' }}>{feed.createdDate}</Typography>
+                          <Typography sx={{ color: 'text.secondary' }}>{formatDate(feed.createdDate)}</Typography>
                         </AccordionSummary>
                         <AccordionDetails>
                           <Typography>{feed.content}</Typography>
@@ -154,23 +199,23 @@ const MyPage = () => {
             <TabPanel value={value} index={1}>
               <div>
                 <Box sx={{ justifyContent: 'center' }}>
-                  {myPageQuestionDtoList.map((question) => (
-                    <div key={question.id}>
+                  {myPageCommentDtoList.map((content) => (
+                    <div key={content.id}>
                       <Accordion
-                        expanded={expanded === question.id}
-                        onChange={handleChanges(question.id)}
+                        expanded={expanded === content.id}
+                        onChange={handleChanges(content.id)}
                         sx={{ marginBottom: '1%' }}
                       >
                         <AccordionSummary
                           expandIcon={<ExpandMoreIcon />}
-                          aria-controls={`panel-${question.id}-content`}
-                          id={`panel-${question.id}-header`}
+                          aria-controls={`panel-${content.id}-content`}
+                          id={`panel-${content.id}-header`}
                         >
-                          <Typography sx={{ width: '33%', flexShrink: 0 }}>{question.title}</Typography>
-                          <Typography sx={{ color: 'text.secondary' }}>{question.createdDate}</Typography>
+                          <Typography sx={{ width: '33%', flexShrink: 0 }}>{content.nickname}</Typography>
+                          <Typography sx={{ color: 'text.secondary' }}>{formatDate(content.createdDate)}</Typography>
                         </AccordionSummary>
                         <AccordionDetails>
-                          <Typography>{question.content}</Typography>
+                          <Typography>{content.content}</Typography>
                         </AccordionDetails>
                       </Accordion>
                     </div>

@@ -1,8 +1,6 @@
 import React from 'react';
 import '../../styles/Main.css';
 import { Link } from 'react-router-dom';
-import { redirect } from 'react-router-dom';
-import axios from '../Token/Interceptor';
 
 export default function Nav() {
   return (
@@ -13,20 +11,7 @@ export default function Nav() {
             <div className="logo">Play</div>
           </Link>
           <div className="menu">
-            <ul className="topTitle">
-              <li>
-                <Link to="/notice"> 공지사항 </Link>
-              </li>
-              <li>
-                <Link to="/qna"> Q&A </Link>
-              </li>
-              <li>
-                <Link to="/home">실시간 인기게시물</Link>
-              </li>
-              <li>
-                <Link to="/recommend">채용 추천</Link>
-              </li>
-            </ul>
+            <ul className="topTitle"></ul>
           </div>
         </div>
       </nav>

@@ -16,7 +16,7 @@ body {
 }
 
 .modify-title {
-  width: 78%;
+  width: 80%;
   height: 30px;
 }
 
@@ -63,4 +63,15 @@ body {
 .btn-primary-modify:hover {
   background-color: #f0e4ff;
   color: #7d7d7d;
+}
+
+.noticeMDbutton {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 170px;
+  margin-bottom: 100px;
+}
+
+.left-align {
+  text-align: left;
 }

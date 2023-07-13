@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Header from '../../components/Base/Header';
 import axios from '../Token/Interceptor';
 import { useNavigate } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 import '../../styles/Notice/NoticeModify.css';
 
 export default function NoticeModify() {
@@ -52,8 +53,8 @@ export default function NoticeModify() {
     <div>
       <Header />
       <div align="center" class="notice-modify-board">
-        <div class="notice-title">공지사항</div>
-        <table class="notice-modify-table">
+        <div className="notice-title">공지사항</div>
+        <table className="notice-modify-table">
           <tr>
             <TextField
               className="modify-title"
@@ -65,34 +66,30 @@ export default function NoticeModify() {
               onChange={(e) => setTitle(e.target.value)}
             />
           </tr>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
           <tr>
-            <div>
-              <TextField
-                sx={{ marginRight: '66%', marginTop: '3%' }}
-                disabled
-                defaultValue={`작성자 :   ${notice.member.name}`}
-              />
-              {/* <TextField sx={{ marginLeft: '55%' }} disabled defaultValue={`작성일자: ${notice.createdDate}`} /> */}
-            </div>
-          </tr>
-          {/* <p>조회수 : {notice.viewCount}</p><br/> */}
-          <tr>
-            <td>
-              <TextField
-                className="modify-content"
-                id="outlined-multiline-static"
-                label="내용"
-                multiline
-                rows={10}
-                defaultValue={notice.content}
-                onChange={(e) => setContent(e.target.value)}
-              />
-            </td>
+            <TextField
+              className="modify-content"
+              id="outlined-multiline-static"
+              label="내용"
+              multiline
+              rows={10}
+              defaultValue={notice.content}
+              onChange={(e) => setContent(e.target.value)}
+            />
           </tr>
         </table>
-        <button type="submit" className="btn btn-primary-modify" onClick={() => modifyCompleteHandler()}>
-          수정하기
-        </button>
+        <div className="noticeMDbutton">
+          <Button variant="contained" size="medium" color="inherit" onClick={() => modifyCompleteHandler()}>
+            수정하기
+          </Button>
+          <Button variant="contained" size="medium" color="error" sx={{ marginLeft: '10px' }}>
+            <Link to="/notice">취소하기</Link>
+          </Button>
+        </div>
       </div>
     </div>
   );
