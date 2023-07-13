@@ -16,7 +16,7 @@ export default function Nav() {
     <header style={{ zIndex: 100 }}>
       <nav>
         <div className="bar">
-          <Link to="/" style={{ textDecoration: 'none' }}>
+          <Link to="/home" style={{ textDecoration: 'none' }}>
             <div className="logo">Play</div>
           </Link>
           <div className="menu">
@@ -40,7 +40,7 @@ export default function Nav() {
         <div className="icon">
           <ul className="topTitle">
             <li>
-              <button>
+              {/* <button>
                 <i className="fa-solid fa-magnifying-glass"></i>
               </button>
             </li>
@@ -52,7 +52,7 @@ export default function Nav() {
             <li>
               <button>
                 <i class="fa-regular fa-bell"></i>
-              </button>
+              </button> */}
             </li>
             {/* <li><button><i class="fa-solid fa-user"></i></button></li> */}
 
@@ -75,11 +75,11 @@ export default function Nav() {
                     </Link>
                   </a>
                 </li>
-                <li>
+                {/* <li>
                   <a className="dropdown-item" href="#">
                     고객센터
                   </a>
-                </li>
+                </li> */}
               </ul>
             </div>
           </ul>

@@ -2,6 +2,7 @@ import axios from '../Token/Interceptor';
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import TextField from '@mui/material/TextField';
 // import Comments from './Comments';
 import Moment from 'react-moment';
 import Header from '../../components/Base/Header';
@@ -12,10 +13,10 @@ export const QnaView = () => {
   const location = useLocation();
   const getId = location.state.id;
   const navigate = useNavigate();
-
   const [questionViewData, setQuestionViewData] = useState(null);
   const [content, setContent] = useState('');
-  const [memberId, setMemberId] = useState('');
+  const [questionId, setQuestionId] = useState('');
+  const [comments, setComments] = useState([]);
 
   useEffect(() => {
     axios
@@ -79,9 +80,9 @@ export const QnaView = () => {
 
     axios({
       method: 'POST',
-      url: `/api/qna/answer/create/${getId}`,
+      url: '/api/qna/answer/write',
       data: {
-        memberId: memberId,
+        questionId: questionId,
         content: content,
       },
     })
@@ -154,6 +155,19 @@ export const QnaView = () => {
           </Button>
         </div>
       )}
+
+      <TextField
+        className="modify-content"
+        id="outlined-multiline-static"
+        label="내용"
+        multiline
+        rows={10}
+        value={content}
+        onChange={(e) => setContent(e.target.value)}
+      />
+      <Button variant="contained" size="medium" color="error" onClick={onClickCreateAnswer} sx={{ marginLeft: '10px' }}>
+        답변 작성
+      </Button>
     </div>
   );
 };
