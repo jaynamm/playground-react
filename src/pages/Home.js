@@ -42,28 +42,32 @@ const Home = () => {
     const [feeds, setFeeds] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
+     // 피드 무한스크롤
+     const lastFeedRef = useRef(null);
+     const [currentPage, setCurrentPage] = useState(0);
+     const [isLast, setIsLast] = useState(false);
+
+
     useEffect(() => {
         axios({
             method: 'GET',
             url: '/api/feed/list',
         })
-            .then((res) => {
-                console.log(res.data);
-                let feedData = res.data.content;
-                setFeeds(feedData);
-                setIsLoading(false);
-            })
-            .catch((err) => {
-                console.log(err);
-                setIsLoading(false);
-            });
+        .then((res) => {
+            console.log(res.data);
+            let feedData = res.data.content;
+            setFeeds(feedData);
+            setIsLoading(false);
+
+            const isLast = res.data.last;
+            setIsLast(isLast);
+        })
+        .catch((err) => {
+            console.log(err);
+            setIsLoading(false);
+        });
     }, []);
 
-
-    // 피드 무한스크롤
-    const lastFeedRef = useRef(null);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [isLast, setIsLast] = useState();
 
     useEffect(() => {
         const options = {
@@ -152,7 +156,6 @@ const Home = () => {
                                             <Skeleton />
                                             <Skeleton />
                                             <Skeleton />
-
                                         </>
                                     ) : (
                                         // 로딩되면 피드 생성
@@ -322,10 +325,6 @@ const Home = () => {
                                             </div>
                                         </div>
                                     </button>
-
-
-
-
                                 </div>
                             </div>
                         </div>
