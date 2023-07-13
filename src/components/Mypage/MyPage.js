@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import axios from '../Token/Interceptor';
 
@@ -19,6 +19,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Header from '../Base/Header';
 import '../../styles/Mypage.css';
 import Avvvatars from 'avvvatars-react';
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -54,12 +55,22 @@ function a11yProps(index) {
 const MyPage = () => {
   const [value, setValue] = React.useState(0);
   const [mypage, setMypage] = useState([]);
-  const [folowMyPage, setFollowMyPage] = useState([]);
+  const [followMyPage, setFollowMyPage] = useState([]);
   const [myPageFeedDtoList, setMyPageFeedDtoList] = useState([]);
   const [myPageCommentDtoList, setPageCommentDtoList] = useState([]);
   const [expanded, setExpanded] = React.useState(false);
   // const [skill, setSkill] = useState([]);
   // const [myPageQuestionDtoList, setMyPageQuestionDtoList] = useState([]);
+
+  const navigate = useNavigate();
+
+  const feedViewHandler = (id) => {
+    navigate(`/feed/view/${id}`, {
+      state: {
+        id: id,
+      },
+    });
+  };
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -71,19 +82,6 @@ const MyPage = () => {
   };
 
   useEffect(() => {
-    // axios({
-    //   method: 'GET',
-    //   url: '/api/member/skills',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    // })
-    //   .then((response) => {
-    //     setSkill(response.data.skill);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
     axios({
       method: 'GET',
       url: '/api/mypage',
@@ -91,12 +89,13 @@ const MyPage = () => {
         'Content-Type': 'application/json',
       },
     })
-      .then((response) => {
-        setMypage(response.data.memberMyPageDto);
-        setFollowMyPage(response.data.followMyPageDto);
-        setMyPageFeedDtoList(response.data.myPageFeedDtoList.reverse());
-        // setMyPageQuestionDtoList(response.data.myPageQuestionDtoList);
-        setPageCommentDtoList(response.data.myPageCommentDtoList.reverse());
+      .then((res) => {
+        console.log(res.data.data);
+
+        setMypage(res.data.data.memberMyPageDto);
+        setFollowMyPage(res.data.data.followMyPageDto);
+        setMyPageFeedDtoList(res.data.data.myPageFeedDtoList.content);
+        setPageCommentDtoList(res.data.data.myPageCommentDtoList.content);
       })
       .catch((error) => {
         console.log(error);
@@ -111,13 +110,14 @@ const MyPage = () => {
     setExpanded(isExpanded ? panelId : null);
   };
 
+
   return (
     <div>
       <Header />
       <div>
         <Box sx={{ display: 'flex', justifyContent: 'center', marginRight: '100px' }}>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            {mypage && folowMyPage && (
+            {mypage && followMyPage && (
               <Card sx={{ width: 300, height: 450, minWidth: 275, marginTop: '80px', backgroundColor: '#EDF4FF' }}>
                 <CardContent>
                   <Typography variant="h5" component="div" sx={{ display: 'flex', justifyContent: 'center', marginBottom: '10px' }}>
@@ -136,10 +136,10 @@ const MyPage = () => {
                     <pre>닉네임    {mypage.nickname}</pre>
                     </Typography>
                     <Typography sx={{ ml: 1, mb: 1.5 }} color="text.secondary">
-                    <pre>팔로잉    {folowMyPage.followingCount}</pre>
+                    <pre>팔로잉    {followMyPage.followingCount}</pre>
                     </Typography>
                     <Typography sx={{ ml: 1, mb: 1.5 }} color="text.secondary">
-                    <pre>팔로워    {folowMyPage.followerCount}</pre>
+                    <pre>팔로워    {followMyPage.followerCount}</pre>
                     </Typography>
                   
                   <Typography variant="body2">{mypage.myskill}</Typography>
@@ -181,7 +181,8 @@ const MyPage = () => {
             <TabPanel value={value} index={0}>
               <div>
                 <Box sx={{ justifyContent: 'center' }}>
-                  {myPageFeedDtoList.map((feed) => (
+                { myPageFeedDtoList !== null && myPageFeedDtoList.length > 0 ? (
+                  myPageFeedDtoList.map((feed) => (
                     <div key={feed.id}>
                       <Accordion
                         expanded={expanded === feed.id}
@@ -197,18 +198,27 @@ const MyPage = () => {
                           <Typography sx={{ color: 'text.secondary' }}>{formatDate(feed.createdDate)}</Typography>
                         </AccordionSummary>
                         <AccordionDetails>
-                          <Typography>{feed.content}</Typography>
+                          <div className="py-3 flex gap-3 pr-6 justify-between">
+                            <Typography>{feed.content}</Typography> {/* 요소의 내용을 출력 */}
+                            <button className="flex items-center" style={{ fontSize: "15px"}} onClick={() => feedViewHandler(feed.id)}>
+                              <p className="font-bold text-xs text-slate-500 text-center" style={{ color: "grey" }}>보러가기</p>
+                            </button>
+                          </div>
                         </AccordionDetails>
                       </Accordion>
                     </div>
-                  ))}
+                  ))
+                ) : (
+                  <Typography sx={{ textAlign: 'center' }}>피드를 작성해보세요 !</Typography>
+                )}
                 </Box>
               </div>
             </TabPanel>
             <TabPanel value={value} index={1}>
               <div>
                 <Box sx={{ justifyContent: 'center' }}>
-                  {myPageCommentDtoList.map((content) => (
+                  { myPageCommentDtoList !== null && myPageCommentDtoList.length > 0 ? (
+                    myPageCommentDtoList.map((content) => (
                     <div key={content.id}>
                       <Accordion
                         expanded={expanded === content.id}
@@ -228,7 +238,10 @@ const MyPage = () => {
                         </AccordionDetails>
                       </Accordion>
                     </div>
-                  ))}
+                  )) 
+                  ) : (
+                    <Typography sx={{ textAlign: 'center' }}>댓글을 작성해보세요 !</Typography>
+                  )}
                 </Box>
               </div>
             </TabPanel>
