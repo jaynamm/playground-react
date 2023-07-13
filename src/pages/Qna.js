@@ -22,8 +22,8 @@ const Qna = () => {
       url: '/api/qna/question/list',
     })
       .then((res) => {
-        console.log(res.data);
-        setQuestions(res.data);
+        console.log(res.data.content);
+        setQuestions(res.data.content);
       })
       .catch((err) => {
         console.log(err);

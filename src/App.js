@@ -20,6 +20,7 @@ import QnaModify from './components/Qna/QnaModify';
 
 import MyPage from './components/Mypage/MyPage';
 import MyPageModify from './components/Mypage/MyPageModify';
+import UserPage from './components/Mypage/UserPage';
 
 import Create from './components/Feed/Create';
 import View from './components/Feed/View';
@@ -58,6 +59,7 @@ function App() {
           <Route path="/recommend/result" element={<RecommendResult />} />
 
           <Route path="/mypage" element={<MyPage />} />
+          <Route path="/userpage" element={<UserPage />} />
           <Route path="/mypage/modify" element={<MyPageModify />} />
           <Route path="/mypage/myskill" element={<MySkill />} />
 

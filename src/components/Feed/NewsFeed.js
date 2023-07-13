@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import '../../styles/Feed/Newfeed.css';
 import Moment from 'react-moment';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useAsyncError } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { confetti } from '../../App';
 import axios from '../Token/Interceptor';
 
 export default function NewsFeed({ feed }) {
+  const [userPageMove, setUserPageMove] = useState();
   // View 창으로 id 들고가기
   const navigate = useNavigate();
   const feedViewHandler = (id) => {
@@ -61,6 +62,17 @@ export default function NewsFeed({ feed }) {
     setLikeCount((likeCount) => likeCount + 1);
   };
 
+  // const onClickNickNameHandler = (userId) => {
+  //   if (userId.data.responseMessage.includes('MYPAGE_USERPAGE_ACCESS')) {
+  //     navigate('/mypage');
+  //   } else {
+  //     navigate('/userpage', { state: userId });
+  //   }
+  // };
+
+  const onClickNickNameHandler = (userId) => {
+    navigate('/mypage', { state: userId });
+  };
   return (
     <>
       <div className="bg-white border border-solid border-slate-300">
@@ -68,7 +80,9 @@ export default function NewsFeed({ feed }) {
           <div className="flex gap-4 items-center">
             <img src="/user.png" alt="User profile " className="w-8 h-8 rounded-full" />
             <div className="flex-1">
-              <p className="text-sm text-slate-900 font-bold">{feed.nickname}</p>
+              <p className="text-sm text-slate-900 font-bold">
+                <div onClick={() => onClickNickNameHandler(feed.userId)}> {feed.nickname}</div>
+              </p>
               {/* <p className="text-xs text-slate-700">{feed.userId}</p> */}
             </div>
             <div className="text-xs">
