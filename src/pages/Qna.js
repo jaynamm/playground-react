@@ -22,8 +22,8 @@ const Qna = () => {
       url: '/api/qna/question/list',
     })
       .then((res) => {
-        console.log(res.data);
-        setQuestions(res.data);
+        console.log(res.data.content);
+        setQuestions(res.data.content);
       })
       .catch((err) => {
         console.log(err);
@@ -68,7 +68,7 @@ const Qna = () => {
               <TableRow key={item.id} onClick={() => onClickQnaViewHandler(item.id)} className="notice-table-row">
                 <TableCell className="notice-id">{item.id}</TableCell>
                 <TableCell>{item.title}</TableCell>
-                <TableCell>{item.member.name}</TableCell>
+                <TableCell>{item.member.nickname}</TableCell>
                 {/* <td>{item.viewCount}</td> */}
                 <TableCell className="notice-createdDate">
                   <Moment format="YYYY년 MM월 DD일 HH:mm">{item.createdDate}</Moment>
