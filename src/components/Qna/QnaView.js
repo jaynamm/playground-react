@@ -19,6 +19,7 @@ import Moment from 'react-moment';
 import Header from '../../components/Base/Header';
 // import QnaCommentModify from './QnaCommentModify';
 import '../../styles/Notice/NoticeView.css';
+import { comment } from 'postcss';
 
 export const QnaView = () => {
   const location = useLocation();
@@ -128,9 +129,9 @@ export const QnaView = () => {
       });
   };
 
-  const qnaCommentDeleteHandler = () => {
+  const qnaCommentDeleteHandler = (id) => {
     const data = {
-      id: qnaComment,
+      id: id,
     };
 
     axios
@@ -163,7 +164,7 @@ export const QnaView = () => {
       ),
       name: '수정하기',
     },
-    { icon: <DeleteIcon onClick={qnaCommentDeleteHandler} />, name: '삭제하기' },
+    { icon: <DeleteIcon onClick={() => qnaCommentDeleteHandler()} />, name: '삭제하기' },
   ];
   return (
     <div>
@@ -310,7 +311,8 @@ export const QnaView = () => {
                             key={action.name}
                             icon={action.icon}
                             tooltipTitle={action.name}
-                            onClick={action.onClick}
+
+                            // onClick={action.onClick}
                           />
                         ))}
                       </SpeedDial>
