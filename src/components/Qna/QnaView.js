@@ -36,11 +36,23 @@ export const QnaView = () => {
     const [getId, setGetId] = useState();
 
     const qnaCommentModifyHandler = () => {
+      const data = {
+        id: qnaComment.id,
+      };
+
       axios
-        .post(`/api/qna/answer/delete${getId}`)
+        .post('/api/qna/answer/delete', JSON.stringify(data), {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
         .then((response) => {
-          console.log(response);
+          console.log(response.data);
+          const responseData = response.data;
           alert('댓글이 삭제되었습니다.');
+          {
+            state: responseData;
+          }
         })
         .catch((error) => {
           console(error);
@@ -50,7 +62,13 @@ export const QnaView = () => {
 
     return (
       <div>
-        <TextField sx={{ width: '90%' }} label="내용" multiline rows={1} onChange={(e) => setContent(e.target.value)} />
+        <TextField
+          sx={{ width: '90%' }}
+          label="내용"
+          multiline
+          rows={1}
+          onChange={(e) => setContent(e.target.value)}
+        ></TextField>
         <Button
           variant="contained"
           size="small"
@@ -141,17 +159,12 @@ export const QnaView = () => {
         <CreateIcon
           onClick={() => {
             setVisible(!visible);
-            // navigate(`/api/member/answer/${questionId}`, {
-            //   state: {
-            //     questionId: questionId,
-            //   },
-            // });
           }}
         />
       ),
       name: '수정하기',
     },
-    { icon: <DeleteIcon />, name: '삭제하기' },
+    { icon: <DeleteIcon onClick={(qnaDeleteHandler) => ''} />, name: '삭제하기' },
   ];
   return (
     <div>
@@ -249,7 +262,7 @@ export const QnaView = () => {
                     size="large"
                     color="success"
                     onClick={onClickCreateAnswer}
-                    sx={{ marginLeft: '15px', marginTop: '40px' }}
+                    sx={{ marginLeft: '15px', marginTop: '5px' }}
                   >
                     댓글 작성
                   </Button>
