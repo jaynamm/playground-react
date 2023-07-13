@@ -1,14 +1,24 @@
 import axios from '../Token/Interceptor';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import SpeedDial from '@mui/material/SpeedDial';
+import SpeedDialIcon from '@mui/material/SpeedDialIcon';
+import SpeedDialAction from '@mui/material/SpeedDialAction';
+import CreateIcon from '@mui/icons-material/Create';
+import DeleteIcon from '@mui/icons-material/Delete';
+import Box from '@mui/material/Box';
+
 // import Comments from './Comments';
 import Moment from 'react-moment';
 import Header from '../../components/Base/Header';
-import Button from '@mui/material/Button';
+// import QnaCommentModify from './QnaCommentModify';
 import '../../styles/Notice/NoticeView.css';
-import { Height } from '@mui/icons-material';
 
 export const QnaView = () => {
   const location = useLocation();
@@ -17,8 +27,41 @@ export const QnaView = () => {
   const [questionViewData, setQuestionViewData] = useState(null);
   const [content, setContent] = useState('');
   const [questionId, setQuestionId] = useState('');
-  // const [comments, setComments] = useState([]);
   const [editButton, setEditButton] = useState();
+  const [qnaComment, setQnaComment] = useState([]);
+  const [visible, setVisible] = useState(false);
+
+  const QnaCommentModify = () => {
+    const [content, setContent] = useState();
+    const [getId, setGetId] = useState();
+
+    const qnaCommentModifyHandler = () => {
+      axios
+        .post(`/api/qna/answer/delete${getId}`)
+        .then((response) => {
+          console.log(response);
+          alert('댓글이 삭제되었습니다.');
+        })
+        .catch((error) => {
+          console(error);
+          alert('댓글을 삭제하는데 실패하였습니다.');
+        });
+    };
+
+    return (
+      <div>
+        <TextField sx={{ width: '90%' }} label="내용" multiline rows={1} onChange={(e) => setContent(e.target.value)} />
+        <Button
+          variant="contained"
+          size="small"
+          onClick={qnaCommentModifyHandler}
+          sx={{ marginLeft: '15px', marginTop: '15px' }}
+        >
+          댓글 수정
+        </Button>
+      </div>
+    );
+  };
 
   useEffect(() => {
     axios
@@ -28,6 +71,7 @@ export const QnaView = () => {
         setQuestionViewData(response.data.data.question);
         setQuestionId(response.data.data.question.id);
         setEditButton(!response.data.responseMessage.includes('QUESTION_WRITER_ACCESS_FAILED'));
+        setQnaComment(response.data.data.answers.content);
       })
       .catch((error) => {
         console.log(error);
@@ -91,6 +135,24 @@ export const QnaView = () => {
       });
   };
 
+  const actions = [
+    {
+      icon: (
+        <CreateIcon
+          onClick={() => {
+            setVisible(!visible);
+            // navigate(`/api/member/answer/${questionId}`, {
+            //   state: {
+            //     questionId: questionId,
+            //   },
+            // });
+          }}
+        />
+      ),
+      name: '수정하기',
+    },
+    { icon: <DeleteIcon />, name: '삭제하기' },
+  ];
   return (
     <div>
       <Header />
@@ -157,28 +219,98 @@ export const QnaView = () => {
         </div>
       )}
       <div>
-        <table className="qna-view-table">
-          <tbody>
-            <TextField
-              className="qna-content"
-              // id="outlined-multiline-static"
-              label="내용"
-              multiline
-              rows={1}
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-            />
-            <Button
-              variant="contained"
-              size="large"
-              color="success"
-              onClick={onClickCreateAnswer}
-              sx={{ marginLeft: '15px', marginTop: '6px' }}
-            >
-              답변 작성
-            </Button>
-          </tbody>
-        </table>
+        <Paper
+          sx={{
+            p: 2,
+            margin: 'auto',
+            maxWidth: '75%',
+            flexGrow: 1,
+            backgroundColor: (theme) => (theme.palette.mode === 'dark' ? '#1A2027' : '#fff'),
+          }}
+        >
+          <Grid container spacing={4}>
+            <Grid item xs={30} sm container>
+              <Grid item xs container direction="column" spacing={4}>
+                <Grid item xs>
+                  <TextField
+                    sx={{ width: '90%' }}
+                    label="내용"
+                    multiline
+                    rows={1}
+                    value={content}
+                    onChange={(e) => setContent(e.target.value)}
+                  />
+                </Grid>
+              </Grid>
+              <Grid item>
+                <Grid item>
+                  <Button
+                    variant="contained"
+                    size="large"
+                    color="success"
+                    onClick={onClickCreateAnswer}
+                    sx={{ marginLeft: '15px', marginTop: '40px' }}
+                  >
+                    댓글 작성
+                  </Button>
+                </Grid>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Paper>
+
+        <br></br>
+        {qnaComment.map((comment) => (
+          <Paper
+            sx={{
+              p: 2,
+              margin: 'auto',
+              marginBottom: '1%',
+              maxWidth: '75%',
+              flexGrow: 1,
+              backgroundColor: (theme) => (theme.palette.mode === 'dark' ? '#1A2027' : '#fff'),
+            }}
+          >
+            <Grid container spacing={4}>
+              <Grid item xs={30} sm container>
+                <Grid item xs container direction="column" spacing={4}>
+                  <Grid item xs>
+                    <div>
+                      <Typography gutterBottom variant="subtitle1" component="div">
+                        {comment.userId}
+                      </Typography>
+                      <Typography gutterBottom variant="subtitle1" component="div">
+                        {comment.content}
+                      </Typography>
+                    </div>
+                  </Grid>
+                </Grid>
+                <Grid item>
+                  <Grid item>
+                    <Box sx={{ height: 100, transform: 'translateZ(0px)', flexGrow: 1 }}>
+                      <SpeedDial
+                        ariaLabel="SpeedDial basic example"
+                        sx={{ position: 'absolute', bottom: 5, right: -20 }}
+                        icon={<SpeedDialIcon />}
+                      >
+                        {actions.map((action) => (
+                          <SpeedDialAction
+                            key={action.name}
+                            icon={action.icon}
+                            tooltipTitle={action.name}
+                            onClick={action.onClick}
+                          />
+                        ))}
+                      </SpeedDial>
+                    </Box>
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Grid>
+
+            {visible && <QnaCommentModify />}
+          </Paper>
+        ))}
       </div>
     </div>
   );
