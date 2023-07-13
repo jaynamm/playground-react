@@ -106,7 +106,11 @@ export default function NewsFeed({ feed }) {
             
           </div>
 
-          { userId === feed.userId ? (
+          <div className="flex px-1 items-center" style={{ marginLeft: "15px", fontSize: "12px" }}>
+            {calcDatetime}
+          </div>
+
+          {/* { userId === feed.userId ? (
               <></>
           ) : (
             !follow ? (
@@ -126,124 +130,64 @@ export default function NewsFeed({ feed }) {
                 <ToastContainer />
               </div>
             )
-          )}
+          )} */}
           
         </div>
 
         <div className="p-4">
           <h1 className="mb-6 font-bold text-xl">{feed.content}</h1>
-          <p className="auto-line-break text-base text-slate-900 whitespace-pre-wrap">
-            {/* {feed.content} */}
-            {/* <a
-              className="text-slate-900 mt-6 flex underline"
-              target="_blank"
-              rel="origin"
-              href="https://www.lipsum.com/"
-            >
-              https://www.lipsum.com/
-            </a> */}
-          </p>
-        </div>
-
-        <div id="article" className="px-4 py-2">
-          {/* <a href="https://www.lipsum.com/" target="_blank" rel="origin">
-            <div className="border border-solid border-slate-200 rounded-lg overflow-hidden bg-slate-50 flex">
-              <div className="flex-1 p-4">
-                <p className="mb-1 text-sm font-bold text-slate-900 line-clamp-3">북마크 샘플</p>
-                <p className="text-sm text-slate-700 line-clamp-1">정보 샘플</p>
-              </div>
-              <span className="box-border inline-block overflow-hidden w-auto h-auto bg-transparent opacity-100 border-0 m-0 p-0 relative max-w-full">
-                <span className="box-border block w-auto h-auto bg-transparent opacity-100 border-0 m-0 p-0 max-w-full"></span>
-              </span>
-            </div>
-          </a> */}
         </div>
 
         <div className=" mx-4 mb-2 border-slate-500 py-3 flex justify-between">
-          <p className="text-xs text-slate-500">조회 {feed.viewCount} </p>
-          <p className="text-xs text-slate-500 false">
-            <pre>좋아요 <b>{likeCount}</b>        댓글 <b>{feed.commentCount}</b></pre>
-          </p>
+          <div className="flex-grow"></div> {/* 빈 공간을 채우기 위한 추가 요소 */}
+          
         </div>
 
-        {/* <div className="">
+        <div className="">
           <div className="flex px-1">
-            <div className="flex px-1 items-center fx-15">
-                  <Moment format="YYYY-MM-DD HH:mm">{feed.createdDate}</Moment>
+            <div className="flex px-1 items-center" style={{ marginLeft: "15px", fontSize: "12px" }}>
+              <p className="text-xs text-slate-500 false">좋아요 <b>{likeCount}</b></p>
             </div>
-            <div className="flex px-1">
+            <div className="flex px-1 items-center" style={{ marginLeft: "15px", fontSize: "12px" }}>
+              <p className="text-xs text-slate-500 false">댓글 <b>{feed.commentCount}</b></p>
+            </div>
+            <div className="flex px-1 items-center" style={{ marginLeft: "15px", fontSize: "12px" }}>
+              <p className="text-xs text-slate-500">조회 {feed.viewCount} </p >
+            </div>
+            <div className="flex-grow"></div> {/* 빈 공간을 채우기 위한 추가 요소 */}
+            <div className="flex">
               <div id="likeRepost" className="flex">
                 {liked ? (
-                  <button className="flex items-center gap-1 p-3 focus:outline-none false" onClick={likeHandler}>
+                  <button className="flex gap-1 p-3 focus:outline-none false" onClick={likeHandler}>
                     <i className="fa-solid fa-thumbs-up"></i>
                     <p className="font-bold text-xs text-slate-500">좋아요 취소</p>
                   </button>
                 ) : (
                   <button
                     type="button"
-                    className="flex items-center gap-1 p-3 focus:outline-none false"
+                    className="flex gap-1 p-3 focus:outline-none false"
                     onClick={confettiClick}
                   >
-                    <i className="fa-regular fa-thumbs-up"></i>
+                    <i className="fa-regular fa-thumbs-up" style={{ fontSize: "15px"}}></i>
                     <p className="font-bold text-xs text-slate-500">좋아요</p>
                   </button>
                 )}
-
-                <button type="button" className="flex items-center gap-1 p-3 focus:outline-none false">
-                  {/* <i class="fa-regular fa-paper-plane"></i> */}
-                  {/* <p className="font-bold text-xs text-slate-500">리포스트</p> */}
-                {/*</div></button>
-                </div>
+                {/* <button type="button" className="flex items-center gap-1 p-3 focus:outline-none false">
+                  <i class="fa-regular fa-paper-plane"></i>
+                  <p className="font-bold text-xs text-slate-500">리포스트</p>
+                </button> */}
+              </div>
             </div>
-
             <div className="py-3 flex gap-3 pr-6">
-              <button>
-                <i class="fa-regular fa-message" onClick={() => feedViewHandler(feed.id)}></i>
-              </button>
-            </div>
-          </div>
-        </div> */}
-
-      <div className="">
-        <div className="flex px-1">
-          <div className="flex px-1 items-center" style={{ marginLeft: "15px", fontSize: "12px" }}>
-            {/* <Moment format="YYYY-MM-DD HH:mm">{feed.createdDate}</Moment> */}
-            {calcDatetime}
-          </div>
-          <div className="flex-grow"></div> {/* 빈 공간을 채우기 위한 추가 요소 */}
-          <div className="flex">
-            <div id="likeRepost" className="flex">
-              {liked ? (
-                <button className="flex gap-1 p-3 focus:outline-none false" onClick={likeHandler}>
-                  <i className="fa-solid fa-thumbs-up"></i>
-                  <p className="font-bold text-xs text-slate-500">좋아요 취소</p>
+              <div id="feedComment" className="flex">
+                <button className="flex gap-1" style={{ fontSize: "15px"}} onClick={() => feedViewHandler(feed.id)}>
+                  <i class="fa-regular fa-message"></i>
+                  <p className="font-bold text-xs text-slate-500">댓글</p>
                 </button>
-              ) : (
-                <button
-                  type="button"
-                  className="flex gap-1 p-3 focus:outline-none false"
-                  onClick={confettiClick}
-                >
-                  <i className="fa-regular fa-thumbs-up" style={{ fontSize: "15px"}}></i>
-                  <p className="font-bold text-xs text-slate-500">좋아요</p>
-                </button>
-              )}
-              {/* <button type="button" className="flex items-center gap-1 p-3 focus:outline-none false">
-                <i class="fa-regular fa-paper-plane"></i>
-                <p className="font-bold text-xs text-slate-500">리포스트</p>
-              </button> */}
-            </div>
-          </div>
-          <div className="py-3 flex gap-3 pr-6">
-          <div id="feedComment" className="flex">
-            <button className="flex gap-1" style={{ fontSize: "15px"}} onClick={() => feedViewHandler(feed.id)}>
-              <i class="fa-regular fa-message"></i>
-              <p className="font-bold text-xs text-slate-500">댓글</p>
-            </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
       </div>
       <br />
       <br />
