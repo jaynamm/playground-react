@@ -9,17 +9,32 @@ import Swal from 'sweetalert2';
 import { toast, ToastContainer } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css';
 import { confetti } from '../../App';
-
+import Avvvatars from 'avvvatars-react';
+import base64 from 'base-64';
 
 
 export default function View() {
+  const [userId, setUserId] = useState("");
+  const jwtToken = localStorage.getItem("accessToken"); // localStorage 에 있는 토큰 가져오기
+  let payload = jwtToken.substring(jwtToken.indexOf('.')+1,jwtToken.lastIndexOf('.'));  // payload 추출하기
+  let decodeMemberInfo = JSON.parse(base64.decode(payload)); // 디코딩 후 JSON 타입으로 파싱
 
+  const navigate = useNavigate();
+  const [textareaValue, setTextareaValue] = useState('');
+
+  useEffect(() => {
+    setUserId(decodeMemberInfo.sub);
+  }, [])
 
   const [feed, setFeed] = useState([]);
   const [comments, setComments] = useState([]);
   const [editButton, setEditButton] = useState();
   const location = useLocation();
   const feedId = location.state.id;
+
+  const [liked, setLiked] = useState(false); // 좋아요 토글
+  const [likeCount, setLikeCount] = useState(0); // 좋아요 카운트
+
   useEffect(() => {
     axios({
       method: 'GET',
@@ -28,20 +43,21 @@ export default function View() {
       },
     })
       .then((res) => {
-        console.log(res.data);
+        console.log(res.data)
         let feedData = res.data.data;
         setFeed(feedData.feed);
-        console.log(feedData.feed);
         setComments(feedData.comments.content);
-        console.log(feedData.comments);
         setEditButton(!res.data.responseMessage.includes('FAILED'));
+
+        setLiked(feedData.feed.liked); 
+        setLikeCount(feedData.feed.likeCount);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
-  // 수정화면으로 id 들고가기
-  const navigate = useNavigate();
+
+  // 수정화면으로 id 들고가기  
   const modifyHandler = (id) => {
     navigate(`/feed/modify/${id}`, {
       state: {
@@ -49,18 +65,20 @@ export default function View() {
       },
     });
   };
-  const [textareaValue, setTextareaValue] = useState('');
+
+  
   const handleTextareaChange = (e) => {
     setTextareaValue(e.target.value);
   };
+
   const handleCommentRegistration = () => {
     // Create the comment object with the required information
     const commentData = {
       feedId: feedId, // Replace with the actual feedId value
       content: textareaValue,
     };
-    axios
-      .post('/api/comment/write', commentData, {
+
+    axios.post('/api/comment/write', commentData, {
         headers: {
           Authorization: localStorage.getItem('Authorization'),
         },
@@ -73,6 +91,7 @@ export default function View() {
         console.log('Error registering comment:', err);
       });
   };
+
   // 피드 삭제
   const feedDelete = () => {
     Swal.fire({
@@ -109,13 +128,6 @@ export default function View() {
     });
   };
 
-  // 좋아요 토글
-  const [liked, setLiked] = useState(false);
-  useEffect(() => { setLiked(feed.liked); }, [])
-
-  // 좋아요 카운트
-  const [likeCount, setLikeCount] = useState(feed.likeCount);
-
   // 팔로우 토글
   const [follow, setFollow] = useState(false);
 
@@ -130,29 +142,28 @@ export default function View() {
     toast.warning("팔로우 취소 했어요 !", { position: "top-center", autoClose: 2000, hideProgressBar: true, })
   }
 
-
-  // 좋아요 api
   const likeHandler = () => {
-    axios.post('/api/likesCancel', { feedId: feed.id })
-    setLiked(!liked);
-    setLikeCount((likeCount) => likeCount - 1);
-
-  }
-
-
-
-  // confetti 효과 , 좋아요 api
-  const confettiClick = () => {
-
-    axios.post('/api/likes', { feedId: feed.id })
-
-    confetti.addConfetti({
-      emojis: ["👍"],
-      emojiSize: 80,
-      confettiNumber: 30,
-    });
-    setLiked(!liked);
-    setLikeCount((likeCount) => likeCount + 1);
+    if (liked) {
+      console.log("좋아요 취소", likeCount);
+  
+      setLiked(false);
+      setLikeCount((prevLikeCount) => prevLikeCount - 1);
+  
+      axios.post('/api/likesCancel', { feedId: feed.id });
+    } else {
+      console.log("좋아요 누름", likeCount);
+  
+      confetti.addConfetti({
+        emojis: ["👍"],
+        emojiSize: 80,
+        confettiNumber: 30,
+      });
+  
+      setLiked(true);
+      setLikeCount((prevLikeCount) => prevLikeCount + 1);
+  
+      axios.post('/api/likes', { feedId: feed.id });
+    }
   };
 
 
@@ -214,7 +225,25 @@ export default function View() {
   }, [comments]);
 
 
+  const detailDate = (a) => {
+		const milliSeconds = new Date() - a;
+		const seconds = milliSeconds / 1000;
+		if (seconds < 60) return `방금 전`;
+		const minutes = seconds / 60;
+		if (minutes < 60) return `${Math.floor(minutes)}분 전`;
+		const hours = minutes / 60;
+		if (hours < 24) return `${Math.floor(hours)}시간 전`;
+		const days = hours / 24;
+		if (days < 7) return `${Math.floor(days)}일 전`;
+		const weeks = days / 7;
+		if (weeks < 5) return `${Math.floor(weeks)}주 전`;
+		const months = days / 30;
+		if (months < 12) return `${Math.floor(months)}개월 전`;
+		const years = days / 365;
+		return `${Math.floor(years)}년 전`;
+	};
 
+  const calcFeedDetailDatetime = detailDate(new Date(feed.createdDate));
 
 
 
@@ -226,51 +255,56 @@ export default function View() {
           <div className="bg-white border border-solid border-slate-300">
             <div className="flex justify-between items-center p-4">
               <div className="flex gap-4 items-center">
-                <img src="/user.png" alt="User profile picture" className="w-8 h-8" />
+                {/* <img src="/user.png" alt="User profile picture" className="w-8 h-8" /> */}
+                <Avvvatars value={feed.userId} style="shape" size={40}/>
                 <div className="flex-1">
                   <p className="text-sm text-slate-900">{feed.nickname}</p>
-                  <p className="text-xs text-slate-700">{feed.userId}</p>
-                </div>
-
-
-                <div className='text-xs'>
-                  <Moment format="YYYY-MM-DD HH:mm:ss">{feed.createdDate}</Moment>
+                  {/* <p className="text-xs text-slate-700">{feed.userId}</p> */}
                 </div>
               </div>
 
-              {!follow ? (
-
-                <div className='flex-none'>
-                  <button className='btn btn-sm btn-coral-100 bg-blue-200 hover:bg-slate-200 text-coral-600 font-bold' type='button' onClick={followHandler}>팔로우</button>
-                  <ToastContainer />
+              {editButton ? (
+                <div id="modifyDeleteButton">
+                  <button type="button" className="px-2" style={{ color: "grey", fontSize: "12px" }} onClick={() => modifyHandler(feed.id)}>
+                    <i class="fa-solid fa-pen"></i> 수정
+                  </button>
+                  <button type="button" className="px-2" style={{ color: "darkred", fontSize: "12px" }} onClick={feedDelete}>
+                    <i className="fa-solid fa-trash"></i> 삭제
+                  </button>
                 </div>
               ) : (
-                <div>
-                  <button className='btn btn-sm bg-red-200 hover:bg-red-100' onClick={unFollowHandler}>
-                    <i class="fa-solid fa-user-xmark"></i>
-                  </button>
-                  <ToastContainer />
-                </div>
+                !follow ? (
 
+                  <div className='flex-none'>
+                    <button className='btn btn-sm btn-coral-100 bg-blue-200 hover:bg-slate-200 text-coral-600 font-bold' type='button' onClick={followHandler}>팔로우</button>
+                    <ToastContainer />
+                  </div>
+                ) : (
+                  <div>
+                    <button className='btn btn-sm bg-red-200 hover:bg-red-100' onClick={unFollowHandler}>
+                      <i class="fa-solid fa-user-xmark"></i>
+                    </button>
+                    <ToastContainer />
+                  </div>
+  
+                )
               )}
-
 
             </div>
             <div className="p-4">
-              <h1 className="mb-6 font-bold text-xl">플레이그라운드</h1>
               <p className="auto-line-break text-base text-slate-900 whitespace-pre-wrap">
-                {feed.content}
-                <a
+                <h1 className="mb-6 font-bold text-xl">{feed.content}</h1>  
+                {/* <a
                   className="text-slate-900 mt-6 flex underline"
                   target="_blank"
                   rel="origin"
                   href="https://www.lipsum.com/"
                 >
                   https://www.lipsum.com/
-                </a>
+                </a> */}
               </p>
             </div>
-            <div id="article" className="px-4 py-2">
+            {/* <div id="article" className="px-4 py-2">
               <a href="https://www.lipsum.com/" target="_blank" rel="origin">
                 <div className="border border-solid border-slate-200 rounded-lg overflow-hidden bg-slate-50 flex">
                   <div className="flex-1 p-4">
@@ -288,48 +322,38 @@ export default function View() {
                   </span>
                 </div>
               </a>
-            </div>
-
+            </div> */}
             <div className=' mx-4 mb-2 border-slate-500 py-3 flex justify-between'>
-              <p className='text-xs text-slate-500'>
-                좋아요 {likeCount}
-
+              <p className="text-xs text-slate-500">조회 {feed.viewCount} </p>
+              <p className="text-xs text-slate-500 false">
+                <pre>좋아요 <b>{likeCount}</b>        댓글 <b>{feed.commentCount}</b></pre>
               </p>
-
-              {editButton && (
-                <div id="modifyDeleteButton">
-                  <button type="button" className="px-2" onClick={() => modifyHandler(feed.id)}>
-                    <i class="fa-solid fa-pen"></i>
-                  </button>
-                  <button type="button" className="px-2" onClick={feedDelete}>
-                    <i className="fa-solid fa-trash"></i>
-                  </button>
-                </div>
-              )}
             </div>
 
 
             <div className=''>
               <div className='flex px-1 justify-between'>
+                <div className="flex px-1 items-center" style={{ marginLeft: "15px", fontSize: "12px" }}>
+                  {/* <Moment format="YYYY-MM-DD HH:mm:ss">{feed.createdDate}</Moment> */}
+                  {calcFeedDetailDatetime}
+                </div>
                 <div id="likeRepost" className='flex'>
-
-
                   {liked ? (
                     <button className="flex items-center gap-1 p-3 focus:outline-none false" onClick={likeHandler}>
                       <i className="fa-solid fa-thumbs-up"></i>
                       <p className="font-bold text-xs text-slate-500">좋아요 취소</p>
                     </button>
                   ) : (
-                    <button type="button" className="flex items-center gap-1 p-3 focus:outline-none false" onClick={confettiClick}>
+                    <button type="button" className="flex items-center gap-1 p-3 focus:outline-none false" onClick={likeHandler}>
                       <i className="fa-regular fa-thumbs-up"></i>
                       <p className="font-bold text-xs text-slate-500">좋아요</p>
                     </button>
                   )}
 
-                  <button type="button" className='flex items-center gap-1 p-3 focus:outline-none false'>
+                  {/* <button type="button" className='flex items-center gap-1 p-3 focus:outline-none false'>
                     <i class="fa-regular fa-paper-plane"></i>
                     <p className='font-bold text-xs text-slate-500'>리포스트</p>
-                  </button>
+                  </button> */}
                 </div>
 
 
@@ -339,12 +363,13 @@ export default function View() {
 
           {/* 댓글 */}
           <div id="comment">
-            <h3 className="false m-0 py-6 font-bold mx-1 text-2xl">댓글 {feed.commentCount}</h3>
+            <h3 className="false m-0 py-6 font-bold mx-2 text-2xl">댓글 {feed.commentCount}</h3>
             <div className="bg-white border border-solid border-slate-300">
               <form className="p-4">
                 <div className="flex gap-4 items-center">
                   <div className="w-full items-center flex gap-2">
-                    <img src="/user.png" alt="userIcon" className="w-6 h-6"></img>
+                    {/* <img src="/user.png" alt="userIcon" className="w-6 h-6"></img> */}
+                    <Avvvatars value={userId} style="shape" size={40}/>
                     <div className="flex flex-grow">
                       <textarea
                         placeholder="댓글을 남겨보세요."
