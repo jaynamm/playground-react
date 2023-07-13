@@ -7,8 +7,19 @@ import 'react-toastify/dist/ReactToastify.css';
 import { confetti } from '../../App';
 import axios from '../Token/Interceptor';
 import Avvvatars from 'avvvatars-react';
+import base64 from 'base-64';
+
 
 export default function NewsFeed({ feed }) {
+  const [userId, setUserId] = useState("");
+  const jwtToken = localStorage.getItem("accessToken"); // localStorage 에 있는 토큰 가져오기
+  let payload = jwtToken.substring(jwtToken.indexOf('.')+1,jwtToken.lastIndexOf('.'));  // payload 추출하기
+  let decodeMemberInfo = JSON.parse(base64.decode(payload)); // 디코딩 후 JSON 타입으로 파싱
+
+  useEffect(() => {
+    setUserId(decodeMemberInfo.sub);
+  }, []);
+
   // View 창으로 id 들고가기
   const navigate = useNavigate();
   const feedViewHandler = (id) => {
@@ -91,27 +102,30 @@ export default function NewsFeed({ feed }) {
             
             <div className="flex-1">
               <p className="text-sm text-slate-900 font-bold">{feed.nickname}</p>
-              {/* <p className="text-xs text-slate-700">{feed.userId}</p> */}
             </div>
             
           </div>
 
-          {!follow ? (
-            <div className="flex-none">
-              <button type="button" 
-                      className="btn btn-sm btn-coral-100 bg-blue-200 hover:bg-slate-200 text-coral-600 font-bold" 
-                      onClick={followHandler} >
-                팔로우
-              </button>
-              <ToastContainer />
-            </div>
+          { userId === feed.userId ? (
+              <></>
           ) : (
-            <div>
-              <button className="btn btn-sm bg-red-200 hover:bg-red-100" onClick={unFollowHandler}>
-                <i class="fa-solid fa-user-xmark"></i>
-              </button>
-              <ToastContainer />
-            </div>
+            !follow ? (
+              <div className="flex-none">
+                <button type="button" 
+                        className="btn btn-sm btn-coral-100 bg-blue-200 hover:bg-slate-200 text-coral-600 font-bold" 
+                        onClick={followHandler} >
+                  팔로우
+                </button>
+                <ToastContainer />
+              </div>
+            ) : (
+              <div>
+                <button className="btn btn-sm bg-red-200 hover:bg-red-100" onClick={unFollowHandler}>
+                  <i class="fa-solid fa-user-xmark"></i>
+                </button>
+                <ToastContainer />
+              </div>
+            )
           )}
           
         </div>
@@ -190,48 +204,46 @@ export default function NewsFeed({ feed }) {
           </div>
         </div> */}
 
-<div className="">
-  <div className="flex px-1">
-    <div className="flex px-1 items-center" style={{ marginLeft: "15px", fontSize: "10px" }}>
-      {/* <Moment format="YYYY-MM-DD HH:mm">{feed.createdDate}</Moment> */}
-      {calcDatetime}
-    </div>
-    <div className="flex-grow"></div> {/* 빈 공간을 채우기 위한 추가 요소 */}
-    <div className="flex">
-      <div id="likeRepost" className="flex">
-        {liked ? (
-          <button className="flex gap-1 p-3 focus:outline-none false" onClick={likeHandler}>
-            <i className="fa-solid fa-thumbs-up"></i>
-            <p className="font-bold text-xs text-slate-500">좋아요 취소</p>
-          </button>
-        ) : (
-          <button
-            type="button"
-            className="flex gap-1 p-3 focus:outline-none false"
-            onClick={confettiClick}
-          >
-            <i className="fa-regular fa-thumbs-up" style={{ fontSize: "15px"}}></i>
-            <p className="font-bold text-xs text-slate-500">좋아요</p>
-          </button>
-        )}
-        {/* <button type="button" className="flex items-center gap-1 p-3 focus:outline-none false">
-          <i class="fa-regular fa-paper-plane"></i>
-          <p className="font-bold text-xs text-slate-500">리포스트</p>
-        </button> */}
+      <div className="">
+        <div className="flex px-1">
+          <div className="flex px-1 items-center" style={{ marginLeft: "15px", fontSize: "12px" }}>
+            {/* <Moment format="YYYY-MM-DD HH:mm">{feed.createdDate}</Moment> */}
+            {calcDatetime}
+          </div>
+          <div className="flex-grow"></div> {/* 빈 공간을 채우기 위한 추가 요소 */}
+          <div className="flex">
+            <div id="likeRepost" className="flex">
+              {liked ? (
+                <button className="flex gap-1 p-3 focus:outline-none false" onClick={likeHandler}>
+                  <i className="fa-solid fa-thumbs-up"></i>
+                  <p className="font-bold text-xs text-slate-500">좋아요 취소</p>
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  className="flex gap-1 p-3 focus:outline-none false"
+                  onClick={confettiClick}
+                >
+                  <i className="fa-regular fa-thumbs-up" style={{ fontSize: "15px"}}></i>
+                  <p className="font-bold text-xs text-slate-500">좋아요</p>
+                </button>
+              )}
+              {/* <button type="button" className="flex items-center gap-1 p-3 focus:outline-none false">
+                <i class="fa-regular fa-paper-plane"></i>
+                <p className="font-bold text-xs text-slate-500">리포스트</p>
+              </button> */}
+            </div>
+          </div>
+          <div className="py-3 flex gap-3 pr-6">
+          <div id="feedComment" className="flex">
+            <button className="flex gap-1" style={{ fontSize: "15px"}} onClick={() => feedViewHandler(feed.id)}>
+              <i class="fa-regular fa-message"></i>
+              <p className="font-bold text-xs text-slate-500">댓글</p>
+            </button>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-    <div className="py-3 flex gap-3 pr-6">
-    <div id="feedComment" className="flex">
-      <button className="flex gap-1" style={{ fontSize: "15px"}} onClick={() => feedViewHandler(feed.id)}>
-        <i class="fa-regular fa-message"></i>
-        <p className="font-bold text-xs text-slate-500">댓글</p>
-      </button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
       </div>
       <br />
       <br />
