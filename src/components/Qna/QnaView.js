@@ -35,28 +35,6 @@ export const QnaView = () => {
     const [content, setContent] = useState();
     const [getId, setGetId] = useState();
 
-    const qnaCommentModifyHandler = () => {
-      const data = {
-        id: qnaComment.id,
-      };
-
-      axios
-        .post('/api/qna/answer/delete', JSON.stringify(data), {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        })
-        .then((response) => {
-          console.log(response.data);
-          const responseData = response.data;
-          alert('댓글이 삭제되었습니다.');
-        })
-        .catch((error) => {
-          console(error);
-          alert('댓글을 삭제하는데 실패하였습니다.');
-        });
-    };
-
     return (
       <div>
         <TextField
@@ -69,7 +47,7 @@ export const QnaView = () => {
         <Button
           variant="contained"
           size="small"
-          onClick={qnaCommentModifyHandler}
+          // onClick={qnaCommentModifyHandler}
           sx={{ marginLeft: '15px', marginTop: '15px' }}
         >
           댓글 수정
@@ -150,6 +128,30 @@ export const QnaView = () => {
       });
   };
 
+  const qnaCommentDeleteHandler = () => {
+    const data = {
+      id: qnaComment,
+    };
+
+    axios
+      .post('/api/qna/answer/delete', data, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+        // const responseData = response.data;
+        alert('댓글이 삭제되었습니다.');
+      })
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((error) => {
+        console.log(error);
+        alert('댓글을 삭제하는데 실패하였습니다.');
+      });
+  };
   const actions = [
     {
       icon: (
@@ -161,7 +163,7 @@ export const QnaView = () => {
       ),
       name: '수정하기',
     },
-    { icon: <DeleteIcon onClick={(qnaDeleteHandler) => ''} />, name: '삭제하기' },
+    { icon: <DeleteIcon onClick={qnaCommentDeleteHandler} />, name: '삭제하기' },
   ];
   return (
     <div>
