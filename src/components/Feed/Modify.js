@@ -107,7 +107,7 @@ function Modify() {
             className="w-10 h-10 p-0 flex items-center justify-center focus:outline-none"
             onClick={modifyBack}
           >
-            🔙
+            <i class="fa-solid fa-xmark"></i>
           </button>
 
           <h1 className="font-bold text-slate-900">게시물 수정</h1>
