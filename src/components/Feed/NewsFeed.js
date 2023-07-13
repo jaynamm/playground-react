@@ -7,9 +7,18 @@ import 'react-toastify/dist/ReactToastify.css';
 import { confetti } from '../../App';
 import axios from '../Token/Interceptor';
 import Avvvatars from 'avvvatars-react';
+import base64 from 'base-64';
 
 export default function NewsFeed({ feed }) {
-  const [userPageMove, setUserPageMove] = useState();
+  const [userId, setUserId] = useState('');
+  const jwtToken = localStorage.getItem('accessToken'); // localStorage 에 있는 토큰 가져오기
+  let payload = jwtToken.substring(jwtToken.indexOf('.') + 1, jwtToken.lastIndexOf('.')); // payload 추출하기
+  let decodeMemberInfo = JSON.parse(base64.decode(payload)); // 디코딩 후 JSON 타입으로 파싱
+
+  useEffect(() => {
+    setUserId(decodeMemberInfo.sub);
+  }, []);
+
   // View 창으로 id 들고가기
   const navigate = useNavigate();
   const feedViewHandler = (id) => {
@@ -91,14 +100,13 @@ export default function NewsFeed({ feed }) {
             <Avvvatars value={feed.userId} style="shape" size={40} />
 
             <div className="flex-1">
-              <p className="text-sm text-slate-900 font-bold">
-                <div onClick={() => onClickNickNameHandler(feed.userId)}> {feed.nickname}</div>
-              </p>
-              {/* <p className="text-xs text-slate-700">{feed.userId}</p> */}
+              <p className="text-sm text-slate-900 font-bold">{feed.nickname}</p>
             </div>
           </div>
 
-          {!follow ? (
+          {userId === feed.userId ? (
+            <></>
+          ) : !follow ? (
             <div className="flex-none">
               <button
                 type="button"
@@ -197,7 +205,7 @@ export default function NewsFeed({ feed }) {
 
         <div className="">
           <div className="flex px-1">
-            <div className="flex px-1 items-center" style={{ marginLeft: '15px', fontSize: '10px' }}>
+            <div className="flex px-1 items-center" style={{ marginLeft: '15px', fontSize: '12px' }}>
               {/* <Moment format="YYYY-MM-DD HH:mm">{feed.createdDate}</Moment> */}
               {calcDatetime}
             </div>
@@ -216,9 +224,9 @@ export default function NewsFeed({ feed }) {
                   </button>
                 )}
                 {/* <button type="button" className="flex items-center gap-1 p-3 focus:outline-none false">
-          <i class="fa-regular fa-paper-plane"></i>
-          <p className="font-bold text-xs text-slate-500">리포스트</p>
-        </button> */}
+                <i class="fa-regular fa-paper-plane"></i>
+                <p className="font-bold text-xs text-slate-500">리포스트</p>
+              </button> */}
               </div>
             </div>
             <div className="py-3 flex gap-3 pr-6">

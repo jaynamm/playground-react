@@ -46,7 +46,7 @@ const MyPageModify = () => {
       <Header />
       <div className="myPageModify">
         <Card sx={{ height: '450px', width: '500px', textAlign: 'center' }}>
-          <CardHeader subheader="비밀번호 변경" title="비밀번호" />
+          <CardHeader title="비밀번호 변경" subheader="새 비밀번호를 입력해주세요." />
           <Divider />
           <CardContent>
             <Stack spacing={3} sx={{}}>
@@ -78,11 +78,9 @@ const MyPageModify = () => {
           </CardContent>
           <Divider />
           <CardActions sx={{ justifyContent: 'center', marginTop: '5%' }}>
-            <Button variant="contained" onClick={passwordChangeHandler}>
-              비밀번호 변경하기
-            </Button>
+            <Button variant="contained" onClick={passwordChangeHandler}> 변경 </Button>
             <Button variant="contained" color="error">
-              <Link to="/mypage">비밀번호 변경 취소하기</Link>
+              <Link to="/mypage"> 취소 </Link>
             </Button>
           </CardActions>
         </Card>
