@@ -202,7 +202,7 @@ export const QnaComment = ({ comment }) => {
                 gutterBottom
                 component="div"
                 variant="body1"
-                style={{ whiteSpace: 'pre-line' }}
+                style={{ whiteSpace: 'pre-line', overflowWrap: "break-word" }}
               >
                 {comment.content}
               </Typography>

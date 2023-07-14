@@ -15,7 +15,7 @@ function Dashboard() {
         memberId: 'userid',
         content: feedArticle,
       },
-      // headers: { 'Authorization': localStorage.getItem('Authorization') }
+
     })
       .then((res) => {
         console.log(res.data);
@@ -50,12 +50,12 @@ function Dashboard() {
             </Link>
 
             <div className="flex gap-2 px-2">
-              <button
+              {/* <button
                 type="button"
                 className="focus:outline-0 rounded bg-white border border-solid border-color-coral-600 flex-none px-4 py-2 text-sm opacity-80"
               >
                 <span className="text-color-coral-600">보관</span>
-              </button>
+              </button> */}
 
               <button
                 type="button"
@@ -143,7 +143,8 @@ function Dashboard() {
               id="description"
               className="text-slate-900 placeholder:text-slate-300 border-0 rounded-none px-0 py-6 resize-none focus:ring-0 focus:outline-none caret-color-teal-800 overflow-y-hidden"
               name="description"
-              placeholder="나누고 싶은생각을 적어주세요. 링크나 사진을 추가할 수도 있어요."
+              // placeholder="나누고 싶은생각을 적어주세요. 링크나 사진을 추가할 수도 있어요."
+              placeholder="여기에 나누고 싶은생각을 적어주세요."
               style={{ height: '500px', important: true }}
               onChange={(e) => setFeedArticle(e.target.value)}
             ></textarea>

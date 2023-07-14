@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Header from '../Base/Header';
 import Footer from '../Base/Footer';
-import axios from 'axios';
-// import axios from '../Token/Interceptor';
+import axios from '../Token/Interceptor';
 
 import jobNameList from '../Data/Job';
 import jobSkillList from '../Data/Skill';

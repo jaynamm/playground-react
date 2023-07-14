@@ -1,11 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Footer from '../components/Base/Footer';
-import Header from '../components/Base/Header';
 import HeaderLogin from '../components/Base/HeaderLogin';
-// import Three from "../three/Three";
-// import ThreeScene from "../three/ThreeScene";
-// import '../styles/Main.css';
 
 const Main = () => {
   const location = useLocation();
@@ -16,8 +12,7 @@ const Main = () => {
   return (
     <>
       <HeaderLogin />
-      {/* <ThreeScene /> */}
-
+      
       <div
         style={{
           backgroundImage: `url(./black.jpg)`,

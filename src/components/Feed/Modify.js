@@ -12,19 +12,21 @@ function Modify() {
   const [showElements, setShowElements] = useState(false);
   const [commentTitle, setCommentTitle] = useState('');
 
-  const handleButtonClick = () => {
-    setShowElements(!showElements);
-  };
+  // const handleButtonClick = () => {
+  //   setShowElements(!showElements);
+  // };
 
-  const handleCancelButtonClick = () => {
-    setShowElements(false);
-    setCommentTitle('');
-  };
+  // const handleCancelButtonClick = () => {
+  //   setShowElements(false);
+  //   setCommentTitle('');
+  // };
 
   // 상세보기 내용 가져오기
   const location = useLocation();
   const feedId = location.state.id;
+
   const [feed, setFeed] = useState([]);
+  const [modifyFeed, setModifyFeed] = useState("");
 
   useEffect(() => {
     axios({
@@ -32,25 +34,15 @@ function Modify() {
       url: `/api/feed/view/${feedId}`,
     })
       .then((res) => {
-        let feedData = res.data.data;
-        setFeed(feedData.feed);
+        console.log(res.data);
+        const feedData = res.data.data.feed;
+        setFeed(feedData);
+        setModifyFeed(feedData.content);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
-
-  // 피드 수정
-
-  const [modifyFeed, setModifyFeed] = useState(feed.content);
-  const handleFeedChange = (e) => {
-    setModifyFeed(e.target.value);
-  };
-
-  const modifyData = {
-    id: feed.id,
-    content: modifyFeed,
-  };
 
   const modifyHandler = (id) => {
     navigate(`/feed/view/${id}`, {
@@ -62,6 +54,11 @@ function Modify() {
 
   // 피드 수정
   const modifySave = () => {
+    const modifyData = {
+      id: feed.id,
+      content: modifyFeed,
+    };
+
     axios
       .post('/api/feed/modify', modifyData, {
         headers: {
@@ -110,7 +107,7 @@ function Modify() {
             <i class="fa-solid fa-xmark"></i>
           </button>
 
-          <h1 className="font-bold text-slate-900">게시물 수정</h1>
+          <h1 className="font-bold text-slate-900">피드 수정</h1>
 
           <button
             type="button"
@@ -121,15 +118,15 @@ function Modify() {
           </button>
         </nav>
 
-        <div className="bg-white flex items-center gap-4 w-full max-w-screen-md mx-auto px-3 py-2 border border-solid border-slate-300 border-t-0 border-x-0 md:border-x">
+        {/* <div className="bg-white flex items-center gap-4 w-full max-w-screen-md mx-auto px-3 py-2 border border-solid border-slate-300 border-t-0 border-x-0 md:border-x">
           <button type="button" className="p-1 focus:outline-none">
             📷
           </button>
-        </div>
+        </div> */}
 
         <div className="bg-white border border-solid w-full max-w-3xl flex-1 mx-auto overflow-auto hide-scroll-bar md:border-slate-300 md:border-y-0">
           <div className="mx-auto w-full max-w-[633px] px-4 flex flex-col py-5">
-            <div className="flex flex-row gap-3 justify-end">
+            {/* <div className="flex flex-row gap-3 justify-end">
               <label className="flex items-center mb-0 justify-end">
                 <input
                   type="checkbox"
@@ -145,9 +142,9 @@ function Modify() {
                 />
                 <p className="ml-2 text-xs font-bold text-slate-500">Facebook 공유</p>
               </label>
-            </div>
+            </div> */}
 
-            <div className="flex flex-col">
+            {/* <div className="flex flex-col">
               {!showElements ? (
                 <div
                   role="button"
@@ -190,16 +187,17 @@ function Modify() {
                   ></textarea>
                 </div>
               )}
-            </div>
+            </div> */}
 
             <textarea
               id="description"
               className="text-slate-900 placeholder:text-slate-300 border-0 rounded-none px-0 py-6 resize-none focus:ring-0 focus:outline-none caret-color-teal-800 overflow-y-hidden"
               name="description"
-              style={{ height: '500px', important: true }}
+              style={{ height: '500px', important: true, marginTop: "50px" }}
               value={modifyFeed}
-              onChange={handleFeedChange}
+              onChange={(e) => {setModifyFeed(e.target.value)}}
             ></textarea>
+
             <div className="h-4"></div>
             <div className="py-2"></div>
           </div>
