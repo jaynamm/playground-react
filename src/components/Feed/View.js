@@ -4,7 +4,6 @@ import { useState, useEffect, useRef } from 'react';
 import axios from '../Token/Interceptor';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Comments from './Comments';
-import Moment from 'react-moment';
 import Swal from 'sweetalert2';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -36,6 +35,8 @@ export default function View() {
 
   const [follow, setFollow] = useState(false); // 팔로우 토글
 
+  const [hotFeeds, setHotFeeds] = useState([]);
+
   useEffect(() => {
     axios({
       method: 'GET',
@@ -57,6 +58,15 @@ export default function View() {
       .catch((err) => {
         console.log(err);
       });
+
+      axios.get('/api/feed/hotfeed')
+      .then((res) => {
+        console.log(res.data);
+        setHotFeeds(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   // 수정화면으로 id 들고가기
@@ -73,9 +83,8 @@ export default function View() {
   };
 
   const handleCommentRegistration = () => {
-    // Create the comment object with the required information
     const commentData = {
-      feedId: feedId, // Replace with the actual feedId value
+      feedId: feedId, 
       content: textareaValue,
     };
 
@@ -250,7 +259,6 @@ export default function View() {
           <div className="bg-white border border-solid border-slate-300">
             <div className="flex justify-between items-center p-4">
               <div className="flex gap-4 items-center">
-                {/* <img src="/user.png" alt="User profile picture" className="w-8 h-8" /> */}
                 <Avvvatars value={feed.userId} style="shape" size={40} />
                 <div className="flex-1">
                   <p
@@ -265,7 +273,6 @@ export default function View() {
                   >
                     {feed.nickname}
                   </p>
-                  {/* <p className="text-xs text-slate-700">{feed.userId}</p> */}
                 </div>
               </div>
 
@@ -309,7 +316,7 @@ export default function View() {
               )}
             </div>
             <div className="p-4">
-              <p className="auto-line-break text-base text-slate-900 whitespace-pre-wrap">
+              <p className="auto-line-break text-base text-slate-900 whitespace-pre-wrap" style={{ overflowWrap: "break-word" }}>
                 <h1 className="mb-6 font-bold text-xl">{feed.content}</h1>
                 {/* <a
                   className="text-slate-900 mt-6 flex underline"
@@ -352,7 +359,6 @@ export default function View() {
             <div className="">
               <div className="flex px-1 justify-between">
                 <div className="flex px-1 items-center" style={{ marginLeft: '15px', fontSize: '12px' }}>
-                  {/* <Moment format="YYYY-MM-DD HH:mm:ss">{feed.createdDate}</Moment> */}
                   {calcFeedDetailDatetime}
                 </div>
                 <div id="likeRepost" className="flex">
@@ -371,11 +377,6 @@ export default function View() {
                       <p className="font-bold text-xs text-slate-500">좋아요</p>
                     </button>
                   )}
-
-                  {/* <button type="button" className='flex items-center gap-1 p-3 focus:outline-none false'>
-                    <i class="fa-regular fa-paper-plane"></i>
-                    <p className='font-bold text-xs text-slate-500'>리포스트</p>
-                  </button> */}
                 </div>
               </div>
             </div>
@@ -436,106 +437,50 @@ export default function View() {
         {/* 추천 게시물  */}
         <div className="hidden md:inline col-span-4 sticky top-14 h-[calc(100vh-56px)] overflow-scroll overscroll-y-contain hide-scroll-bar">
           <div className="py-8 flex flex-col gap-5">
-            <div className="bg-white border border-solid border-slate-300">
-              <div>
-                <div className="pt-4 px-4">
-                  <h5 className="mb-0 font-bold">주간 인기 TOP 10</h5>
-                  <p className="text-sm text-slate700 mt-2">지난주 인기 있던 게시물이에요!</p>
-                </div>
-                <div className="pb-4">
-                  {/* 박스디자인 */}
-                  <button>
-                    <div className="md:hover:bg-slate-50 h-20 px-4 flex items-center gap-3">
-                      <div className="flex-none w-[24px] flex justify-center">
-                        <span className="leading-none font-bold text-xl text-cyan-600">1</span>
-                      </div>
-                      <div className="relative flex-none w-10 h-10 border border-slate-200 bg-white rounded-full"></div>
-                      <div className="flex-1 pl-1">
-                        <p className="mb-1 text-sm text-slate-900 line-clamp-2">
-                          우아한형제들에서 시니어 개발자로 일하면 어떨까? – (1) 일
-                        </p>
-                        <p className="text-xs text-slate-700 line-clamp-1">
-                          <span className="font0bold text-slate-900">우아한형제들</span>
-                        </p>
-                      </div>
-                    </div>
-                  </button>
+              <div className="bg-white border border-solid border-slate-300">
+                {/*상단 탭*/}
+                <div>
+                  <div className="pt-4 px-4">
+                    <h5 className="mb-0 font-bold">주간 인기 TOP 5</h5>
+                    <p className="text-sm text-slate-700 mt-2">지난주 인기 있던 게시물이에요!</p>
+                  </div>
+                  {/*상단 탭*/}
 
-                  {/* 박스디자인 */}
-                  <button>
-                    <div className="md:hover:bg-slate-50 h-20 px-4 flex items-center gap-3">
-                      <div className="flex-none w-[24px] flex justify-center">
-                        <span className="leading-none font-bold text-xl text-cyan-600">2</span>
-                      </div>
-                      <div className="relative flex-none w-10 h-10 border border-slate-200 bg-white rounded-full"></div>
-                      <div className="flex-1 pl-1">
-                        <p className="mb-1 text-sm text-slate-900 line-clamp-2">
-                          사이드 프로젝트에 사용하기 좋은 upstash.com 서비스
-                        </p>
-                        <p className="text-xs text-slate-700 line-clamp-1">
-                          <span className="font0bold text-slate-900">asbubam</span>
-                          당근마켓 SRE팀
-                        </p>
-                      </div>
-                    </div>
-                  </button>
+                  {/*하단 탭 */}
+                  <div className="pb-4">
+                    {/* 박스디자인 */}
+                    { hotFeeds.map((hotFeeds, index) =>
+                      <button className="hotFeeds" onClick={() => {
+                        try {
+                          navigate(`/feed/view/${hotFeeds.id}`, {
+                            state: {
+                              id: hotFeeds.id
+                            }
+                          })
+                        } catch {
+                          alert('해당 피드로 이동할 수 없습니다.');
+                        } finally {
+                          window.location.reload();
+                        }
+                        }} >
+                        <div className="md:hover:bg-slate-50 h-20 px-4 flex items-center gap-3">
+                          <div className="flex-none w-[24px] flex justify-center">
+                            <span className="leading-none font-bold text-xl text-cyan-600">{index + 1}</span>
+                          </div>
 
-                  {/* 박스디자인 */}
-                  <button>
-                    <div className="md:hover:bg-slate-50 h-20 px-4 flex items-center gap-3">
-                      <div className="flex-none w-[24px] flex justify-center">
-                        <span className="leading-none font-bold text-xl text-cyan-600">3</span>
-                      </div>
-                      <div className="relative flex-none w-10 h-10 border border-slate-200 bg-white rounded-full"></div>
-                      <div className="flex-1 pl-1">
-                        <p className="mb-1 text-sm text-slate-900 line-clamp-2">
-                          사이드 프로젝트에 사용하기 좋은 upstash.com 서비스
-                        </p>
-                        <p className="text-xs text-slate-700 line-clamp-1">
-                          <span className="font0bold text-slate-900">asbubam</span>
-                          당근마켓 SRE팀
-                        </p>
-                      </div>
-                    </div>
-                  </button>
-
-                  {/* 박스디자인 */}
-                  <button>
-                    <div className="md:hover:bg-slate-50 h-20 px-4 flex items-center gap-3">
-                      <div className="flex-none w-[24px] flex justify-center">
-                        <span className="leading-none font-bold text-xl text-cyan-600">4</span>
-                      </div>
-                      <div className="relative flex-none w-10 h-10 border border-slate-200 bg-white rounded-full"></div>
-                      <div className="flex-1 pl-1">
-                        <p className="mb-1 text-sm text-slate-900 line-clamp-2">
-                          사이드 프로젝트에 사용하기 좋은 upstash.com 서비스
-                        </p>
-                        <p className="text-xs text-slate-700 line-clamp-1">
-                          <span className="font0bold text-slate-900">asbubam</span>
-                          당근마켓 SRE팀
-                        </p>
-                      </div>
-                    </div>
-                  </button>
-
-                  {/* 박스디자인 */}
-                  <button>
-                    <div className="md:hover:bg-slate-50 h-20 px-4 flex items-center gap-3">
-                      <div className="flex-none w-[24px] flex justify-center">
-                        <span className="leading-none font-bold text-xl text-cyan-600">5</span>
-                      </div>
-                      <div className="relative flex-none w-10 h-10 border border-slate-200 bg-white rounded-full"></div>
-                      <div className="flex-1 pl-1">
-                        <p className="mb-1 text-sm text-slate-900 line-clamp-2">
-                          사이드 프로젝트에 사용하기 좋은 upstash.com 서비스
-                        </p>
-                        <p className="text-xs text-slate-700 line-clamp-1">
-                          <span className="font0bold text-slate-900">asbubam</span>
-                          당근마켓 SRE팀
-                        </p>
-                      </div>
-                    </div>
-                  </button>
+                          <div className="flex-1 pl-1">
+                            <p className="mb-1 text-sm text-slate-900 line-clamp-2">
+                              {hotFeeds.content}
+                            </p>
+                            <p className="text-xs text-slate-700 line-clamp-1">
+                              <span className="font0bold text-slate-900">
+                                {hotFeeds.nickname}
+                              </span>
+                            </p>
+                          </div>
+                        </div>
+                      </button>
+                    )}
                 </div>
               </div>
             </div>
