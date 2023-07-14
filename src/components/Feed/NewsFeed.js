@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import '../../styles/Feed/Newfeed.css';
 import Moment from 'react-moment';
-import { useNavigate, Link, useAsyncError } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { confetti } from '../../App';
@@ -104,30 +104,7 @@ export default function NewsFeed({ feed }) {
             </div>
           </div>
 
-<<<<<<< HEAD
-          {userId === feed.userId ? (
-            <></>
-          ) : !follow ? (
-            <div className="flex-none">
-              <button
-                type="button"
-                className="btn btn-sm btn-coral-100 bg-blue-200 hover:bg-slate-200 text-coral-600 font-bold"
-                onClick={followHandler}
-              >
-                팔로우
-              </button>
-              <ToastContainer />
-            </div>
-          ) : (
-            <div>
-              <button className="btn btn-sm bg-red-200 hover:bg-red-100" onClick={unFollowHandler}>
-                <i class="fa-solid fa-user-xmark"></i>
-              </button>
-              <ToastContainer />
-            </div>
-          )}
-=======
-          <div className="flex px-1 items-center" style={{ marginLeft: "15px", fontSize: "12px" }}>
+          <div className="flex px-1 items-center" style={{ marginLeft: '15px', fontSize: '12px' }}>
             {calcDatetime}
           </div>
 
@@ -152,8 +129,6 @@ export default function NewsFeed({ feed }) {
               </div>
             )
           )} */}
-          
->>>>>>> upstream/main
         </div>
 
         <div className="p-4">
@@ -161,77 +136,23 @@ export default function NewsFeed({ feed }) {
         </div>
 
         <div className=" mx-4 mb-2 border-slate-500 py-3 flex justify-between">
-<<<<<<< HEAD
-          <p className="text-xs text-slate-500">조회 {feed.viewCount} </p>
-          <p className="text-xs text-slate-500 false">
-            <pre>
-              좋아요 <b>{likeCount}</b> 댓글 <b>{feed.commentCount}</b>
-            </pre>
-          </p>
-=======
           <div className="flex-grow"></div> {/* 빈 공간을 채우기 위한 추가 요소 */}
-          
->>>>>>> upstream/main
         </div>
 
         <div className="">
           <div className="flex px-1">
-            <div className="flex px-1 items-center" style={{ marginLeft: "15px", fontSize: "12px" }}>
-              <p className="text-xs text-slate-500 false">좋아요 <b>{likeCount}</b></p>
-            </div>
-            <div className="flex px-1 items-center" style={{ marginLeft: "15px", fontSize: "12px" }}>
-              <p className="text-xs text-slate-500 false">댓글 <b>{feed.commentCount}</b></p>
-            </div>
-            <div className="flex px-1 items-center" style={{ marginLeft: "15px", fontSize: "12px" }}>
-              <p className="text-xs text-slate-500">조회 {feed.viewCount} </p >
-            </div>
-            <div className="flex-grow"></div> {/* 빈 공간을 채우기 위한 추가 요소 */}
-            <div className="flex">
-              <div id="likeRepost" className="flex">
-                {liked ? (
-                  <button className="flex gap-1 p-3 focus:outline-none false" onClick={likeHandler}>
-                    <i className="fa-solid fa-thumbs-up"></i>
-                    <p className="font-bold text-xs text-slate-500">좋아요 취소</p>
-                  </button>
-                ) : (
-                  <button
-                    type="button"
-                    className="flex gap-1 p-3 focus:outline-none false"
-                    onClick={confettiClick}
-                  >
-                    <i className="fa-regular fa-thumbs-up" style={{ fontSize: "15px"}}></i>
-                    <p className="font-bold text-xs text-slate-500">좋아요</p>
-                  </button>
-                )}
-<<<<<<< HEAD
-
-                <button type="button" className="flex items-center gap-1 p-3 focus:outline-none false">
-                  {/* <i class="fa-regular fa-paper-plane"></i> */}
-        {/* <p className="font-bold text-xs text-slate-500">리포스트</p> */}
-        {/*</div></button>
-                </div>
-=======
-                {/* <button type="button" className="flex items-center gap-1 p-3 focus:outline-none false">
-                  <i class="fa-regular fa-paper-plane"></i>
-                  <p className="font-bold text-xs text-slate-500">리포스트</p>
-                </button> */}
-              </div>
->>>>>>> upstream/main
-            </div>
-            <div className="py-3 flex gap-3 pr-6">
-<<<<<<< HEAD
-              <button>
-                <i class="fa-regular fa-message" onClick={() => feedViewHandler(feed.id)}></i>
-              </button>
-            </div>
-          </div>
-        </div> */}
-
-        <div className="">
-          <div className="flex px-1">
             <div className="flex px-1 items-center" style={{ marginLeft: '15px', fontSize: '12px' }}>
-              {/* <Moment format="YYYY-MM-DD HH:mm">{feed.createdDate}</Moment> */}
-              {calcDatetime}
+              <p className="text-xs text-slate-500 false">
+                좋아요 <b>{likeCount}</b>
+              </p>
+            </div>
+            <div className="flex px-1 items-center" style={{ marginLeft: '15px', fontSize: '12px' }}>
+              <p className="text-xs text-slate-500 false">
+                댓글 <b>{feed.commentCount}</b>
+              </p>
+            </div>
+            <div className="flex px-1 items-center" style={{ marginLeft: '15px', fontSize: '12px' }}>
+              <p className="text-xs text-slate-500">조회 {feed.viewCount} </p>
             </div>
             <div className="flex-grow"></div> {/* 빈 공간을 채우기 위한 추가 요소 */}
             <div className="flex">
@@ -248,18 +169,14 @@ export default function NewsFeed({ feed }) {
                   </button>
                 )}
                 {/* <button type="button" className="flex items-center gap-1 p-3 focus:outline-none false">
-                <i class="fa-regular fa-paper-plane"></i>
-                <p className="font-bold text-xs text-slate-500">리포스트</p>
-              </button> */}
+                  <i class="fa-regular fa-paper-plane"></i>
+                  <p className="font-bold text-xs text-slate-500">리포스트</p>
+                </button> */}
               </div>
             </div>
             <div className="py-3 flex gap-3 pr-6">
               <div id="feedComment" className="flex">
                 <button className="flex gap-1" style={{ fontSize: '15px' }} onClick={() => feedViewHandler(feed.id)}>
-=======
-              <div id="feedComment" className="flex">
-                <button className="flex gap-1" style={{ fontSize: "15px"}} onClick={() => feedViewHandler(feed.id)}>
->>>>>>> upstream/main
                   <i class="fa-regular fa-message"></i>
                   <p className="font-bold text-xs text-slate-500">댓글</p>
                 </button>

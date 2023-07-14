@@ -5,8 +5,9 @@ import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import '../styles/Notice/Notice.css';
 import Moment from 'react-moment';
-import Footer from '../components/Base/Footer';
 import Button from '@mui/material/Button';
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
 
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -74,7 +75,9 @@ const Notice = () => {
           </div>
         )}
       </div>
-      {/* <Footer /> */}
+      <Stack spacing={2} alignItems="center">
+        <Pagination count={5} />
+      </Stack>
     </div>
   );
 };
