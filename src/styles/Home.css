@@ -202,6 +202,23 @@ div.likeAct {
   transform: translate(-50%, -50%) scale(1.1);
 }
 
+.hotFeeds div div p {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 200px;
+  display: inline-block;
+}
+
+
+#right {
+  overflow-y: scroll;
+}
+
+#right::-webkit-scrollbar {
+  display: none;
+}
+
 /* .feed-wrapper {
     float: left;
     margin-left: 20px;

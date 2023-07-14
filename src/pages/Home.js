@@ -39,6 +39,7 @@ const Hello = () => {
 
 const Home = () => {
   const [feeds, setFeeds] = useState([]);
+  const [hotFeeds, setHotFeeds] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   // 피드 무한스크롤
@@ -63,6 +64,14 @@ const Home = () => {
         console.log(err);
         setIsLoading(false);
       });
+    axios.get('/api/feed/hotfeed')
+        .then((res) => {
+          setHotFeeds(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+          setIsLoading(false);
+        });
   }, []);
 
   useEffect(() => {
@@ -170,7 +179,7 @@ const Home = () => {
         {/* 피드 */}
 
         {/* 추천게시물 */}
-        <div className="hidden md:inline col-span-4 sticky top-14 h-[calc(100vh-56px)] overflow-scroll overscroll-contain hide-scroll-bar ">
+        <div id="right" className="hidden md:inline col-span-4 sticky top-14 h-[calc(100vh-56px)] overflow-scroll overscroll-contain hide-scroll-bar ">
           <div className="py-8 flex flex-col gap-5">
             <div className="flex p-4 bg-white border border-solid border-slate-300">
               <p className="flex-1 font-bold py-4">PlayGround</p>
@@ -193,98 +202,26 @@ const Home = () => {
                 {/*하단 탭 */}
                 <div className="pb-4">
                   {/* 박스디자인 */}
-                  <button>
+                  { hotFeeds.map((hotFeeds, index) =>
+                  <button className="hotFeeds">
                     <div className="md:hover:bg-slate-50 h-20 px-4 flex items-center gap-3">
                       <div className="flex-none w-[24px] flex justify-center">
-                        <span className="leading-none font-bold text-xl text-cyan-600">1</span>
+                        <span className="leading-none font-bold text-xl text-cyan-600">{index + 1}</span>
                       </div>
-                      <div className="relative flex-none w-10 h-10 border border-slate-200 bg-white rounded-full"></div>
-                      <div className="flex-1 pl-1">
-                        <p className="mb-1 text-sm text-slate-900 line-clamp-2">
-                          우아한형제들에서 시니어 개발자로 일하면 어떨까? – (1) 일
-                        </p>
-                        <p className="text-xs text-slate-700 line-clamp-1">
-                          <span className="font0bold text-slate-900">우아한형제들</span>
-                        </p>
-                      </div>
-                    </div>
-                  </button>
 
-                  {/* 박스디자인 */}
-                  <button>
-                    <div className="md:hover:bg-slate-50 h-20 px-4 flex items-center gap-3">
-                      <div className="flex-none w-[24px] flex justify-center">
-                        <span className="leading-none font-bold text-xl text-cyan-600">2</span>
-                      </div>
-                      <div className="relative flex-none w-10 h-10 border border-slate-200 bg-white rounded-full"></div>
                       <div className="flex-1 pl-1">
                         <p className="mb-1 text-sm text-slate-900 line-clamp-2">
-                          사이드 프로젝트에 사용하기 좋은 upstash.com 서비스
+                          {hotFeeds.content}
                         </p>
                         <p className="text-xs text-slate-700 line-clamp-1">
-                          <span className="font0bold text-slate-900">asbubam</span>
-                          당근마켓 SRE팀
+                          <span className="font0bold text-slate-900">
+                            {hotFeeds.nickname}
+                          </span>
                         </p>
                       </div>
                     </div>
                   </button>
-
-                  {/* 박스디자인 */}
-                  <button>
-                    <div className="md:hover:bg-slate-50 h-20 px-4 flex items-center gap-3">
-                      <div className="flex-none w-[24px] flex justify-center">
-                        <span className="leading-none font-bold text-xl text-cyan-600">3</span>
-                      </div>
-                      <div className="relative flex-none w-10 h-10 border border-slate-200 bg-white rounded-full"></div>
-                      <div className="flex-1 pl-1">
-                        <p className="mb-1 text-sm text-slate-900 line-clamp-2">
-                          사이드 프로젝트에 사용하기 좋은 upstash.com 서비스
-                        </p>
-                        <p className="text-xs text-slate-700 line-clamp-1">
-                          <span className="font0bold text-slate-900">asbubam</span>
-                          당근마켓 SRE팀
-                        </p>
-                      </div>
-                    </div>
-                  </button>
-
-                  {/* 박스디자인 */}
-                  <button>
-                    <div className="md:hover:bg-slate-50 h-20 px-4 flex items-center gap-3">
-                      <div className="flex-none w-[24px] flex justify-center">
-                        <span className="leading-none font-bold text-xl text-cyan-600">4</span>
-                      </div>
-                      <div className="relative flex-none w-10 h-10 border border-slate-200 bg-white rounded-full"></div>
-                      <div className="flex-1 pl-1">
-                        <p className="mb-1 text-sm text-slate-900 line-clamp-2">
-                          사이드 프로젝트에 사용하기 좋은 upstash.com 서비스
-                        </p>
-                        <p className="text-xs text-slate-700 line-clamp-1">
-                          <span className="font0bold text-slate-900">asbubam</span>
-                          당근마켓 SRE팀
-                        </p>
-                      </div>
-                    </div>
-                  </button>
-
-                  {/* 박스디자인 */}
-                  <button>
-                    <div className="md:hover:bg-slate-50 h-20 px-4 flex items-center gap-3">
-                      <div className="flex-none w-[24px] flex justify-center">
-                        <span className="leading-none font-bold text-xl text-cyan-600">5</span>
-                      </div>
-                      <div className="relative flex-none w-10 h-10 border border-slate-200 bg-white rounded-full"></div>
-                      <div className="flex-1 pl-1">
-                        <p className="mb-1 text-sm text-slate-900 line-clamp-2">
-                          사이드 프로젝트에 사용하기 좋은 upstash.com 서비스
-                        </p>
-                        <p className="text-xs text-slate-700 line-clamp-1">
-                          <span className="font0bold text-slate-900">asbubam</span>
-                          당근마켓 SRE팀
-                        </p>
-                      </div>
-                    </div>
-                  </button>
+                  )}
                 </div>
               </div>
             </div>
