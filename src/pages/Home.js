@@ -43,7 +43,7 @@ const Home = () => {
 
   // 피드 무한스크롤
   const lastFeedRef = useRef(null);
-  const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
   const [isLast, setIsLast] = useState(false);
 
   useEffect(() => {
@@ -56,7 +56,6 @@ const Home = () => {
         let feedData = res.data.content;
         setFeeds(feedData);
         setIsLoading(false);
-
         const isLast = res.data.last;
         setIsLast(isLast);
       })

@@ -17,6 +17,7 @@ const Notice = () => {
   const [notice, setNotices] = useState([]);
   const navigate = useNavigate();
   const [editButton, setEditButton] = useState();
+  const [totalPages, setTotalPages] = useState(1);
 
   const noticeViewHandler = (id) => {
     navigate(`/notice/view/${id}`, {
@@ -26,6 +27,16 @@ const Notice = () => {
     });
   };
 
+  const pageButtonHandler = async (event, page) => {
+    const noticePage = await axios.get(
+        '/api/notice', {
+          params: {
+            page: page - 1
+          }
+        });
+    setNotices(noticePage.data.data.content);
+  };
+
   useEffect(() => {
     axios
       .get('/api/notice')
@@ -33,6 +44,7 @@ const Notice = () => {
         console.log(res.data);
         setNotices(res.data.data.content);
         setEditButton(!res.data.responseMessage.includes('NOTICE_USER_ACCESS'));
+        setTotalPages(res.data.data.totalPages);
       })
       .catch((err) => {
         console.log(err);
@@ -49,7 +61,6 @@ const Notice = () => {
               <TableCell>글 번호</TableCell>
               <TableCell>제목</TableCell>
               <TableCell>작성자</TableCell>
-              {/* <th>조회수</th> */}
               <TableCell>작성일시</TableCell>
             </TableRow>
           </thead>
@@ -59,7 +70,6 @@ const Notice = () => {
                 <TableCell className="notice-id">{item.id}</TableCell>
                 <TableCell>{item.title}</TableCell>
                 <TableCell>{item.member.name}</TableCell>
-                {/* <td>{item.viewCount}</td> */}
                 <TableCell className="notice-createdDate">
                   <Moment format="YYYY년 MM월 DD일 HH:mm">{item.createdDate}</Moment>
                 </TableCell>
@@ -69,14 +79,16 @@ const Notice = () => {
         </table>
         {editButton && (
           <div className="buttonContainer">
-            <Button variant="contained" size="large" color="inherit">
-              <Link to="write">글쓰기</Link>
-            </Button>
+            <Link to="write">
+              <Button variant="contained" size="large" color="inherit">
+                글쓰기
+              </Button>
+            </Link>
           </div>
         )}
       </div>
       <Stack spacing={2} alignItems="center">
-        <Pagination count={5} />
+        <Pagination count={totalPages} onChange={pageButtonHandler}/>
       </Stack>
     </div>
   );

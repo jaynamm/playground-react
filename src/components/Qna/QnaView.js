@@ -12,6 +12,8 @@ import '../../styles/Notice/NoticeView.css';
 import { QnaComment } from './QnaComment';
 import Avvvatars from 'avvvatars-react';
 import { Box, Typography } from '@mui/material';
+import Stack from "@mui/material/Stack";
+import Pagination from "@mui/material/Pagination";
 
 export const QnaView = () => {
   const location = useLocation();
@@ -22,6 +24,8 @@ export const QnaView = () => {
   const [questionId, setQuestionId] = useState('');
   const [editButton, setEditButton] = useState();
   const [qnaComment, setQnaComment] = useState([]);
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalElements, setTotalElements] = useState(0);
 
   const lastFeedRef = useRef(null);
 
@@ -34,6 +38,8 @@ export const QnaView = () => {
         setQuestionId(response.data.data.question.id);
         setEditButton(!response.data.responseMessage.includes('QUESTION_WRITER_ACCESS_FAILED'));
         setQnaComment(response.data.data.answers.content);
+        setTotalPages(response.data.data.answers.totalPages);
+        setTotalElements(response.data.data.answers.totalElements);
       })
       .catch((error) => {
         console.log(error);
@@ -100,6 +106,16 @@ export const QnaView = () => {
         console.log(error);
         alert('글을 작성하지 못했습니다.');
       });
+  };
+
+
+  const pageButtonHandler = async (event, page) => {
+    const answerPage = await axios.post(
+        '/api/qna/answer/list',
+        { id: getId },
+        { params: { page: page - 1 }}
+    );
+    setQnaComment(answerPage.data.content);
   };
 
   return (
@@ -214,11 +230,11 @@ export const QnaView = () => {
         <br></br>
         <br></br>
         <Box sx={{ p: 1, margin: 'auto', marginBottom: '10px', maxWidth: '75%', flexGrow: 1, textAlign: 'center' }}>
-          <b>총 {qnaComment.length} 개의 답변이 있습니다.</b>
+          <b>총 {totalElements} 개의 답변이 있습니다.</b>
           <hr style={{ border: 'none', borderTop: '1px solid black', margin: '20px' }} />
         </Box>
         <br></br>
-        {qnaComment.map((comment, index) => {
+        {qnaComment.map((comment) => {
           if (qnaComment.length > 0) {
             return (
               <div key={comment.id}>
@@ -228,6 +244,9 @@ export const QnaView = () => {
           }
         })}
         ;
+        <Stack spacing={2} alignItems="center">
+          <Pagination count={totalPages} onChange={pageButtonHandler}/>
+        </Stack>
       </div>
     </div>
   );

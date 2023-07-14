@@ -27,16 +27,21 @@ const MyPageModify = () => {
       .post('/api/member/password', { password: userPassword, newPassword: userNewPassword })
       .then((response) => {
         console.log(response);
-        if (response.data.responseMessage.includes('PASSWORD_CHANGE_FAILED')) {
+        if (response.status !== 200) {
           setUserPassword('');
           setUserNewPassword('');
-        } else if (response.data.success) {
+          setUserNewPasswordCheck('');
+          alert('비밀번호 변경에 실패하였습니다.');
+        } else {
           alert('비밀번호 변경에 성공하였습니다.');
           navigate('/mypage');
         }
       })
       .catch((error) => {
         console.log(error);
+        setUserPassword('');
+        setUserNewPassword('');
+        setUserNewPasswordCheck('');
         alert('비밀번호 변경에 실패하였습니다.');
       });
   };
