@@ -78,7 +78,10 @@ const MyPageModify = () => {
           </CardContent>
           <Divider />
           <CardActions sx={{ justifyContent: 'center', marginTop: '5%' }}>
-            <Button variant="contained" onClick={passwordChangeHandler}> 변경 </Button>
+            <Button variant="contained" onClick={passwordChangeHandler}>
+              {' '}
+              변경{' '}
+            </Button>
             <Button variant="contained" color="error">
               <Link to="/mypage"> 취소 </Link>
             </Button>
