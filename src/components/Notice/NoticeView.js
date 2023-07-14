@@ -90,7 +90,7 @@ const NoticeView = () => {
               </tr>
 
               <tr className="view-content">
-                <td>{notice.content}</td>
+                <td style={{ overflowWrap: "break-word" }}>{notice.content}</td>
               </tr>
             </tbody>
           </table>
