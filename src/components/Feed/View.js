@@ -435,7 +435,7 @@ export default function View() {
           </div>
         </div>
         {/* 추천 게시물  */}
-        <div className="hidden md:inline col-span-4 sticky top-14 h-[calc(100vh-56px)] overflow-scroll overscroll-y-contain hide-scroll-bar">
+        <div id="right" className="hidden md:inline col-span-4 sticky top-14 h-[calc(100vh-56px)] overflow-scroll overscroll-y-contain hide-scroll-bar">
           <div className="py-8 flex flex-col gap-5">
               <div className="bg-white border border-solid border-slate-300">
                 {/*상단 탭*/}
