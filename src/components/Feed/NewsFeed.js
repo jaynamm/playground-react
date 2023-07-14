@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../../styles/Feed/Newfeed.css';
-import Moment from 'react-moment';
-import { useNavigate, Link } from 'react-router-dom';
-import { toast, ToastContainer } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+// import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { confetti } from '../../App';
 import axios from '../Token/Interceptor';
@@ -39,19 +38,20 @@ export default function NewsFeed({ feed }) {
   // 좋아요 카운트
   const [likeCount, setLikeCount] = useState(feed.likeCount);
 
-  // 팔로우 토글
-  const [follow, setFollow] = useState(false);
+  // 팔로우 토글 - 피드 리스트에서 팔로우 기능을 사용하지 않아서 주석 처리함
+  // const [follow, setFollow] = useState(false);
 
-  // 팔로우 토스트알람
-  const followHandler = () => {
-    setFollow((prevFollow) => !prevFollow);
-    toast.info('팔로우 했어요 !', { position: 'top-center', autoClose: 2000, hideProgressBar: true });
-  };
-  // 언팔로우 토스트알람
-  const unFollowHandler = () => {
-    setFollow((prevFollow) => !prevFollow);
-    toast.warning('팔로우 취소 했어요 !', { position: 'top-center', autoClose: 2000, hideProgressBar: true });
-  };
+  // 팔로우 토스트알람 - 피드 리스트에서 팔로우 기능을 사용하지 않아서 주석 처리함
+  // const followHandler = () => {
+  //   setFollow((prevFollow) => !prevFollow);
+  //   toast.info('팔로우 했어요 !', { position: 'top-center', autoClose: 2000, hideProgressBar: true });
+  // };
+
+  // 언팔로우 토스트알람 - 피드 리스트에서 팔로우 기능을 사용하지 않아서 주석 처리함
+  // const unFollowHandler = () => {
+  //   setFollow((prevFollow) => !prevFollow);
+  //   toast.warning('팔로우 취소 했어요 !', { position: 'top-center', autoClose: 2000, hideProgressBar: true });
+  // };
 
   // 좋아요 api
   const likeHandler = () => {
@@ -145,7 +145,7 @@ export default function NewsFeed({ feed }) {
 
         <div className="p-4">
           {/* <h1 className="mb-6 font-bold text-xl">{feed.content}</h1> */}
-          <Typography className="m-1 font-bold text-xl" gutterBottom component="h1" style={{ whiteSpace: 'pre-line' }}>
+          <Typography className="m-1 font-bold text-xl" gutterBottom component="h1" style={{ whiteSpace: 'pre-line', overflowWrap: "break-word" }}>
             {feed.content}
           </Typography>
         </div>

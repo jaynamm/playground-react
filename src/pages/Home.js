@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import axios from '../components/Token/Interceptor';
 import '../styles/Home.css';
-import { redirect, useHistory, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import NewsFeed from '../components/Feed/NewsFeed';
 import Header from '../components/Base/Header';
 import { Link } from 'react-router-dom';
@@ -74,7 +74,6 @@ const Home = () => {
         })
         .catch((err) => {
           console.log(err);
-          setIsLoading(false);
         });
   }, []);
 

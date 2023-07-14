@@ -1,5 +1,4 @@
 import React from 'react';
-import Moment from 'react-moment';
 import { useState, useEffect, useRef } from 'react';
 import axios from '../Token/Interceptor';
 import Swal from 'sweetalert2';

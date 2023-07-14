@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import '../../styles/Main.css';
 import { Link } from 'react-router-dom';
-import zIndex from '@mui/material/styles/zIndex';
-// import { redirect } from 'react-router-dom';
-// import axios from '../Token/Interceptor';
 import base64 from 'base-64';
 import Avvvatars from 'avvvatars-react';
 
@@ -11,7 +8,6 @@ const action = () => {
   localStorage.removeItem('accessToken');
   localStorage.removeItem('refreshToken');
 };
-//로그아웃 기능
 
 export default function Nav() {
   const [userId, setUserId] = useState("");
@@ -50,23 +46,6 @@ export default function Nav() {
 
         <div className="icon">
           <ul className="topTitle">
-            <li>
-              {/* <button>
-                <i className="fa-solid fa-magnifying-glass"></i>
-              </button>
-            </li>
-            <li>
-              <button>
-                <i className="fa-regular fa-comment-dots"></i>
-              </button>
-            </li>
-            <li>
-              <button>
-                <i class="fa-regular fa-bell"></i>
-              </button> */}
-            </li>
-            {/* <li><button><i class="fa-solid fa-user"></i></button></li> */}
-
             <div className="dropdown">
               <button data-bs-toggle="dropdown" aria-expanded="false">
                 <li>
@@ -83,11 +62,6 @@ export default function Nav() {
                 <li style={{ marginBottom: 10}}>
                     <Link to="/" className="dropdown-item" onClick={action}> 로그아웃 </Link>
                 </li>
-                {/* <li>
-                  <a className="dropdown-item" href="#">
-                    고객센터
-                  </a>
-                </li> */}
               </ul>
             </div>
           </ul>
