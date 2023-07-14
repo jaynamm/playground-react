@@ -10,7 +10,8 @@ import '../../styles/Notice/NoticeModify.css';
 
 export default function QnaModify() {
   const location = useLocation();
-  const questionViewData = location.state;
+  const questionViewData = location.state.questionViewData;
+  const questionId = location.state.id;
   console.log(questionViewData);
   const [memberId, setMemberId] = useState(questionViewData.id);
   const [title, setTitle] = useState(questionViewData.title);
@@ -40,7 +41,12 @@ export default function QnaModify() {
         const responseData = response.data.question;
 
         alert('글을 수정했습니다.');
-        navigate('/qna', { state: responseData });
+        navigate(`/qna/view/${questionId}`, { 
+          state: {
+            responseData: responseData,
+            id: questionId 
+          }
+        });
       })
       .catch((error) => {
         console.log(error);
@@ -89,8 +95,8 @@ export default function QnaModify() {
           <Button variant="contained" size="medium" color="inherit" onClick={() => modifyCompleteHandler()}>
             수정하기
           </Button>
-          <Button variant="contained" size="medium" color="error" sx={{ marginLeft: '10px' }}>
-            <Link to="/qna">취소하기</Link>
+          <Button variant="contained" size="medium" color="error" sx={{ marginLeft: '10px' }} onClick={() => {navigate(`/qna/view/${questionId}`, {state: {id: questionId}})}}>
+            취소하기
           </Button>
         </div>
       </div>
