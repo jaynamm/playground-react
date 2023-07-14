@@ -35,7 +35,7 @@ header > nav > div.bar {
 }
 
 .logo::after {
-  content: 'Ground。';
+  content: 'GROUND。';
   font-size: 24px;
   color: #8a7474;
   text-decoration: none;

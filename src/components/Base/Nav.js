@@ -28,7 +28,7 @@ export default function Nav() {
       <nav>
         <div className="bar">
           <Link to="/home" style={{ textDecoration: 'none' }}>
-            <div className="logo">Play</div>
+            <div className="logo">PLAY</div>
           </Link>
           <div className="menu">
             <ul className="topTitle">

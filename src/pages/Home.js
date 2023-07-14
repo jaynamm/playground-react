@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import axios from '../components/Token/Interceptor';
 import '../styles/Home.css';
-import { redirect, useHistory } from 'react-router-dom';
+import { redirect, useHistory, useNavigate } from 'react-router-dom';
 import NewsFeed from '../components/Feed/NewsFeed';
 import Header from '../components/Base/Header';
 import { Link } from 'react-router-dom';
@@ -38,6 +38,8 @@ const Hello = () => {
 };
 
 const Home = () => {
+  const navigate = useNavigate();
+  
   const [feeds, setFeeds] = useState([]);
   const [hotFeeds, setHotFeeds] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -64,8 +66,10 @@ const Home = () => {
         console.log(err);
         setIsLoading(false);
       });
+
     axios.get('/api/feed/hotfeed')
         .then((res) => {
+          console.log(res.data);
           setHotFeeds(res.data);
         })
         .catch((err) => {
@@ -194,7 +198,7 @@ const Home = () => {
               {/*상단 탭*/}
               <div>
                 <div className="pt-4 px-4">
-                  <h5 className="mb-0 font-bold">주간 인기 TOP 10</h5>
+                  <h5 className="mb-0 font-bold">주간 인기 TOP 5</h5>
                   <p className="text-sm text-slate-700 mt-2">지난주 인기 있던 게시물이에요!</p>
                 </div>
                 {/*상단 탭*/}
@@ -203,7 +207,7 @@ const Home = () => {
                 <div className="pb-4">
                   {/* 박스디자인 */}
                   { hotFeeds.map((hotFeeds, index) =>
-                  <button className="hotFeeds">
+                  <button className="hotFeeds" onClick={() => {navigate(`/feed/view/${hotFeeds.id}`, {state: {id: hotFeeds.id}})}} >
                     <div className="md:hover:bg-slate-50 h-20 px-4 flex items-center gap-3">
                       <div className="flex-none w-[24px] flex justify-center">
                         <span className="leading-none font-bold text-xl text-cyan-600">{index + 1}</span>
