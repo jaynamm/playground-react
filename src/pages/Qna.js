@@ -68,7 +68,7 @@ const Qna = () => {
               <TableRow key={item.id} onClick={() => onClickQnaViewHandler(item.id)} className="notice-table-row">
                 <TableCell className="notice-id">{item.id}</TableCell>
                 <TableCell>{item.title}</TableCell>
-                <TableCell>{item.member.name}</TableCell>
+                <TableCell>{item.member.nickname}</TableCell>
                 {/* <td>{item.viewCount}</td> */}
                 <TableCell className="notice-createdDate">
                   <Moment format="YYYY년 MM월 DD일 HH:mm">{item.createdDate}</Moment>

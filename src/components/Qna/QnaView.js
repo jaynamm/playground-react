@@ -5,21 +5,13 @@ import { useNavigate } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import SpeedDial from '@mui/material/SpeedDial';
-import SpeedDialIcon from '@mui/material/SpeedDialIcon';
-import SpeedDialAction from '@mui/material/SpeedDialAction';
-import CreateIcon from '@mui/icons-material/Create';
-import DeleteIcon from '@mui/icons-material/Delete';
-import Box from '@mui/material/Box';
-
-// import Comments from './Comments';
 import Moment from 'react-moment';
 import Header from '../../components/Base/Header';
-// import QnaCommentModify from './QnaCommentModify';
 import '../../styles/Notice/NoticeView.css';
-import { comment } from 'postcss';
+import { QnaComment } from './QnaComment';
+import Avvvatars from 'avvvatars-react';
+import { Box, Typography } from '@mui/material';
 
 export const QnaView = () => {
   const location = useLocation();
@@ -30,32 +22,8 @@ export const QnaView = () => {
   const [questionId, setQuestionId] = useState('');
   const [editButton, setEditButton] = useState();
   const [qnaComment, setQnaComment] = useState([]);
-  const [visible, setVisible] = useState(false);
 
-  const QnaCommentModify = () => {
-    const [content, setContent] = useState();
-    const [getId, setGetId] = useState();
-
-    return (
-      <div>
-        <TextField
-          sx={{ width: '90%' }}
-          label="내용"
-          multiline
-          rows={1}
-          onChange={(e) => setContent(e.target.value)}
-        ></TextField>
-        <Button
-          variant="contained"
-          size="small"
-          // onClick={qnaCommentModifyHandler}
-          sx={{ marginLeft: '15px', marginTop: '15px' }}
-        >
-          댓글 수정
-        </Button>
-      </div>
-    );
-  };
+  const lastFeedRef = useRef(null);
 
   useEffect(() => {
     axios
@@ -98,7 +66,12 @@ export const QnaView = () => {
   };
 
   const qnaModifyHandler = () => {
-    navigate('/qna/qnaModify', { state: questionViewData });
+    navigate('/qna/qnaModify', {
+      state: {
+        questionViewData: questionViewData,
+        id: questionId,
+      },
+    });
   };
 
   const onClickCreateAnswer = () => {
@@ -129,72 +102,59 @@ export const QnaView = () => {
       });
   };
 
-  const qnaCommentDeleteHandler = (id) => {
-    const data = {
-      id: id,
-    };
-
-    axios
-      .post('/api/qna/answer/delete', data, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      .then((response) => {
-        console.log(response.data);
-        // const responseData = response.data;
-        alert('댓글이 삭제되었습니다.');
-      })
-      .then((result) => {
-        console.log(result);
-      })
-      .catch((error) => {
-        console.log(error);
-        alert('댓글을 삭제하는데 실패하였습니다.');
-      });
-  };
-  const actions = [
-    {
-      icon: (
-        <CreateIcon
-          onClick={() => {
-            setVisible(!visible);
-          }}
-        />
-      ),
-      name: '수정하기',
-    },
-    { icon: <DeleteIcon onClick={() => qnaCommentDeleteHandler()} />, name: '삭제하기' },
-  ];
   return (
     <div>
       <Header />
       {questionViewData && (
         <div align="center" className="notice-view-board">
-          <div className="notice-title">Q n A</div>
+          <div className="notice-title">질문 상세보기</div>
           <table className="notice-view-table">
             <tbody>
               <tr className="notice-view-title">
                 <td>{questionViewData.title}</td>
               </tr>
               <tr>
-                <div className="view-member-id">
-                  <td className="view-member-id2">작성자</td>
-                  <td>{questionViewData.member.name}</td>
+                <div className="flex view-member-id">
+                  <td className="view-member-id2"> 작성자 </td>
+                  {/* <td style={{ textAlign: "center", align: "center", paddingInline: "5px" }} ><Avvvatars value={questionViewData.member.userid} style="shape" size={20}/></td> */}
+                  <td style={{ paddingLeft: '3px' }}> {questionViewData.member.nickname} </td>
                 </div>
                 <tr className="view-created-date">
                   <td className="view-created-date2">작성일시</td>
                   <td className="view-created-date3">
-                    <Moment format="YYYY년 MM월 DD일 HH:mm">{questionViewData.createdDate}</Moment>
+                    <Moment format="YYYY년 MM월 DD일 HH시 mm분">{questionViewData.createdDate}</Moment>
                   </td>
                 </tr>
               </tr>
               <tr className="view-content">
-                <td>{questionViewData.content}</td>
+                <td>
+                  <Typography
+                    className="m-2"
+                    gutterBottom
+                    component="div"
+                    variant="body1"
+                    style={{ whiteSpace: 'pre-line' }}
+                  >
+                    {questionViewData.content}
+                  </Typography>
+                </td>
               </tr>
             </tbody>
           </table>
-          <div className="view-buttons">
+          <div className="flex justify-between" style={{ width: '90%' }}>
+            <div>
+              <Button
+                variant="contained"
+                size="medium"
+                color="inherit"
+                onClick={() => {
+                  navigate('/qna');
+                }}
+              >
+                {' '}
+                목록보기{' '}
+              </Button>
+            </div>
             {editButton && (
               <div>
                 <Button
@@ -202,129 +162,72 @@ export const QnaView = () => {
                   size="medium"
                   color="inherit"
                   onClick={qnaModifyHandler}
-                  sx={{ marginRight: '15px' }}
+                  sx={{ marginRight: '10px' }}
                 >
-                  수정하기
+                  {' '}
+                  수정하기{' '}
                 </Button>
-
-                <Button
-                  variant="contained"
-                  size="medium"
-                  color="error"
-                  onClick={qnaDeleteHandler}
-                  sx={{ marginLeft: '10px' }}
-                >
-                  삭제하기
+                <Button variant="contained" size="medium" color="error" onClick={qnaDeleteHandler}>
+                  {' '}
+                  삭제하기{' '}
                 </Button>
               </div>
             )}
           </div>
-          <Button
-            variant="contained"
-            size="medium"
-            color="inherit"
-            onClick={() => {
-              navigate('/qna');
-            }}
-          >
-            목록보기
-          </Button>
         </div>
       )}
+
       <div>
         <Paper
           sx={{
-            p: 2,
+            p: 4,
             margin: 'auto',
             maxWidth: '75%',
             flexGrow: 1,
             backgroundColor: (theme) => (theme.palette.mode === 'dark' ? '#1A2027' : '#fff'),
           }}
         >
-          <Grid container spacing={4}>
-            <Grid item xs={30} sm container>
-              <Grid item xs container direction="column" spacing={4}>
-                <Grid item xs>
-                  <TextField
-                    sx={{ width: '90%' }}
-                    label="내용"
-                    multiline
-                    rows={1}
-                    value={content}
-                    onChange={(e) => setContent(e.target.value)}
-                  />
-                </Grid>
-              </Grid>
-              <Grid item>
-                <Grid item>
-                  <Button
-                    variant="contained"
-                    size="large"
-                    color="success"
-                    onClick={onClickCreateAnswer}
-                    sx={{ marginLeft: '15px', marginTop: '5px' }}
-                  >
-                    댓글 작성
-                  </Button>
-                </Grid>
+          <Grid item xs={45} sm container>
+            <Grid item container direction="column" spacing={4}>
+              <Grid item direction="column" sx={{ textAlign: 'right' }}>
+                <TextField
+                  label="답변을 남겨주세요"
+                  multiline
+                  fullWidth
+                  maxWidth="100%"
+                  value={content}
+                  onChange={(e) => setContent(e.target.value)}
+                />
+                <Button
+                  variant="contained"
+                  size="medium"
+                  color="success"
+                  onClick={onClickCreateAnswer}
+                  sx={{ marginTop: '5px' }}
+                >
+                  작성
+                </Button>
               </Grid>
             </Grid>
           </Grid>
         </Paper>
-
         <br></br>
-        {qnaComment.map((comment) => (
-          <Paper
-            sx={{
-              p: 2,
-              margin: 'auto',
-              marginBottom: '1%',
-              maxWidth: '75%',
-              flexGrow: 1,
-              backgroundColor: (theme) => (theme.palette.mode === 'dark' ? '#1A2027' : '#fff'),
-            }}
-          >
-            <Grid container spacing={4}>
-              <Grid item xs={30} sm container>
-                <Grid item xs container direction="column" spacing={4}>
-                  <Grid item xs>
-                    <div>
-                      <Typography gutterBottom variant="subtitle1" component="div">
-                        {comment.userId}
-                      </Typography>
-                      <Typography gutterBottom variant="subtitle1" component="div">
-                        {comment.content}
-                      </Typography>
-                    </div>
-                  </Grid>
-                </Grid>
-                <Grid item>
-                  <Grid item>
-                    <Box sx={{ height: 100, transform: 'translateZ(0px)', flexGrow: 1 }}>
-                      <SpeedDial
-                        ariaLabel="SpeedDial basic example"
-                        sx={{ position: 'absolute', bottom: 5, right: -20 }}
-                        icon={<SpeedDialIcon />}
-                      >
-                        {actions.map((action) => (
-                          <SpeedDialAction
-                            key={action.name}
-                            icon={action.icon}
-                            tooltipTitle={action.name}
-
-                            // onClick={action.onClick}
-                          />
-                        ))}
-                      </SpeedDial>
-                    </Box>
-                  </Grid>
-                </Grid>
-              </Grid>
-            </Grid>
-
-            {visible && <QnaCommentModify />}
-          </Paper>
-        ))}
+        <br></br>
+        <Box sx={{ p: 1, margin: 'auto', marginBottom: '10px', maxWidth: '75%', flexGrow: 1, textAlign: 'center' }}>
+          <b>총 {qnaComment.length} 개의 답변이 있습니다.</b>
+          <hr style={{ border: 'none', borderTop: '1px solid black', margin: '20px' }} />
+        </Box>
+        <br></br>
+        {qnaComment.map((comment, index) => {
+          if (qnaComment.length > 0) {
+            return (
+              <div key={comment.id}>
+                <QnaComment comment={comment} />
+              </div>
+            );
+          }
+        })}
+        ;
       </div>
     </div>
   );

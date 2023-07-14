@@ -8,6 +8,7 @@ import { confetti } from '../../App';
 import axios from '../Token/Interceptor';
 import Avvvatars from 'avvvatars-react';
 import base64 from 'base-64';
+import { Typography } from '@mui/material';
 
 export default function NewsFeed({ feed }) {
   const [userId, setUserId] = useState('');
@@ -95,16 +96,27 @@ export default function NewsFeed({ feed }) {
   return (
     <>
       <div className="bg-white border border-solid border-slate-300">
-        <div className="flex justify-between items-center p-4">
-          <div className="flex gap-3 items-center">
+        <div className="flex justify-between items-center p-4 pb-0">
+          <div className="flex gap-3 items-center pt-1">
             <Avvvatars value={feed.userId} style="shape" size={40} />
 
             <div className="flex-1">
-              <p className="text-sm text-slate-900 font-bold">{feed.nickname}</p>
+              <p
+                className="text-sm text-slate-900 font-bold"
+                onClick={() => {
+                  if (feed.userId !== userId) {
+                    navigate(`/userpage/${feed.userId}`, { state: { id: feed.userId } });
+                  } else {
+                    navigate(`/mypage`, { state: { id: feed.userId } });
+                  }
+                }}
+              >
+                {feed.nickname}
+              </p>
             </div>
           </div>
 
-          <div className="flex px-1 items-center" style={{ marginLeft: '15px', fontSize: '12px' }}>
+          <div className="flex px-1" style={{ marginLeft: '15px', fontSize: '12px' }}>
             {calcDatetime}
           </div>
 
@@ -132,11 +144,10 @@ export default function NewsFeed({ feed }) {
         </div>
 
         <div className="p-4">
-          <h1 className="mb-6 font-bold text-xl">{feed.content}</h1>
-        </div>
-
-        <div className=" mx-4 mb-2 border-slate-500 py-3 flex justify-between">
-          <div className="flex-grow"></div> {/* 빈 공간을 채우기 위한 추가 요소 */}
+          {/* <h1 className="mb-6 font-bold text-xl">{feed.content}</h1> */}
+          <Typography className="m-1 font-bold text-xl" gutterBottom component="h1" style={{ whiteSpace: 'pre-line' }}>
+            {feed.content}
+          </Typography>
         </div>
 
         <div className="">

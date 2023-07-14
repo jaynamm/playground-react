@@ -261,7 +261,13 @@ export default function View() {
                 {/* <img src="/user.png" alt="User profile picture" className="w-8 h-8" /> */}
                 <Avvvatars value={feed.userId} style="shape" size={40}/>
                 <div className="flex-1">
-                  <p className="text-sm text-slate-900">{feed.nickname}</p>
+                  <p className="text-sm text-slate-900 text-bold" onClick={() => {
+                       if (feed.userId !== userId) {
+                        navigate(`/userpage/${feed.userId}`, {state: {id: feed.userId}})
+                      } else {
+                        navigate(`/mypage`, {state: {id: feed.userId}})
+                      }
+                    }}>{feed.nickname}</p>
                   {/* <p className="text-xs text-slate-700">{feed.userId}</p> */}
                 </div>
               </div>

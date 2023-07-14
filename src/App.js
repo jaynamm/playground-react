@@ -62,6 +62,7 @@ function App() {
           <Route path="/userpage" element={<UserPage />} />
           <Route path="/mypage/modify" element={<MyPageModify />} />
           <Route path="/mypage/myskill" element={<MySkill />} />
+          <Route path="/userpage/:id" element={<UserPage />} />
 
           <Route path="/createfeed" element={<Create />} />
           <Route path="/feed/view/:id" element={<View />} />
