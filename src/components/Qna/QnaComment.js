@@ -1,10 +1,9 @@
-import { Button, Grid, Paper, TextField, Typography } from "@mui/material";
-import Avvvatars from "avvvatars-react";
-import React, { useState } from "react";
+import { Button, Grid, Paper, TextField, Typography } from '@mui/material';
+import Avvvatars from 'avvvatars-react';
+import React, { useState } from 'react';
 import axios from '../Token/Interceptor';
 
 export const QnaComment = ({ comment }) => {
-
   const detailDate = (a) => {
     const milliSeconds = new Date() - a;
     const seconds = milliSeconds / 1000;
@@ -33,20 +32,20 @@ export const QnaComment = ({ comment }) => {
     setIsVisible(!isVisible);
   };
 
-
   // 댓글 삭제
   const onclickDeleteHandler = (contentId) => {
     axios
       .post(
-        '/api/qna/answer/delete', 
+        '/api/qna/answer/delete',
         {
           id: contentId,
-        }, 
+        },
         {
           headers: {
             'Content-Type': 'application/json',
           },
-      })
+        }
+      )
       .then((response) => {
         console.log(response.data);
         alert('댓글이 삭제되었습니다.');
@@ -60,25 +59,24 @@ export const QnaComment = ({ comment }) => {
       })
       .finally(() => {
         window.location.reload();
-      })
-      ;
+      });
   };
-
 
   // 댓글 내용 수정
   const onModifySaveHandler = () => {
     axios
       .post(
-        '/api/qna/answer/modify', 
+        '/api/qna/answer/modify',
         {
-          "id": comment.id,
-          "content": commentContent
-        }, 
+          id: comment.id,
+          content: commentContent,
+        },
         {
           headers: {
             'Content-Type': 'application/json',
           },
-      })
+        }
+      )
       .then((response) => {
         console.log(response.data);
         alert('댓글이 수정되었습니다.');
@@ -92,51 +90,121 @@ export const QnaComment = ({ comment }) => {
       })
       .finally(() => {
         window.location.reload();
-      })
-      ;
+      });
   };
 
   return (
     <div>
-      <Paper sx={{ p: 1, margin: 'auto', marginBottom: '1%', maxWidth: '75%', flexGrow: 1, backgroundColor: (theme) => (theme.palette.mode === 'dark' ? '#1A2027' : '#fff'),}} >
+      <Paper
+        sx={{
+          p: 1,
+          margin: 'auto',
+          marginBottom: '1%',
+          maxWidth: '75%',
+          flexGrow: 1,
+          backgroundColor: (theme) => (theme.palette.mode === 'dark' ? '#1A2027' : '#fff'),
+        }}
+      >
         <Grid container spacing={4}>
-          <Grid item xs={30} sm container> 
+          <Grid item xs={30} sm container>
             <Grid item xs className="flex justify-between">
-              <div className="flex mt-2" style={{ textAlign: "center", marginInline: "10px" }}>
-                <Typography className="m-2" gutterBottom component="div"><Avvvatars value={comment.userId} style="shape" size={30}/> </Typography>
-                <Typography className="m-2" gutterBottom component="div" style={{ fontSize: "14px", alignSelf: "center" }}> {comment.nickname} </Typography>
-                <Typography className="m-3" gutterBottom component="div" style={{ fontSize: "12px" }}> {calcCommentDatetime} </Typography>
+              <div className="flex mt-2" style={{ textAlign: 'center', marginInline: '10px' }}>
+                <Typography className="m-2" gutterBottom component="div">
+                  <Avvvatars value={comment.userId} style="shape" size={30} />{' '}
+                </Typography>
+                <Typography
+                  className="m-2"
+                  gutterBottom
+                  component="div"
+                  style={{ fontSize: '14px', alignSelf: 'center' }}
+                >
+                  {' '}
+                  {comment.nickname}{' '}
+                </Typography>
+                <Typography className="m-3" gutterBottom component="div" style={{ fontSize: '12px' }}>
+                  {' '}
+                  {calcCommentDatetime}{' '}
+                </Typography>
               </div>
 
-              { isVisible ? ( 
-                <div className="flex" style={{ marginBlock: "10px" }}>
-                  <Button size="small" color="primary" variant="outlined" onClick={() => {onModifySaveHandler()}} sx={{ mr: "5px" }} > 완료 </Button>
-                  <Button size="small" color="error" variant="outlined" onClick={() => setIsVisible(false)} sx={{ mr: "5px" }} > 취소 </Button>
+              {isVisible ? (
+                <div className="flex" style={{ marginBlock: '10px' }}>
+                  <Button
+                    size="small"
+                    color="primary"
+                    variant="outlined"
+                    onClick={() => {
+                      onModifySaveHandler();
+                    }}
+                    sx={{ mr: '5px' }}
+                  >
+                    {' '}
+                    완료{' '}
+                  </Button>
+                  <Button
+                    size="small"
+                    color="error"
+                    variant="outlined"
+                    onClick={() => setIsVisible(false)}
+                    sx={{ mr: '5px' }}
+                  >
+                    {' '}
+                    취소{' '}
+                  </Button>
+                </div>
+              ) : comment.editable ? (
+                <div className="flex" style={{ marginBlock: '10px' }}>
+                  <Button
+                    size="small"
+                    color="primary"
+                    variant="outlined"
+                    onClick={() => onclickModifyHandler()}
+                    sx={{ mr: '5px' }}
+                  >
+                    {' '}
+                    수정{' '}
+                  </Button>
+                  <Button
+                    size="small"
+                    color="error"
+                    variant="outlined"
+                    onClick={() => onclickDeleteHandler(comment.id)}
+                    sx={{ mr: '5px' }}
+                  >
+                    {' '}
+                    삭제{' '}
+                  </Button>
                 </div>
               ) : (
-                comment.editable ? (
-                  <div className="flex" style={{ marginBlock: "10px" }}>
-                    <Button size="small" color="primary" variant="outlined" onClick={() => onclickModifyHandler()} sx={{ mr: "5px" }} > 수정 </Button>
-                    <Button size="small" color="error" variant="outlined" onClick={() => onclickDeleteHandler(comment.id)} sx={{ mr: "5px" }} > 삭제 </Button>
-                  </div>
-                ) : (
-                  <></>
-                )
+                <></>
               )}
             </Grid>
           </Grid>
         </Grid>
-        <Grid style={{ marginInline: "10px", marginTop: "5px" }}>
-          { isVisible ? (
+        <Grid style={{ marginInline: '10px', marginTop: '5px' }}>
+          {isVisible ? (
             <div className="mb-4 pr-5 pl-11">
               <div className="w-full">
-                <TextField multiline fullWidth defaultValue={commentContent} onChange={(e) => {setCommentContent(e.target.value)}}/>
+                <TextField
+                  multiline
+                  fullWidth
+                  defaultValue={commentContent}
+                  onChange={(e) => {
+                    setCommentContent(e.target.value);
+                  }}
+                />
               </div>
             </div>
           ) : (
             <div className="mb-4 pr-5 pl-11">
-              <Typography className="m-2" gutterBottom component="div" variant="body1" style={{ whiteSpace: 'pre-line' }}> 
-                {comment.content} 
+              <Typography
+                className="m-2"
+                gutterBottom
+                component="div"
+                variant="body1"
+                style={{ whiteSpace: 'pre-line' }}
+              >
+                {comment.content}
               </Typography>
             </div>
           )}

@@ -10,11 +10,10 @@ import Avvvatars from 'avvvatars-react';
 import base64 from 'base-64';
 import { Typography } from '@mui/material';
 
-
 export default function NewsFeed({ feed }) {
-  const [userId, setUserId] = useState("");
-  const jwtToken = localStorage.getItem("accessToken"); // localStorage 에 있는 토큰 가져오기
-  let payload = jwtToken.substring(jwtToken.indexOf('.')+1,jwtToken.lastIndexOf('.'));  // payload 추출하기
+  const [userId, setUserId] = useState('');
+  const jwtToken = localStorage.getItem('accessToken'); // localStorage 에 있는 토큰 가져오기
+  let payload = jwtToken.substring(jwtToken.indexOf('.') + 1, jwtToken.lastIndexOf('.')); // payload 추출하기
   let decodeMemberInfo = JSON.parse(base64.decode(payload)); // 디코딩 후 JSON 타입으로 파싱
 
   useEffect(() => {
@@ -75,22 +74,22 @@ export default function NewsFeed({ feed }) {
   };
 
   const detailDate = (a) => {
-		const milliSeconds = new Date() - a;
-		const seconds = milliSeconds / 1000;
-		if (seconds < 60) return `방금 전`;
-		const minutes = seconds / 60;
-		if (minutes < 60) return `${Math.floor(minutes)}분 전`;
-		const hours = minutes / 60;
-		if (hours < 24) return `${Math.floor(hours)}시간 전`;
-		const days = hours / 24;
-		if (days < 7) return `${Math.floor(days)}일 전`;
-		const weeks = days / 7;
-		if (weeks < 5) return `${Math.floor(weeks)}주 전`;
-		const months = days / 30;
-		if (months < 12) return `${Math.floor(months)}개월 전`;
-		const years = days / 365;
-		return `${Math.floor(years)}년 전`;
-	};
+    const milliSeconds = new Date() - a;
+    const seconds = milliSeconds / 1000;
+    if (seconds < 60) return `방금 전`;
+    const minutes = seconds / 60;
+    if (minutes < 60) return `${Math.floor(minutes)}분 전`;
+    const hours = minutes / 60;
+    if (hours < 24) return `${Math.floor(hours)}시간 전`;
+    const days = hours / 24;
+    if (days < 7) return `${Math.floor(days)}일 전`;
+    const weeks = days / 7;
+    if (weeks < 5) return `${Math.floor(weeks)}주 전`;
+    const months = days / 30;
+    if (months < 12) return `${Math.floor(months)}개월 전`;
+    const years = days / 365;
+    return `${Math.floor(years)}년 전`;
+  };
 
   const calcDatetime = detailDate(new Date(feed.createdDate));
 
@@ -99,21 +98,25 @@ export default function NewsFeed({ feed }) {
       <div className="bg-white border border-solid border-slate-300">
         <div className="flex justify-between items-center p-4 pb-0">
           <div className="flex gap-3 items-center pt-1">
-            <Avvvatars value={feed.userId} style="shape" size={40}/>
-            
+            <Avvvatars value={feed.userId} style="shape" size={40} />
+
             <div className="flex-1">
-              <p className="text-sm text-slate-900 font-bold" onClick={() => {
+              <p
+                className="text-sm text-slate-900 font-bold"
+                onClick={() => {
                   if (feed.userId !== userId) {
-                    navigate(`/userpage/${feed.userId}`, {state: {id: feed.userId}})
+                    navigate(`/userpage/${feed.userId}`, { state: { id: feed.userId } });
                   } else {
-                    navigate(`/mypage`, {state: {id: feed.userId}})
+                    navigate(`/mypage`, { state: { id: feed.userId } });
                   }
-                }}>{feed.nickname}</p>
+                }}
+              >
+                {feed.nickname}
+              </p>
             </div>
-            
           </div>
 
-          <div className="flex px-1" style={{ marginLeft: "15px", fontSize: "12px" }}>
+          <div className="flex px-1" style={{ marginLeft: '15px', fontSize: '12px' }}>
             {calcDatetime}
           </div>
 
@@ -138,26 +141,29 @@ export default function NewsFeed({ feed }) {
               </div>
             )
           )} */}
-          
         </div>
 
         <div className="p-4">
           {/* <h1 className="mb-6 font-bold text-xl">{feed.content}</h1> */}
-          <Typography className="m-1 font-bold text-xl" gutterBottom component="h1" style={{ whiteSpace: 'pre-line' }}> 
+          <Typography className="m-1 font-bold text-xl" gutterBottom component="h1" style={{ whiteSpace: 'pre-line' }}>
             {feed.content}
           </Typography>
         </div>
 
         <div className="">
           <div className="flex px-1">
-            <div className="flex px-1 items-center" style={{ marginLeft: "15px", fontSize: "12px" }}>
-              <p className="text-xs text-slate-500 false">좋아요 <b>{likeCount}</b></p>
+            <div className="flex px-1 items-center" style={{ marginLeft: '15px', fontSize: '12px' }}>
+              <p className="text-xs text-slate-500 false">
+                좋아요 <b>{likeCount}</b>
+              </p>
             </div>
-            <div className="flex px-1 items-center" style={{ marginLeft: "15px", fontSize: "12px" }}>
-              <p className="text-xs text-slate-500 false">댓글 <b>{feed.commentCount}</b></p>
+            <div className="flex px-1 items-center" style={{ marginLeft: '15px', fontSize: '12px' }}>
+              <p className="text-xs text-slate-500 false">
+                댓글 <b>{feed.commentCount}</b>
+              </p>
             </div>
-            <div className="flex px-1 items-center" style={{ marginLeft: "15px", fontSize: "12px" }}>
-              <p className="text-xs text-slate-500">조회 {feed.viewCount} </p >
+            <div className="flex px-1 items-center" style={{ marginLeft: '15px', fontSize: '12px' }}>
+              <p className="text-xs text-slate-500">조회 {feed.viewCount} </p>
             </div>
             <div className="flex-grow"></div> {/* 빈 공간을 채우기 위한 추가 요소 */}
             <div className="flex">
@@ -168,12 +174,8 @@ export default function NewsFeed({ feed }) {
                     <p className="font-bold text-xs text-slate-500">좋아요 취소</p>
                   </button>
                 ) : (
-                  <button
-                    type="button"
-                    className="flex gap-1 p-3 focus:outline-none false"
-                    onClick={confettiClick}
-                  >
-                    <i className="fa-regular fa-thumbs-up" style={{ fontSize: "15px"}}></i>
+                  <button type="button" className="flex gap-1 p-3 focus:outline-none false" onClick={confettiClick}>
+                    <i className="fa-regular fa-thumbs-up" style={{ fontSize: '15px' }}></i>
                     <p className="font-bold text-xs text-slate-500">좋아요</p>
                   </button>
                 )}
@@ -185,7 +187,7 @@ export default function NewsFeed({ feed }) {
             </div>
             <div className="py-3 flex gap-3 pr-6">
               <div id="feedComment" className="flex">
-                <button className="flex gap-1" style={{ fontSize: "15px"}} onClick={() => feedViewHandler(feed.id)}>
+                <button className="flex gap-1" style={{ fontSize: '15px' }} onClick={() => feedViewHandler(feed.id)}>
                   <i class="fa-regular fa-message"></i>
                   <p className="font-bold text-xs text-slate-500">댓글</p>
                 </button>

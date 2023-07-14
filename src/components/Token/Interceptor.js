@@ -10,7 +10,7 @@ axios.interceptors.request.use(
   }
 );
 axios.interceptors.response.use(
-  function (response) {  
+  function (response) {
     return response;
   },
   async (error) => {
@@ -23,12 +23,12 @@ axios.interceptors.response.use(
         },
       });
       console.log(data);
-        //액세스 토큰을 localStorege에 저장
-        localStorage.setItem('accessToken', data);
-        // 새 액세스 토큰을 header에 저장
-        config.headers['Authorization'] = data;
-        // 재요청
-        return await axios(config);
+      //액세스 토큰을 localStorege에 저장
+      localStorage.setItem('accessToken', data);
+      // 새 액세스 토큰을 header에 저장
+      config.headers['Authorization'] = data;
+      // 재요청
+      return await axios(config);
     }
     if (response.status === 406) {
       alert('다시 로그인 해주세요.');

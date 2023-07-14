@@ -59,6 +59,7 @@ function App() {
           <Route path="/recommend/result" element={<RecommendResult />} />
 
           <Route path="/mypage" element={<MyPage />} />
+          <Route path="/userpage" element={<UserPage />} />
           <Route path="/mypage/modify" element={<MyPageModify />} />
           <Route path="/mypage/myskill" element={<MySkill />} />
           <Route path="/userpage/:id" element={<UserPage />} />

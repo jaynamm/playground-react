@@ -12,6 +12,8 @@ import '../../styles/Notice/NoticeView.css';
 import { QnaComment } from './QnaComment';
 import Avvvatars from 'avvvatars-react';
 import { Box, Typography } from '@mui/material';
+import Stack from "@mui/material/Stack";
+import Pagination from "@mui/material/Pagination";
 
 export const QnaView = () => {
   const location = useLocation();
@@ -22,6 +24,8 @@ export const QnaView = () => {
   const [questionId, setQuestionId] = useState('');
   const [editButton, setEditButton] = useState();
   const [qnaComment, setQnaComment] = useState([]);
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalElements, setTotalElements] = useState(0);
 
   const lastFeedRef = useRef(null);
 
@@ -34,6 +38,8 @@ export const QnaView = () => {
         setQuestionId(response.data.data.question.id);
         setEditButton(!response.data.responseMessage.includes('QUESTION_WRITER_ACCESS_FAILED'));
         setQnaComment(response.data.data.answers.content);
+        setTotalPages(response.data.data.answers.totalPages);
+        setTotalElements(response.data.data.answers.totalElements);
       })
       .catch((error) => {
         console.log(error);
@@ -66,12 +72,12 @@ export const QnaView = () => {
   };
 
   const qnaModifyHandler = () => {
-    navigate('/qna/qnaModify', { 
+    navigate('/qna/qnaModify', {
       state: {
-        questionViewData: questionViewData, 
-        id: questionId 
-      }
-    })
+        questionViewData: questionViewData,
+        id: questionId,
+      },
+    });
   };
 
   const onClickCreateAnswer = () => {
@@ -102,6 +108,16 @@ export const QnaView = () => {
       });
   };
 
+
+  const pageButtonHandler = async (event, page) => {
+    const answerPage = await axios.post(
+        '/api/qna/answer/list',
+        { id: getId },
+        { params: { page: page - 1 }}
+    );
+    setQnaComment(answerPage.data.content);
+  };
+
   return (
     <div>
       <Header />
@@ -114,10 +130,10 @@ export const QnaView = () => {
                 <td>{questionViewData.title}</td>
               </tr>
               <tr>
-                <div className="flex view-member-id" >
-                  <td className="view-member-id2" > 작성자 </td>
+                <div className="flex view-member-id">
+                  <td className="view-member-id2"> 작성자 </td>
                   {/* <td style={{ textAlign: "center", align: "center", paddingInline: "5px" }} ><Avvvatars value={questionViewData.member.userid} style="shape" size={20}/></td> */}
-                  <td style={{ paddingLeft: "3px" }} > {questionViewData.member.nickname} </td>
+                  <td style={{ paddingLeft: '3px' }}> {questionViewData.member.nickname} </td>
                 </div>
                 <tr className="view-created-date">
                   <td className="view-created-date2">작성일시</td>
@@ -126,23 +142,51 @@ export const QnaView = () => {
                   </td>
                 </tr>
               </tr>
-              <tr className="view-content" >
+              <tr className="view-content">
                 <td>
-                  <Typography className="m-2" gutterBottom component="div" variant="body1" style={{ whiteSpace: 'pre-line' }}> 
+                  <Typography
+                    className="m-2"
+                    gutterBottom
+                    component="div"
+                    variant="body1"
+                    style={{ whiteSpace: 'pre-line' }}
+                  >
                     {questionViewData.content}
                   </Typography>
                 </td>
               </tr>
             </tbody>
           </table>
-          <div className='flex justify-between' style={{ width: "90%" }}>
+          <div className="flex justify-between" style={{ width: '90%' }}>
             <div>
-              <Button variant="contained" size="medium" color="inherit" onClick={() => {navigate('/qna');}} > 목록보기 </Button>
+              <Button
+                variant="contained"
+                size="medium"
+                color="inherit"
+                onClick={() => {
+                  navigate('/qna');
+                }}
+              >
+                {' '}
+                목록보기{' '}
+              </Button>
             </div>
             {editButton && (
               <div>
-                <Button variant="contained" size="medium" color="inherit" onClick={qnaModifyHandler} sx={{ marginRight: "10px" }}> 수정하기 </Button>
-                <Button variant="contained" size="medium" color="error" onClick={qnaDeleteHandler} > 삭제하기 </Button>
+                <Button
+                  variant="contained"
+                  size="medium"
+                  color="inherit"
+                  onClick={qnaModifyHandler}
+                  sx={{ marginRight: '10px' }}
+                >
+                  {' '}
+                  수정하기{' '}
+                </Button>
+                <Button variant="contained" size="medium" color="error" onClick={qnaDeleteHandler}>
+                  {' '}
+                  삭제하기{' '}
+                </Button>
               </div>
             )}
           </div>
@@ -150,13 +194,18 @@ export const QnaView = () => {
       )}
 
       <div>
-        <Paper sx={{ p: 4, margin: 'auto', maxWidth: '75%', flexGrow: 1,
-                    backgroundColor: (theme) => (theme.palette.mode === 'dark' ? '#1A2027' : '#fff'),
+        <Paper
+          sx={{
+            p: 4,
+            margin: 'auto',
+            maxWidth: '75%',
+            flexGrow: 1,
+            backgroundColor: (theme) => (theme.palette.mode === 'dark' ? '#1A2027' : '#fff'),
           }}
         >
           <Grid item xs={45} sm container>
             <Grid item container direction="column" spacing={4}>
-              <Grid item direction="column" sx={{ textAlign: "right" }}>
+              <Grid item direction="column" sx={{ textAlign: 'right' }}>
                 <TextField
                   label="답변을 남겨주세요"
                   multiline
@@ -165,25 +214,27 @@ export const QnaView = () => {
                   value={content}
                   onChange={(e) => setContent(e.target.value)}
                 />
-                <Button variant="contained" size="medium" color="success" onClick={onClickCreateAnswer} 
-                        sx={{ marginTop: '5px' }} >
+                <Button
+                  variant="contained"
+                  size="medium"
+                  color="success"
+                  onClick={onClickCreateAnswer}
+                  sx={{ marginTop: '5px' }}
+                >
                   작성
                 </Button>
               </Grid>
             </Grid>
           </Grid>
         </Paper>
-
         <br></br>
         <br></br>
-        
-        <Box sx={{ p: 1, margin: 'auto', marginBottom: '10px', maxWidth: '75%', flexGrow: 1, textAlign: "center" }}>
-          <b>총 {qnaComment.length} 개의 답변이 있습니다.</b>
-          <hr style={{ border: 'none', borderTop: '1px solid black', margin: "20px" }} />
+        <Box sx={{ p: 1, margin: 'auto', marginBottom: '10px', maxWidth: '75%', flexGrow: 1, textAlign: 'center' }}>
+          <b>총 {totalElements} 개의 답변이 있습니다.</b>
+          <hr style={{ border: 'none', borderTop: '1px solid black', margin: '20px' }} />
         </Box>
-        
         <br></br>
-        {qnaComment.map((comment, index) => {
+        {qnaComment.map((comment) => {
           if (qnaComment.length > 0) {
             return (
               <div key={comment.id}>
@@ -191,8 +242,11 @@ export const QnaView = () => {
               </div>
             );
           }
-        })};
-
+        })}
+        ;
+        <Stack spacing={2} alignItems="center">
+          <Pagination count={totalPages} onChange={pageButtonHandler}/>
+        </Stack>
       </div>
     </div>
   );

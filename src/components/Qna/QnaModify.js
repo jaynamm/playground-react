@@ -41,11 +41,11 @@ export default function QnaModify() {
         const responseData = response.data.question;
 
         alert('글을 수정했습니다.');
-        navigate(`/qna/view/${questionId}`, { 
+        navigate(`/qna/view/${questionId}`, {
           state: {
             responseData: responseData,
-            id: questionId 
-          }
+            id: questionId,
+          },
         });
       })
       .catch((error) => {
@@ -95,7 +95,15 @@ export default function QnaModify() {
           <Button variant="contained" size="medium" color="inherit" onClick={() => modifyCompleteHandler()}>
             수정하기
           </Button>
-          <Button variant="contained" size="medium" color="error" sx={{ marginLeft: '10px' }} onClick={() => {navigate(`/qna/view/${questionId}`, {state: {id: questionId}})}}>
+          <Button
+            variant="contained"
+            size="medium"
+            color="error"
+            sx={{ marginLeft: '10px' }}
+            onClick={() => {
+              navigate(`/qna/view/${questionId}`, { state: { id: questionId } });
+            }}
+          >
             취소하기
           </Button>
         </div>

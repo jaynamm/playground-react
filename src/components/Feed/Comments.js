@@ -96,22 +96,22 @@ export default function Comments({ comment }) {
   };
 
   const detailDate = (a) => {
-		const milliSeconds = new Date() - a;
-		const seconds = milliSeconds / 1000;
-		if (seconds < 60) return `방금 전`;
-		const minutes = seconds / 60;
-		if (minutes < 60) return `${Math.floor(minutes)}분 전`;
-		const hours = minutes / 60;
-		if (hours < 24) return `${Math.floor(hours)}시간 전`;
-		const days = hours / 24;
-		if (days < 7) return `${Math.floor(days)}일 전`;
-		const weeks = days / 7;
-		if (weeks < 5) return `${Math.floor(weeks)}주 전`;
-		const months = days / 30;
-		if (months < 12) return `${Math.floor(months)}개월 전`;
-		const years = days / 365;
-		return `${Math.floor(years)}년 전`;
-	};
+    const milliSeconds = new Date() - a;
+    const seconds = milliSeconds / 1000;
+    if (seconds < 60) return `방금 전`;
+    const minutes = seconds / 60;
+    if (minutes < 60) return `${Math.floor(minutes)}분 전`;
+    const hours = minutes / 60;
+    if (hours < 24) return `${Math.floor(hours)}시간 전`;
+    const days = hours / 24;
+    if (days < 7) return `${Math.floor(days)}일 전`;
+    const weeks = days / 7;
+    if (weeks < 5) return `${Math.floor(weeks)}주 전`;
+    const months = days / 30;
+    if (months < 12) return `${Math.floor(months)}개월 전`;
+    const years = days / 365;
+    return `${Math.floor(years)}년 전`;
+  };
 
   const calcDatetime = detailDate(new Date(comment.createdDate));
 
@@ -121,7 +121,7 @@ export default function Comments({ comment }) {
         <div className="w-full">
           <div className="mb-2">
             <a className="flex items-center gap-3 justify-between">
-              <Avvvatars value={comment.userId} style="shape" size={40}/>
+              <Avvvatars value={comment.userId} style="shape" size={40} />
               <div>
                 <div className="flex itesms-center gap-1">
                   <p className="text-xs font-bold text-slate-900">{comment.nickname}</p>
@@ -130,15 +130,13 @@ export default function Comments({ comment }) {
                   <span>{calcDatetime}</span>
                 </p>
               </div>
-
               <div className="flex-grow"></div> {/* 빈 공간을 채우기 위한 추가 요소 */}
-
               {comment.editable && (
-                <button onClick={toggleDrop}><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                <button onClick={toggleDrop}>
+                  <i class="fa-solid fa-ellipsis-vertical"></i>
+                </button>
               )}
-
-
-              <div className="relative" style={{ alignItems: "right"}}>
+              <div className="relative" style={{ alignItems: 'right' }}>
                 {optionsVisible && (
                   <div
                     ref={optionsRef}

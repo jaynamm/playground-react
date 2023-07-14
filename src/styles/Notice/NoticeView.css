@@ -78,3 +78,12 @@ body {
   background-color: #f0e4ff;
   color: #7d7d7d;
 }
+
+.qna-view-table {
+  width: 100%;
+  text-align: center;
+}
+
+.qna-content {
+  width: 70%;
+}
