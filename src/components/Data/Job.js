@@ -1,5 +1,5 @@
 const Job = [
-  { title: '해당 없음' },
+  { title: '전체 선택' },
   { title: '웹 개발자' },
   { title: '서버 개발자' },
   { title: '소프트웨어 엔지니어' },
