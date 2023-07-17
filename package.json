@@ -18,7 +18,7 @@
     "bootstrap": "^5.2.3",
     "dat.gui": "^0.7.9",
     "http-proxy-middleware": "^2.0.6",
-    "itersection-observer": "^0.12.2",
+    "intersection-observer": "^0.12.2",
     "js-confetti": "^0.11.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
